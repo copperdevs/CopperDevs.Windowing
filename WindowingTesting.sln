@@ -12,6 +12,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Repo", "Repo", "{6CFA9B7F-8
 		.gitignore = .gitignore
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WindowTesting", "WindowTesting\WindowTesting.csproj", "{32348DD9-A229-4CC9-B37A-6D212C79EDDB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -30,5 +32,9 @@ Global
 		{356BC720-9F6F-4671-BBD5-CD82C7A9B63B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{356BC720-9F6F-4671-BBD5-CD82C7A9B63B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{356BC720-9F6F-4671-BBD5-CD82C7A9B63B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{32348DD9-A229-4CC9-B37A-6D212C79EDDB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{32348DD9-A229-4CC9-B37A-6D212C79EDDB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{32348DD9-A229-4CC9-B37A-6D212C79EDDB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{32348DD9-A229-4CC9-B37A-6D212C79EDDB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

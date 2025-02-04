@@ -1,16 +1,14 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
+        <OutputType>Exe</OutputType>
         <TargetFramework>net8.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
     </PropertyGroup>
 
     <ItemGroup>
-      <PackageReference Include="ppy.SDL3-CS" Version="2025.127.0" />
-    </ItemGroup>
-
-    <ItemGroup>
+      <ProjectReference Include="..\CopperDevs.Games.Windowing.SDL3\CopperDevs.Games.Windowing.SDL3.csproj" />
       <ProjectReference Include="..\CopperDevs.Games.Windowing\CopperDevs.Games.Windowing.csproj" />
     </ItemGroup>
 
