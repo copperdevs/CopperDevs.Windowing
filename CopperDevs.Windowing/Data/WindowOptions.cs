@@ -1,6 +1,6 @@
 using CopperDevs.Core.Data;
 
-namespace CopperDevs.Games.Windowing.Data;
+namespace CopperDevs.Windowing.Data;
 
 public record class WindowOptions
 {

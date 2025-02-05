@@ -1,6 +1,6 @@
 using SDL;
 
-namespace CopperDevs.Games.Windowing.SDL3.Data;
+namespace CopperDevs.Windowing.SDL3.Data;
 
 [Flags]
 public enum WindowFlags : ulong

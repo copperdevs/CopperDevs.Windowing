@@ -1,0 +1,32 @@
+using System.Text;
+using CopperDevs.Core.Data;
+using CopperDevs.Windowing.SDL3.Data;
+using SDL;
+using static SDL.SDL3;
+
+namespace CopperDevs.Windowing.SDL3;
+
+// ReSharper disable once InconsistentNaming
+internal static class SDL
+{
+    public static bool InitSubSystem(InitFlags flags) => SDL_InitSubSystem((SDL_InitFlags)flags);
+
+    public static string GetError() => SDL_GetError() ?? string.Empty;
+
+    public static unsafe SDL_Window* CreateWindow(string title, Vector2Int size, WindowFlags flags)
+    {
+        fixed (byte* titlePtr = Encoding.UTF8.GetBytes(title))
+        {
+            return SDL_CreateWindow(titlePtr, size.X, size.Y, (SDL_WindowFlags)flags);
+        }
+    }
+
+    public static unsafe SDL_Renderer* CreateRenderer(SDL_Window* window) => SDL_CreateRenderer(window, (Utf8String)null);
+
+    public static void Quit() => SDL_Quit();
+    public static void QuitSubSystem(InitFlags flags) => SDL_QuitSubSystem((SDL_InitFlags)flags);
+
+    public static void PumpEvents() => SDL_PumpEvents();
+
+    public static int PeepEvents(SDL_Event[] events, SDL_EventAction action, SDL_EventType minType, SDL_EventType maxType) => SDL_PeepEvents(events, action, minType, maxType);
+}

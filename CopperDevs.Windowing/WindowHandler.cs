@@ -1,4 +1,4 @@
-namespace CopperDevs.Games.Windowing;
+namespace CopperDevs.Windowing;
 
 public partial class Window
 {

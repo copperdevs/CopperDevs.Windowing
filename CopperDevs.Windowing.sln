@@ -2,9 +2,9 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WindowingTesting.Example", "WindowingTesting.Example\WindowingTesting.Example.csproj", "{6216576B-982D-4599-ADC3-2DFEF1E3AF92}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CopperDevs.Games.Windowing", "CopperDevs.Games.Windowing\CopperDevs.Games.Windowing.csproj", "{FBC126A3-DE91-45F8-9169-20AABF655423}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CopperDevs.Windowing", "CopperDevs.Windowing\CopperDevs.Windowing.csproj", "{FBC126A3-DE91-45F8-9169-20AABF655423}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CopperDevs.Games.Windowing.SDL3", "CopperDevs.Games.Windowing.SDL3\CopperDevs.Games.Windowing.SDL3.csproj", "{356BC720-9F6F-4671-BBD5-CD82C7A9B63B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CopperDevs.Windowing.SDL3", "CopperDevs.Windowing.SDL3\CopperDevs.Windowing.SDL3.csproj", "{356BC720-9F6F-4671-BBD5-CD82C7A9B63B}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Repo", "Repo", "{6CFA9B7F-892B-4691-8782-1D6D2C15F93C}"
 	ProjectSection(SolutionItems) = preProject

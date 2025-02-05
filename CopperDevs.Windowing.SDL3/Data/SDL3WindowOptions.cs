@@ -1,6 +1,6 @@
-using CopperDevs.Games.Windowing.Data;
+using CopperDevs.Windowing.Data;
 
-namespace CopperDevs.Games.Windowing.SDL3.Data;
+namespace CopperDevs.Windowing.SDL3.Data;
 
 // ReSharper disable once InconsistentNaming
 public record class SDL3WindowOptions : WindowOptions

@@ -1,6 +1,6 @@
-﻿using CopperDevs.Games.Windowing;
-using CopperDevs.Games.Windowing.SDL3;
-using CopperDevs.Games.Windowing.SDL3.Data;
+﻿using CopperDevs.Windowing;
+using CopperDevs.Windowing.SDL3;
+using CopperDevs.Windowing.SDL3.Data;
 
 namespace WindowTesting;
 

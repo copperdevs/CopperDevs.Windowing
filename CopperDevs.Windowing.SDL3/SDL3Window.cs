@@ -1,14 +1,18 @@
 using CopperDevs.Core.Data;
-using CopperDevs.Games.Windowing.Data;
+using CopperDevs.Windowing.Data;
 
-namespace CopperDevs.Games.Windowing.SDL3;
+namespace CopperDevs.Windowing.SDL3;
 
 // ReSharper disable once InconsistentNaming
 public class SDL3Window : Window
 {
+    private bool createdSuccessfully = false;
+
+    private ManagedSDLWindow window = null!;
+
     public override void DisposeResources()
     {
-        throw new NotImplementedException();
+        window.Dispose();
     }
 
     protected override Vector2Int GetWindowSize()
@@ -18,7 +22,7 @@ public class SDL3Window : Window
 
     public override void CreateWindow(WindowOptions options)
     {
-        throw new NotImplementedException();
+        window = new ManagedSDLWindow(options);
     }
 
     public override void UpdateWindow()

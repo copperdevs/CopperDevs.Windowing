@@ -1,7 +1,7 @@
 using CopperDevs.Core.Utility;
-using CopperDevs.Games.Windowing.Data;
+using CopperDevs.Windowing.Data;
 
-namespace CopperDevs.Games.Windowing;
+namespace CopperDevs.Windowing;
 
 public abstract partial class Window : SafeDisposable
 {

@@ -8,8 +8,8 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\CopperDevs.Games.Windowing.SDL3\CopperDevs.Games.Windowing.SDL3.csproj" />
-      <ProjectReference Include="..\CopperDevs.Games.Windowing\CopperDevs.Games.Windowing.csproj" />
+      <ProjectReference Include="..\CopperDevs.Windowing.SDL3\CopperDevs.Windowing.SDL3.csproj" />
+      <ProjectReference Include="..\CopperDevs.Windowing\CopperDevs.Windowing.csproj" />
     </ItemGroup>
 
 </Project>

@@ -1,8 +1,6 @@
 // Copyright (c) ppy Pty Ltd <contact@ppy.sh>. Licensed under the MIT Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-using System.Runtime.CompilerServices;
-using System.Runtime.InteropServices;
 using SDL;
 using static SDL.SDL3;
 
@@ -10,8 +8,6 @@ namespace WindowingTesting.Example
 {
     public sealed unsafe class MyWindow : IDisposable
     {
-        private bool flash;
-        private ObjectHandle<MyWindow> objectHandle { get; }
         private SDL_Window* sdlWindowHandle;
         private SDL_Renderer* renderer;
         private readonly bool initSuccess;
@@ -24,68 +20,11 @@ namespace WindowingTesting.Example
                 throw new InvalidOperationException($"failed to initialise SDL. Error: {SDL_GetError()}");
 
             initSuccess = true;
-
-            objectHandle = new ObjectHandle<MyWindow>(this, GCHandleType.Normal);
         }
 
         public void Setup()
         {
             SDL_SetGamepadEventsEnabled(true);
-            SDL_SetEventFilter(&nativeFilter, objectHandle.Handle);
-
-            if (OperatingSystem.IsWindows())
-                SDL_SetWindowsMessageHook(&wndProc, objectHandle.Handle);
-        }
-
-        [UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvCdecl) })]
-        private static SDLBool wndProc(IntPtr userdata, MSG* message)
-        {
-            var handle = new ObjectHandle<MyWindow>(userdata);
-
-            if (handle.GetTarget(out var window))
-            {
-                Console.WriteLine($"from {window}, message: {message->message}");
-            }
-
-            return true;
-        }
-
-        // ReSharper disable once UseCollectionExpression
-        [UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvCdecl) })]
-        private static SDLBool nativeFilter(IntPtr userdata, SDL_Event* e)
-        {
-            var handle = new ObjectHandle<MyWindow>(userdata);
-            if (handle.GetTarget(out var window))
-                return window.handleEventFromFilter(e);
-
-            return true;
-        }
-
-        public Action<SDL_Event>? EventFilter;
-
-        private bool handleEventFromFilter(SDL_Event* e)
-        {
-            switch (e->Type)
-            {
-                case SDL_EventType.SDL_EVENT_KEY_UP:
-                case SDL_EventType.SDL_EVENT_KEY_DOWN:
-                    handleKeyFromFilter(e->key);
-                    break;
-
-                default:
-                    EventFilter?.Invoke(*e);
-                    break;
-            }
-
-            return true;
-        }
-
-        private void handleKeyFromFilter(SDL_KeyboardEvent e)
-        {
-            if (e.key == SDL_Keycode.SDLK_F)
-            {
-                flash = true;
-            }
         }
 
         public void Create()
@@ -93,7 +32,7 @@ namespace WindowingTesting.Example
             sdlWindowHandle = SDL_CreateWindow("hello"u8, 800, 600, SDL_WindowFlags.SDL_WINDOW_RESIZABLE | SDL_WindowFlags.SDL_WINDOW_HIGH_PIXEL_DENSITY);
             renderer = SDL_CreateRenderer(sdlWindowHandle, (Utf8String)null);
         }
-
+ 
         private void handleEvent(SDL_Event e)
         {
             switch (e.Type)
@@ -202,14 +141,9 @@ namespace WindowingTesting.Example
         {
             while (run)
             {
-                if (flash)
-                {
-                    flash = false;
-                    Console.WriteLine("flash!");
-                }
-
                 pollEvents();
 
+                
                 SDL_SetRenderDrawColorFloat(renderer, SDL_sinf(frame) / 2 + 0.5f, SDL_cosf(frame) / 2 + 0.5f, 0.3f, 1.0f);
                 SDL_RenderClear(renderer);
                 SDL_RenderPresent(renderer);
@@ -224,8 +158,6 @@ namespace WindowingTesting.Example
         {
             if (initSuccess)
                 SDL_QuitSubSystem(init_flags);
-
-            objectHandle.Dispose();
         }
     }
 }
