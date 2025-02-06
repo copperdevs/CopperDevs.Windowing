@@ -29,4 +29,25 @@ internal static class SDL
     public static void PumpEvents() => SDL_PumpEvents();
 
     public static int PeepEvents(SDL_Event[] events, SDL_EventAction action, SDL_EventType minType, SDL_EventType maxType) => SDL_PeepEvents(events, action, minType, maxType);
+
+    public static unsafe Vector2Int GetWindowSize(SDL_Window* window)
+    {
+        int width ;
+        int height;
+
+        var value = new Vector2Int(0);
+
+        if (!SDL_GetWindowSize(window, &width, &height)) 
+            return value;
+        
+        value.X = width;
+        value.Y = height;
+
+        return value;
+    }
+
+    public static bool SetHint(string name, string value) => SetHint((Utf8String)name, (Utf8String)value);
+    public static bool SetHint(Utf8String name, string value) => SetHint(name, (Utf8String)value);
+    
+    public static bool SetHint(Utf8String name, Utf8String value) => SDL_SetHint(name, value);
 }
