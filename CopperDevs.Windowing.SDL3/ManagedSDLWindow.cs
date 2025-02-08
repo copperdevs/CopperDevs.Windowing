@@ -4,17 +4,20 @@ using CopperDevs.Logger;
 using CopperDevs.Windowing.Data;
 using CopperDevs.Windowing.SDL3.Data;
 using SDL;
+using NativeSDL3 = SDL.SDL3;
 
 namespace CopperDevs.Windowing.SDL3;
 
 // ReSharper disable once InconsistentNaming
-internal unsafe class ManagedSDLWindow : SafeDisposable
+public unsafe class ManagedSDLWindow : SafeDisposable
 {
     private bool createdSuccessfully = false;
 
     // ReSharper disable once PrivateFieldCanBeConvertedToLocalVariable
     private readonly SDL_Window* window;
-    private readonly SDL_Renderer* renderer;
+    private readonly SDLRenderer renderer;
+
+    public SDLRenderer GetRenderer() => renderer;
 
     // ReSharper disable once PrivateFieldCanBeConvertedToLocalVariable
     private readonly WindowFlags windowFlags;
@@ -23,7 +26,12 @@ internal unsafe class ManagedSDLWindow : SafeDisposable
     private Events events = new();
 
     public Vector2Int Size => SDL.GetWindowSize(window);
-    
+
+    public Action<EventType> OnEvent = null!;
+    public Action<EventType, SDL_Event> HandleEvent = null!;
+
+    public Action OnUpdate = null!;
+
     public ManagedSDLWindow(WindowOptions options)
     {
         initFlags = InitFlags.Video;
@@ -45,20 +53,21 @@ internal unsafe class ManagedSDLWindow : SafeDisposable
         events.HandleEvent += HandleEvents;
 
         window = SDL.CreateWindow(options.Title, options.Size, windowFlags);
-        renderer = SDL.CreateRenderer(window);
+        renderer = new SDLRenderer(SDL.CreateRenderer(window));
     }
 
     public void Update()
     {
         events.Poll();
-        Thread.Sleep(10);
+        OnUpdate?.Invoke();
     }
 
     private void HandleEvents(SDL_Event e)
     {
-        Log.Info(e.Type);
+        OnEvent?.Invoke((EventType)e.type);
+        HandleEvent?.Invoke((EventType)e.type, e);
     }
-    
+
     public override void DisposeResources()
     {
         if (createdSuccessfully)

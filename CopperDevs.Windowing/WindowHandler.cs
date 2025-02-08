@@ -1,21 +1,46 @@
+using CopperDevs.Core.Utility;
+
 namespace CopperDevs.Windowing;
 
 public partial class Window
 {
-    protected bool shouldRun = true;
-    
+    protected bool ShouldRun = true;
+
     public void Run()
     {
-        while (shouldRun)
+        OnLoad?.Invoke();
+
+        while (ShouldRun)
         {
-            UpdateWindow();
+            RenderWindow();
         }
-        
+
+        OnClose?.Invoke();
         DestroyWindow();
     }
 
     public void Stop()
     {
-        shouldRun = false;
+        ShouldRun = false;
+    }
+
+    private void RenderWindow()
+    {
+        StartWindowUpdate();
+
+        OnUpdate?.Invoke();
+        OnRender?.Invoke();
+
+        Thread.Sleep(10);
+
+        StopWindowUpdate();
+    }
+
+    private void ConnectWindowEvents()
+    {
+        
+        // WindowsApi.RegisterWindow(handle);
+        //
+        // WindowsApi.OnWindowResize += _ => { RenderGame(); };
     }
 }

@@ -6,7 +6,7 @@ namespace CopperDevs.Windowing.SDL3.Data;
 public record class SDL3WindowOptions : WindowOptions
 {
     public InitFlags InitFlags { get; set; } = InitFlags.Video;
-    public WindowFlags WindowFlags { get; set; } = WindowFlags.Resizable | WindowFlags.Hidden;
+    public WindowFlags WindowFlags { get; set; } = WindowFlags.Resizable | WindowFlags.HighPixelDensity;
     
     public new static SDL3WindowOptions Default => new();
 }

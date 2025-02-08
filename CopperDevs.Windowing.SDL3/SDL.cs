@@ -32,14 +32,14 @@ internal static class SDL
 
     public static unsafe Vector2Int GetWindowSize(SDL_Window* window)
     {
-        int width ;
+        int width;
         int height;
 
         var value = new Vector2Int(0);
 
-        if (!SDL_GetWindowSize(window, &width, &height)) 
+        if (!SDL_GetWindowSize(window, &width, &height))
             return value;
-        
+
         value.X = width;
         value.Y = height;
 
@@ -48,6 +48,12 @@ internal static class SDL
 
     public static bool SetHint(string name, string value) => SetHint((Utf8String)name, (Utf8String)value);
     public static bool SetHint(Utf8String name, string value) => SetHint(name, (Utf8String)value);
-    
+
     public static bool SetHint(Utf8String name, Utf8String value) => SDL_SetHint(name, value);
+
+    public static unsafe void SetRenderDrawColor(SDL_Renderer* renderer, float r, float g, float b, float a) => SDL_SetRenderDrawColorFloat(renderer, r, g, b, a);
+    public static unsafe void RenderClear(SDL_Renderer* renderer) => SDL_RenderClear(renderer);
+    public static unsafe void RenderPresent(SDL_Renderer* renderer) => SDL_RenderPresent(renderer);
+
+    public static ulong GetTicks() => SDL_GetTicks();
 }
