@@ -8,7 +8,7 @@ public partial class Window
 
     public void Run()
     {
-        if (WindowsApi.IsWindows)
+        if (WindowsApi.IsWindows && false)
             ConnectWindowEvents();
 
         OnLoad?.Invoke();
