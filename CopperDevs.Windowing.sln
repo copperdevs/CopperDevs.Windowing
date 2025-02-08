@@ -1,7 +1,5 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WindowingTesting.Example", "WindowingTesting.Example\WindowingTesting.Example.csproj", "{6216576B-982D-4599-ADC3-2DFEF1E3AF92}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CopperDevs.Windowing", "CopperDevs.Windowing\CopperDevs.Windowing.csproj", "{FBC126A3-DE91-45F8-9169-20AABF655423}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CopperDevs.Windowing.SDL3", "CopperDevs.Windowing.SDL3\CopperDevs.Windowing.SDL3.csproj", "{356BC720-9F6F-4671-BBD5-CD82C7A9B63B}"
@@ -20,10 +18,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{6216576B-982D-4599-ADC3-2DFEF1E3AF92}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{6216576B-982D-4599-ADC3-2DFEF1E3AF92}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{6216576B-982D-4599-ADC3-2DFEF1E3AF92}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{6216576B-982D-4599-ADC3-2DFEF1E3AF92}.Release|Any CPU.Build.0 = Release|Any CPU
 		{FBC126A3-DE91-45F8-9169-20AABF655423}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{FBC126A3-DE91-45F8-9169-20AABF655423}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FBC126A3-DE91-45F8-9169-20AABF655423}.Release|Any CPU.ActiveCfg = Release|Any CPU

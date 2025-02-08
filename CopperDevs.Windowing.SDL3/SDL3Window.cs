@@ -14,6 +14,7 @@ public class SDL3Window : Window
 
     // ReSharper disable once InconsistentNaming
     public ManagedSDLWindow GetManagedSDLWindow() => window;
+    public SDLRenderer GetRenderer() => window.GetRenderer();
 
     public override void DisposeResources()
     {

@@ -1,5 +1,4 @@
-﻿using CopperDevs.Logger;
-using CopperDevs.Windowing;
+﻿using CopperDevs.Windowing;
 using CopperDevs.Windowing.SDL3;
 using CopperDevs.Windowing.SDL3.Data;
 
@@ -15,7 +14,7 @@ public static class Program
         var options = SDL3WindowOptions.Default with { Title = "Window Testing" };
 
         window = Window.CreateWindow<SDL3Window>(options);
-        renderer = window.GetManagedSDLWindow().GetRenderer();
+        renderer = window.GetRenderer();
 
         window.OnUpdate += OnUpdate;
 

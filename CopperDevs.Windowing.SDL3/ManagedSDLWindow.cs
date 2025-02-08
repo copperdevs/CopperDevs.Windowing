@@ -1,10 +1,8 @@
 using CopperDevs.Core.Data;
 using CopperDevs.Core.Utility;
-using CopperDevs.Logger;
 using CopperDevs.Windowing.Data;
 using CopperDevs.Windowing.SDL3.Data;
 using SDL;
-using NativeSDL3 = SDL.SDL3;
 
 namespace CopperDevs.Windowing.SDL3;
 
