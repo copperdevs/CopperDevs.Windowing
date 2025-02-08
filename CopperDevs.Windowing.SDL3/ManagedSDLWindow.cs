@@ -17,6 +17,7 @@ public unsafe class ManagedSDLWindow : SafeDisposable
     private readonly SDL_Window* window;
     private readonly SDLRenderer renderer;
 
+    public SDL_Window* GetNativeWindow() => window;
     public SDLRenderer GetRenderer() => renderer;
 
     // ReSharper disable once PrivateFieldCanBeConvertedToLocalVariable

@@ -26,8 +26,6 @@ public static class Program
 
     private static void OnUpdate()
     {
-        // Log.Debug($"Total Time: {window.TotalTime} | Delta Time: {window.DeltaTime}");
-
         renderer.SetDrawColor(Math.Sin(window.TotalTime) / 2 + 0.5, Math.Cos(window.TotalTime) / 2 + 0.5, 0.3, 1);
         renderer.Clear();
         renderer.Present();

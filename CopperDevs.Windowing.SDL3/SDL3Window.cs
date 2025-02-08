@@ -1,4 +1,5 @@
 using CopperDevs.Core.Data;
+using CopperDevs.Core.Utility;
 using CopperDevs.Windowing.Data;
 using CopperDevs.Windowing.SDL3.Data;
 using SDL;
@@ -25,7 +26,18 @@ public class SDL3Window : Window
 
     protected override double GetDeltaTime() => deltaTime;
 
-    public override void CreateWindow(WindowOptions options)
+    protected override unsafe void ConnectWindowEvents()
+    {
+        fixed (byte* pointerPointer = NativeSDL3.SDL_PROP_WINDOW_WIN32_HWND_POINTER)
+        {
+            var pointer = NativeSDL3.SDL_GetPointerProperty(NativeSDL3.SDL_GetWindowProperties(window.GetNativeWindow()), pointerPointer, (IntPtr)null);
+            
+            WindowsApi.RegisterWindow(pointer);
+            WindowsApi.OnWindowResize += _ => RenderWindow();
+        }
+    }
+
+    public override unsafe void CreateWindow(WindowOptions options)
     {
         SDL.SetHint(NativeSDL3.SDL_HINT_WINDOWS_CLOSE_ON_ALT_F4, "null byte \0 in string"u8);
 

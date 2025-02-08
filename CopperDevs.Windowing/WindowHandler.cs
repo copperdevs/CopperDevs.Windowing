@@ -8,6 +8,9 @@ public partial class Window
 
     public void Run()
     {
+        if (WindowsApi.IsWindows)
+            ConnectWindowEvents();
+
         OnLoad?.Invoke();
 
         while (ShouldRun)
@@ -24,7 +27,7 @@ public partial class Window
         ShouldRun = false;
     }
 
-    private void RenderWindow()
+    protected void RenderWindow()
     {
         StartWindowUpdate();
 
@@ -36,11 +39,5 @@ public partial class Window
         StopWindowUpdate();
     }
 
-    private void ConnectWindowEvents()
-    {
-        
-        // WindowsApi.RegisterWindow(handle);
-        //
-        // WindowsApi.OnWindowResize += _ => { RenderGame(); };
-    }
+    protected abstract void ConnectWindowEvents();
 }
