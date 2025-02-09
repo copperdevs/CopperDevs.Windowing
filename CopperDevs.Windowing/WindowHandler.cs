@@ -8,7 +8,7 @@ public partial class Window
 
     public void Run()
     {
-        if (WindowsApi.IsWindows && false)
+        if (WindowsApi.IsWindows && Options.WindowsApiResizeCallback)
             ConnectWindowEvents();
 
         OnLoad?.Invoke();

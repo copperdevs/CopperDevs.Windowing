@@ -32,7 +32,7 @@ public class SDL3Window : Window
         fixed (byte* pointerPointer = NativeSDL3.SDL_PROP_WINDOW_WIN32_HWND_POINTER)
         {
             var pointer = NativeSDL3.SDL_GetPointerProperty(NativeSDL3.SDL_GetWindowProperties(window.GetNativeWindow()), pointerPointer, (IntPtr)null);
-            
+
             WindowsApi.RegisterWindow(pointer);
             WindowsApi.OnWindowResize += _ => RenderWindow();
         }

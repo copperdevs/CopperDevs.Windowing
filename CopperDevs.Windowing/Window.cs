@@ -7,8 +7,9 @@ public partial class Window
     public static TWindow CreateWindow<TWindow>(WindowOptions options) where TWindow : Window, new()
     {
         var window = new TWindow();
-        
-        window.CreateWindow(options);
+        window.Options = options;
+
+        window.CreateWindow(window.Options);
 
         return window;
     }

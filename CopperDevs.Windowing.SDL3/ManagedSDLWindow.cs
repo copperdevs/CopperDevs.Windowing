@@ -9,7 +9,7 @@ namespace CopperDevs.Windowing.SDL3;
 // ReSharper disable once InconsistentNaming
 public unsafe class ManagedSDLWindow : SafeDisposable
 {
-    private bool createdSuccessfully = false;
+    private bool createdSuccessfully;
 
     // ReSharper disable once PrivateFieldCanBeConvertedToLocalVariable
     private readonly SDL_Window* window;

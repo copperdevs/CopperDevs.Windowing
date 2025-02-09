@@ -1,9 +1,12 @@
 using CopperDevs.Core.Data;
+using CopperDevs.Windowing.Data;
 
 namespace CopperDevs.Windowing;
 
 public partial class Window
 {
+    internal WindowOptions Options = null!;
+    
     public Vector2Int Size => GetWindowSize();
     public double TotalTime => GetTotalTime();
     public double DeltaTime => GetDeltaTime();
