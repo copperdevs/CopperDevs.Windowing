@@ -6,9 +6,9 @@ using CopperDevs.Windowing.SDL3.Data;
 namespace CopperDevs.Windowing.SDL3;
 
 /// <summary>
-/// Thing layer above <see cref="SDL_Window"/> that wraps common actions (Initialization, Events,Disposing, etc.)
+/// Thin layer above <see cref="SDL_Window"/> that wraps common actions (Initialization, Events, Disposing, etc.)
 /// </summary>
-/// <remarks>Can be used without using <see cref="SDL3Window"/>, although its not recommended</remarks>
+/// <remarks>Can be used without using <see cref="SDL3Window"/>, although it's not recommended</remarks>
 // ReSharper disable once InconsistentNaming
 public unsafe class ManagedSDLWindow : SafeDisposable
 {
@@ -37,9 +37,60 @@ public unsafe class ManagedSDLWindow : SafeDisposable
     private Events events = new();
 
     /// <summary>
-    /// Get the size of the window
+    /// Current size of the window
     /// </summary>
-    public Vector2Int Size => SDL.GetWindowSize(window);
+    public Vector2Int Size
+    {
+        get => SDL.GetWindowSize(window);
+        set => SDL.SetWindowSize(window, value.X, value.Y);
+    }
+
+    /// <summary>
+    /// Current title of the window
+    /// </summary>
+    public string Title
+    {
+        get => SDL.GetWindowTitle(window);
+        set => SDL.SetWindowTitle(window, value);
+    }
+
+    /// <summary>
+    /// Should the window be fullscreen
+    /// </summary>
+    public bool Fullscreen
+    {
+        get => SDL.GetFlags(window).HasFlag(WindowFlags.Fullscreen);
+        set => SDL.SetFullscreen(window, value);
+    }
+
+    /// <summary>
+    /// If the window should always be on top of everything else regardless of if focused or not
+    /// </summary>
+    public bool AlwaysOnTop
+    {
+        get => SDL.GetFlags(window).HasFlag(WindowFlags.AlwaysOnTop);
+        set => SDL.SetAlwaysOnTop(window, value);
+    }
+
+    /// <summary>
+    /// Is the window currently minimized
+    /// </summary>
+    public bool Minimized => SDL.GetFlags(window).HasFlag(WindowFlags.Minimized);
+
+    /// <summary>
+    /// Is the window currently maximized
+    /// </summary>
+    public bool Maximized => SDL.GetFlags(window).HasFlag(WindowFlags.Maximized);
+
+    /// <summary>
+    /// Is the window currently being focused
+    /// </summary>
+    public bool Focused => SDL.GetFlags(window).HasFlag(WindowFlags.InputFocus);
+
+    /// <summary>
+    /// Is the window currently being hovered by the mouse
+    /// </summary>
+    public bool Hovered => SDL.GetFlags(window).HasFlag(WindowFlags.MouseFocus);
 
     /// <summary>
     /// Callback for when an event is called
@@ -101,6 +152,16 @@ public unsafe class ManagedSDLWindow : SafeDisposable
         OnEvent?.Invoke((EventType)e.type);
         HandleEvent?.Invoke((EventType)e.type, e);
     }
+
+    /// <summary>
+    /// Maximize the window 
+    /// </summary>
+    public void Maximize() => SDL.Maximize(window);
+
+    /// <summary>
+    /// Minimize the window
+    /// </summary>
+    public void Minimize() => SDL.Minimize(window);
 
     /// <summary>
     /// Disposes of the windows resources and shuts down SDL
