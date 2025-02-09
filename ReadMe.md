@@ -4,7 +4,7 @@
 ## Installation
 ### Nuget Packages
 - Base Package: https://www.nuget.org/packages/CopperDevs.Windowing/
-- SDL3 Support:https://www.nuget.org/packages/CopperDevs.Windowing.SDL3/
+- SDL3 Support: https://www.nuget.org/packages/CopperDevs.Windowing.SDL3/
 
 ## Example
 *A full, simple, example project can be found [here](./CopperDevs.Windowing.Example)*
