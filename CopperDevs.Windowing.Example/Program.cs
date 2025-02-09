@@ -24,7 +24,11 @@ public static class Program
 
     private static void OnUpdate()
     {
-        renderer.SetDrawColor(Math.Sin(window.TotalTime) / 2 + 0.5, Math.Cos(window.TotalTime) / 2 + 0.5, 0.3, 1);
+        renderer.SetDrawColor(
+            Math.Sin(window.TotalTime) / 2 + 0.5,
+            Math.Cos(window.TotalTime) / 2 + 0.5,
+            0.3,
+            1);
         renderer.Clear();
         renderer.Present();
     }
