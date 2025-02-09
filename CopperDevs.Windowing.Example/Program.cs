@@ -1,8 +1,7 @@
-﻿using CopperDevs.Windowing;
-using CopperDevs.Windowing.SDL3;
+﻿using CopperDevs.Windowing.SDL3;
 using CopperDevs.Windowing.SDL3.Data;
 
-namespace WindowTesting;
+namespace CopperDevs.Windowing.Example;
 
 public static class Program
 {
@@ -11,7 +10,7 @@ public static class Program
 
     public static void Main()
     {
-        var options = SDL3WindowOptions.Default with { Title = "Window Testing" };
+        var options = SDL3WindowOptions.Default with { Title = "Copper Windowing Example" };
 
         window = Window.Create<SDL3Window>(options);
         renderer = window.GetRenderer();
