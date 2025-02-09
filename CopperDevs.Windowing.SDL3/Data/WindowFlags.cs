@@ -8,7 +8,7 @@ namespace CopperDevs.Windowing.SDL3.Data;
 public enum WindowFlags : ulong
 {
     Fullscreen = SDL_WindowFlags.SDL_WINDOW_FULLSCREEN,
-    Opengl = SDL_WindowFlags.SDL_WINDOW_OPENGL,
+    OpenGl = SDL_WindowFlags.SDL_WINDOW_OPENGL,
     Occluded = SDL_WindowFlags.SDL_WINDOW_OCCLUDED,
     Hidden = SDL_WindowFlags.SDL_WINDOW_HIDDEN,
     Borderless = SDL_WindowFlags.SDL_WINDOW_BORDERLESS,

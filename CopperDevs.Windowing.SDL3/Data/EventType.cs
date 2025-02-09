@@ -42,7 +42,8 @@ public enum EventType
     WindowFocusLost = SDL_EventType.SDL_EVENT_WINDOW_FOCUS_LOST,
     WindowCloseRequested = SDL_EventType.SDL_EVENT_WINDOW_CLOSE_REQUESTED,
     WindowHitTest = SDL_EventType.SDL_EVENT_WINDOW_HIT_TEST,
-    WindowIccprofChanged = SDL_EventType.SDL_EVENT_WINDOW_ICCPROF_CHANGED,
+    // ReSharper disable once InconsistentNaming
+    WindowICCProfChanged = SDL_EventType.SDL_EVENT_WINDOW_ICCPROF_CHANGED,
     WindowDisplayChanged = SDL_EventType.SDL_EVENT_WINDOW_DISPLAY_CHANGED,
     WindowDisplayScaleChanged = SDL_EventType.SDL_EVENT_WINDOW_DISPLAY_SCALE_CHANGED,
     WindowSafeAreaChanged = SDL_EventType.SDL_EVENT_WINDOW_SAFE_AREA_CHANGED,
