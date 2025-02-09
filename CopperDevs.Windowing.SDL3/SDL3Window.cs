@@ -30,7 +30,7 @@ public class SDL3Window : Window
     /// <summary>
     /// Disposes of the windows resources and shuts down SDL
     /// </summary>
-    /// <remarks>Call <see cref="Window.Dispose"/> instead to make sure resources aren't attempted to be disposed of multiple times, and to fully shutdown the windowing system correctly</remarks>
+    /// <remarks>Call <see cref="Window.Dispose"/> instead to make sure resources aren't attempted to be disposed of multiple times, and to fully shut down the windowing system correctly</remarks>
     public override void DisposeResources()
     {
         window.Dispose();
