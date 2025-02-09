@@ -13,7 +13,7 @@ public static class Program
     {
         var options = SDL3WindowOptions.Default with { Title = "Window Testing" };
 
-        window = Window.CreateWindow<SDL3Window>(options);
+        window = Window.Create<SDL3Window>(options);
         renderer = window.GetRenderer();
 
         window.OnUpdate += OnUpdate;

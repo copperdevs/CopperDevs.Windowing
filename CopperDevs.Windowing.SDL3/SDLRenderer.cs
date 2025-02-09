@@ -1,5 +1,3 @@
-using SDL;
-
 namespace CopperDevs.Windowing.SDL3;
 
 // ReSharper disable once InconsistentNaming

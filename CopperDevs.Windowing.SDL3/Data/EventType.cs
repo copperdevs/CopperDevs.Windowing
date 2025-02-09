@@ -1,7 +1,9 @@
-using SDL;
-
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
 namespace CopperDevs.Windowing.SDL3.Data;
 
+/// <summary>
+/// Wrapper for <see cref="SDL_EventType"/>
+/// </summary>
 public enum EventType
 {
     First = SDL_EventType.SDL_EVENT_FIRST,

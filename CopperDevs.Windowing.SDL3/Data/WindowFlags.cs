@@ -1,7 +1,8 @@
-using SDL;
-
 namespace CopperDevs.Windowing.SDL3.Data;
 
+/// <summary>
+/// Wrapper for <see cref="WindowFlags"/>
+/// </summary>
 [Flags]
 public enum WindowFlags : ulong
 {

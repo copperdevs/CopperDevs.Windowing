@@ -1,3 +1,4 @@
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
 using CopperDevs.Core.Utility;
 using CopperDevs.Windowing.Data;
 
@@ -5,8 +6,8 @@ namespace CopperDevs.Windowing;
 
 public abstract partial class Window : SafeDisposable
 {
-    public abstract void CreateWindow(WindowOptions options);
-    public abstract void StartWindowUpdate();
-    public abstract void StopWindowUpdate();
-    public abstract void DestroyWindow();
+    protected abstract void CreateWindow(WindowOptions options);
+    protected abstract void StartWindowUpdate();
+    protected abstract void StopWindowUpdate();
+    protected abstract void DestroyWindow();
 }

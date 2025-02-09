@@ -1,8 +1,6 @@
 using System.Text;
 using CopperDevs.Core.Data;
 using CopperDevs.Windowing.SDL3.Data;
-using SDL;
-using static SDL.SDL3;
 
 namespace CopperDevs.Windowing.SDL3;
 
