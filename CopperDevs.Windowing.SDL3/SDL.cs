@@ -7,21 +7,40 @@ namespace CopperDevs.Windowing.SDL3;
 // ReSharper disable once InconsistentNaming
 internal static unsafe class SDL
 {
-    // love how this is the only non one liner
     public static Vector2Int GetWindowSize(SDL_Window* window)
     {
-        int width;
-        int height;
-
         var value = new Vector2Int(0);
 
-        if (!SDL_GetWindowSize(window, &width, &height))
+        if (SDL_GetWindowSize(window, &value.X, &value.Y))
             return value;
+        return value with { X = 0, Y = 0 };
+    }
 
-        value.X = width;
-        value.Y = height;
+    public static Vector2Int GetWindowMaximumSize(SDL_Window* window)
+    {
+        var value = new Vector2Int(0);
 
-        return value;
+        if (SDL_GetWindowMaximumSize(window, &value.X, &value.Y))
+            return value;
+        return value with { X = 0, Y = 0 };
+    }
+
+    public static Vector2Int GetWindowMinimumSize(SDL_Window* window)
+    {
+        var value = new Vector2Int(0);
+
+        if (SDL_GetWindowMaximumSize(window, &value.X, &value.Y))
+            return value;
+        return value with { X = 0, Y = 0 };
+    }
+
+    public static Vector2Int GetWindowPosition(SDL_Window* window)
+    {
+        var value = new Vector2Int(0);
+        
+        if(SDL_GetWindowPosition(window, &value.X, &value.Y))
+            return value;
+        return value with { X = 0, Y = 0 };
     }
 
     public static bool InitSubSystem(InitFlags flags) => SDL_InitSubSystem((SDL_InitFlags)flags);
@@ -47,4 +66,7 @@ internal static unsafe class SDL
     public static void SetAlwaysOnTop(SDL_Window* window, bool onTop) => SDL_SetWindowAlwaysOnTop(window, onTop);
     public static void Minimize(SDL_Window* window) => SDL_MinimizeWindow(window);
     public static void Maximize(SDL_Window* window) => SDL_MaximizeWindow(window);
+    public static void SetWindowMaximumSize(SDL_Window* window, Vector2Int size) => SDL_SetWindowMaximumSize(window, size.X, size.Y);
+    public static void SetWindowMinimumSize(SDL_Window* window, Vector2Int size) => SDL_SetWindowMinimumSize(window, size.X, size.Y);
+    public static void SetWindowPosition(SDL_Window* window, Vector2Int position) => SDL_SetWindowPosition(window, position.X, position.Y);
 }

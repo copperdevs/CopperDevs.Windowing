@@ -39,6 +39,12 @@ public class SDL3Window : Window
 #pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
     protected override Vector2Int GetWindowSize() => window.Size;
     protected override void SetWindowSize(Vector2Int size) => window.Size = size;
+    protected override Vector2Int GetWindowMaximumSize() => window.MaximumSize;
+    protected override void SetWindowMaximumSize(Vector2Int size) => window.MaximumSize = size;
+    protected override Vector2Int GetWindowMinimumSize() => window.MinimumSize;
+    protected override void SetWindowMinimumSize(Vector2Int size) => window.MinimumSize = size;
+    protected override Vector2Int GetWindowPosition() => window.Position;
+    protected override void SetWindowPosition(Vector2Int position) => window.Position = position;
     protected override string GetWindowTitle() => window.Title;
     protected override void SetWindowTitle(string title) => window.Title = title;
     protected override void SetFullscreen(bool fullscreen) => window.Fullscreen = fullscreen;

@@ -37,6 +37,15 @@ public unsafe class ManagedSDLWindow : SafeDisposable
     private Events events = new();
 
     /// <summary>
+    /// Current position of the window
+    /// </summary>
+    public Vector2Int Position
+    {
+        get => SDL.GetWindowPosition(window);
+        set => SDL.SetWindowPosition(window, value);
+    }
+
+    /// <summary>
     /// Current size of the window
     /// </summary>
     public Vector2Int Size
@@ -44,6 +53,25 @@ public unsafe class ManagedSDLWindow : SafeDisposable
         get => SDL.GetWindowSize(window);
         set => SDL.SetWindowSize(window, value.X, value.Y);
     }
+
+    /// <summary>
+    /// Current minimum size of the window
+    /// </summary>
+    public Vector2Int MinimumSize
+    {
+        get => SDL.GetWindowSize(window);
+        set => SDL.SetWindowSize(window, value.X, value.Y);
+    }
+    
+    /// <summary>
+    /// Current maximum size of the window
+    /// </summary>
+    public Vector2Int MaximumSize
+    {
+        get => SDL.GetWindowSize(window);
+        set => SDL.SetWindowSize(window, value.X, value.Y);
+    }
+
 
     /// <summary>
     /// Current title of the window

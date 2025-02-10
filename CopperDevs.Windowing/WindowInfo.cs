@@ -8,12 +8,39 @@ public partial class Window
     internal WindowOptions Options = null!;
 
     /// <summary>
+    /// Current position of the window
+    /// </summary>
+    public Vector2Int Position
+    {
+        get => GetWindowPosition();
+        set => SetWindowPosition(value);
+    }
+    
+    /// <summary>
     /// Current size of the window
     /// </summary>
     public Vector2Int Size
     {
         get => GetWindowSize();
         set => SetWindowSize(value);
+    }
+
+    /// <summary>
+    /// Current minimum size of the window
+    /// </summary>
+    public Vector2Int MinimumSize
+    {
+        get => GetWindowMinimumSize();
+        set => SetWindowMinimumSize(value);
+    }
+
+    /// <summary>
+    /// Current maximum size of the window
+    /// </summary>
+    public Vector2Int MaximumSize
+    {
+        get => GetWindowMaximumSize();
+        set => SetWindowMaximumSize(value);
     }
 
     /// <summary>
@@ -91,6 +118,18 @@ public partial class Window
     // size
     protected abstract Vector2Int GetWindowSize();
     protected abstract void SetWindowSize(Vector2Int size);
+
+    // max size
+    protected abstract Vector2Int GetWindowMaximumSize();
+    protected abstract void SetWindowMaximumSize(Vector2Int size);
+
+    // min size
+    protected abstract Vector2Int GetWindowMinimumSize();
+    protected abstract void SetWindowMinimumSize(Vector2Int size);
+
+    // pos
+    protected abstract Vector2Int GetWindowPosition();
+    protected abstract void SetWindowPosition(Vector2Int position);
 
     // title
     protected abstract string GetWindowTitle();
