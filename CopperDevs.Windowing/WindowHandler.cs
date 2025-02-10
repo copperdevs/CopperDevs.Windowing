@@ -50,12 +50,4 @@ public partial class Window
 
         StopWindowUpdate();
     }
-
-    /// <summary>
-    /// Base 
-    /// </summary>
-    protected virtual void ConnectWindowEvents()
-    {
-        // TODO: Add a way to get the main window pointer regardless of the windowing library used
-    }
 }
