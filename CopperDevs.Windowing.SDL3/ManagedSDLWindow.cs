@@ -62,7 +62,7 @@ public unsafe class ManagedSDLWindow : SafeDisposable
         get => SDL.GetWindowSize(window);
         set => SDL.SetWindowSize(window, value.X, value.Y);
     }
-    
+
     /// <summary>
     /// Current maximum size of the window
     /// </summary>
@@ -190,6 +190,23 @@ public unsafe class ManagedSDLWindow : SafeDisposable
     /// Minimize the window
     /// </summary>
     public void Minimize() => SDL.Minimize(window);
+
+    /// <summary>
+    /// Flash the window
+    /// </summary>
+    /// <param name="untilFocus">If true, flashes the window until focused, otherwise only briefly flashes</param>
+    public void Flash(bool untilFocus = true)
+    {
+        SDL.FlashWindow(window, untilFocus ? SDL_FlashOperation.SDL_FLASH_UNTIL_FOCUSED : SDL_FlashOperation.SDL_FLASH_BRIEFLY);
+    }
+
+    /// <summary>
+    /// Cancel any window flash state
+    /// </summary>
+    public void StopFlash()
+    {
+        SDL.FlashWindow(window, SDL_FlashOperation.SDL_FLASH_CANCEL);
+    }
 
     /// <summary>
     /// Disposes of the windows resources and shuts down SDL
