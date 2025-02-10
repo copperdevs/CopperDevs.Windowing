@@ -51,7 +51,7 @@ public unsafe class ManagedSDLWindow : SafeDisposable
     public Vector2Int Size
     {
         get => SDL.GetWindowSize(window);
-        set => SDL.SetWindowSize(window, value.X, value.Y);
+        set => SDL.SetWindowSize(window, value);
     }
 
     /// <summary>
@@ -59,8 +59,8 @@ public unsafe class ManagedSDLWindow : SafeDisposable
     /// </summary>
     public Vector2Int MinimumSize
     {
-        get => SDL.GetWindowSize(window);
-        set => SDL.SetWindowSize(window, value.X, value.Y);
+        get => SDL.GetWindowMinimumSize(window);
+        set => SDL.SetWindowMinimumSize(window, value);
     }
 
     /// <summary>
@@ -68,8 +68,8 @@ public unsafe class ManagedSDLWindow : SafeDisposable
     /// </summary>
     public Vector2Int MaximumSize
     {
-        get => SDL.GetWindowSize(window);
-        set => SDL.SetWindowSize(window, value.X, value.Y);
+        get => SDL.GetWindowMaximumSize(window);
+        set => SDL.SetWindowMaximumSize(window, value);
     }
 
 

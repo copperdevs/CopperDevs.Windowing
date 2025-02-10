@@ -58,7 +58,7 @@ internal static unsafe class SDL
     public static void RenderClear(SDL_Renderer* renderer) => SDL_RenderClear(renderer);
     public static void RenderPresent(SDL_Renderer* renderer) => SDL_RenderPresent(renderer);
     public static ulong GetTicks() => SDL_GetTicks();
-    public static void SetWindowSize(SDL_Window* window, int width, int height) => SDL_SetWindowSize(window, width, height);
+    public static void SetWindowSize(SDL_Window* window, Vector2Int size) => SDL_SetWindowSize(window, size.X, size.Y);
     public static void SetWindowTitle(SDL_Window* window, string title) => SDL_SetWindowTitle(window, title);
     public static string GetWindowTitle(SDL_Window* window) => SDL_GetWindowTitle(window) ?? string.Empty;
     public static void SetFullscreen(SDL_Window* window, bool fullscreen) => SDL_SetWindowFullscreen(window, fullscreen);
