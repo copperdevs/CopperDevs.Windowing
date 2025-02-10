@@ -38,9 +38,26 @@ public class SDL3Window : Window
 
 #pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
     protected override Vector2Int GetWindowSize() => window.Size;
-
+    protected override void SetWindowSize(Vector2Int size) => window.Size = size;
+    protected override Vector2Int GetWindowMaximumSize() => window.MaximumSize;
+    protected override void SetWindowMaximumSize(Vector2Int size) => window.MaximumSize = size;
+    protected override Vector2Int GetWindowMinimumSize() => window.MinimumSize;
+    protected override void SetWindowMinimumSize(Vector2Int size) => window.MinimumSize = size;
+    protected override Vector2Int GetWindowPosition() => window.Position;
+    protected override void SetWindowPosition(Vector2Int position) => window.Position = position;
+    protected override string GetWindowTitle() => window.Title;
+    protected override void SetWindowTitle(string title) => window.Title = title;
+    protected override void SetFullscreen(bool fullscreen) => window.Fullscreen = fullscreen;
+    protected override bool GetFullscreen() => window.Fullscreen;
+    protected override void SetAlwaysOnTop(bool alwaysOnTop) => window.AlwaysOnTop = alwaysOnTop;
+    protected override bool GetAlwaysOnTop() => window.AlwaysOnTop;
+    protected override bool GetMinimized() => window.Minimized;
+    protected override void SetMinimize() => window.Minimize();
+    protected override bool GetMaximized() => window.Maximized;
+    protected override void SetMaximize() => window.Maximize();
+    protected override bool GetFocused() => window.Focused;
+    protected override bool GetHovered() => window.Hovered;
     protected override double GetTotalTime() => totalTime;
-
     protected override double GetDeltaTime() => deltaTime;
 
     protected override unsafe void ConnectWindowEvents()
@@ -53,6 +70,10 @@ public class SDL3Window : Window
             WindowsApi.OnWindowResize += _ => RenderWindow();
         }
     }
+
+    protected override void WindowFlash(bool untilFocus = true) => window.Flash(untilFocus);
+    protected override void StopWindowFlash() => window.StopFlash();
+    
 #pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
 
     /// <summary>
