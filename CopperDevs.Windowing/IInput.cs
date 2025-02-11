@@ -5,8 +5,11 @@ namespace CopperDevs.Windowing;
 
 public interface IInput
 {
+    // updates
+    protected internal void UpdateInput();
+    
     // checks
-    public bool SupportsInputKey(InputKey inputKey);
+    protected internal bool SupportsInputKey(InputKey inputKey);
     
     // key inputs
     public bool IsKeyPressed(InputKey key);

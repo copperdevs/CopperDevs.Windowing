@@ -18,7 +18,7 @@ public partial class Window
             ConnectWindowEvents();
 
         SetupInput();
-        
+
         OnLoad?.Invoke();
 
         while (ShouldRun)
@@ -45,11 +45,22 @@ public partial class Window
     {
         StartWindowUpdate();
 
-        OnUpdate?.Invoke();
-        OnRender?.Invoke();
+        InternalUpdateWindow();
+        InternalRenderWindow();
 
         Thread.Sleep(10);
 
         StopWindowUpdate();
+    }
+
+    private void InternalUpdateWindow()
+    {
+        UpdateInput();
+        OnUpdate?.Invoke();
+    }
+
+    private void InternalRenderWindow()
+    {
+        OnRender?.Invoke();
     }
 }

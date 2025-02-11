@@ -13,6 +13,12 @@ public partial class Window
         input ??= CreateInput();
     }
 
+    private void UpdateInput()
+    {
+        SetupInput();
+        input!.UpdateInput();
+    }
+
     protected abstract IInput CreateInput();
 
     private bool InputCheck()
