@@ -32,6 +32,14 @@ public static class Program
 
         if (window.IsKeyReleased(InputKey.Space))
             Log.Info($"Key released {InputKey.Space}");
+        
+        // i don't want these always spamming the console so i just threw the false in there 
+        
+        if (window.IsKeyDown(InputKey.Space) && false)
+            Log.Info($"Key down {InputKey.Space}");
+
+        if (window.IsKeyUp(InputKey.Space) && false)
+            Log.Info($"Key up {InputKey.Space}");
     }
 
     private static void OnRender()

@@ -7,13 +7,13 @@ namespace CopperDevs.Windowing.SDL3;
 
 public class SDLInput : IInput
 {
-    private const bool InputLogs = true;
+    private const bool InputLogs = false;
 
     private SDL3Window connectedWindow;
 
     private SDLKeyMap keyMap = new();
     private SDLMouseMap mouseMap = new();
-
+    
     private Dictionary<SDL_Keycode, bool> keyCurrentlyPressed = new();
     private Dictionary<SDLButton, bool> buttonCurrentlyPressed = new();
 
@@ -22,16 +22,7 @@ public class SDLInput : IInput
 
     private bool GetKeyPressState(InputKey key, bool previousFrame)
     {
-        if (previousFrame)
-        {
-            if (previousFrameKeyCurrentlyPressed.TryGetValue(keyMap[key], out var value))
-                return value;
-            return false;
-        }
-        else
-        {
-            return keyCurrentlyPressed.GetValueOrDefault(keyMap[key], false);
-        }
+        return previousFrame ? previousFrameKeyCurrentlyPressed.GetValueOrDefault(keyMap[key], false) : keyCurrentlyPressed.GetValueOrDefault(keyMap[key], false);
     }
 
     private readonly List<EventType> targetEvents =
@@ -108,8 +99,8 @@ public class SDLInput : IInput
         previousFrameKeyCurrentlyPressed = new Dictionary<SDL_Keycode, bool>(keyCurrentlyPressed);
         previousFrameButtonCurrentlyPressed = new Dictionary<SDLButton, bool>(buttonCurrentlyPressed);
 
-        keyCurrentlyPressed.Clear();
-        buttonCurrentlyPressed.Clear();
+        // keyCurrentlyPressed.Clear();
+        // buttonCurrentlyPressed.Clear();
     }
 
     public bool SupportsInputKey(InputKey inputKey)
@@ -134,7 +125,7 @@ public class SDLInput : IInput
 
     public bool IsKeyUp(InputKey key)
     {
-        return GetKeyPressState(key, false);
+        return !GetKeyPressState(key, false);
     }
 
     public bool IsMouseButtonPressed(MouseButton button)
