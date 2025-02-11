@@ -26,25 +26,60 @@ public partial class Window
         return input is not null;
     }
 
-    public bool IsKeyPressed(InputKey key) => InputCheck() && input!.IsKeyPressed(key);
+    private bool InputCheck(InputKey key)
+    {
+        return InputCheck() && input!.SupportsInputKey(key);
+    }
 
-    public bool IsKeyDown(InputKey key) => InputCheck() && input!.IsKeyDown(key);
+    public bool IsKeyPressed(InputKey key)
+    {
+        return InputCheck(key) && input!.IsKeyPressed(key);
+    }
 
-    public bool IsKeyReleased(InputKey key) => InputCheck() && input!.IsKeyReleased(key);
+    public bool IsKeyDown(InputKey key)
+    {
+        return InputCheck(key) && input!.IsKeyDown(key);
+    }
 
-    public bool IsKeyUp(InputKey key) => InputCheck() && input!.IsKeyUp(key);
+    public bool IsKeyReleased(InputKey key)
+    {
+        return InputCheck(key) && input!.IsKeyReleased(key);
+    }
 
-    public bool IsMouseButtonPressed(MouseButton button) => InputCheck() && input!.IsMouseButtonPressed(button);
+    public bool IsKeyUp(InputKey key)
+    {
+        return InputCheck() && input!.IsKeyUp(key);
+    }
 
-    public bool IsMouseButtonDown(MouseButton button) => InputCheck() && input!.IsMouseButtonDown(button);
+    public bool IsMouseButtonPressed(MouseButton button)
+    {
+        return InputCheck() && input!.IsMouseButtonPressed(button);
+    }
 
-    public bool IsMouseButtonReleased(MouseButton button) => InputCheck() && input!.IsMouseButtonReleased(button);
+    public bool IsMouseButtonDown(MouseButton button)
+    {
+        return InputCheck() && input!.IsMouseButtonDown(button);
+    }
 
-    public bool IsMouseButtonUp(MouseButton button) => InputCheck() && input!.IsMouseButtonUp(button);
+    public bool IsMouseButtonReleased(MouseButton button)
+    {
+        return InputCheck() && input!.IsMouseButtonReleased(button);
+    }
 
-    public Vector2Int GetMousePosition() => InputCheck() ? input!.GetMousePosition() : Vector2Int.Zero;
+    public bool IsMouseButtonUp(MouseButton button)
+    {
+        return InputCheck() && input!.IsMouseButtonUp(button);
+    }
 
-    public Vector2Int GetMouseDelta() => InputCheck() ? input!.GetMouseDelta() : Vector2Int.Zero;
+    public Vector2Int GetMousePosition()
+    {
+        return InputCheck() ? input!.GetMousePosition() : Vector2Int.Zero;
+    }
+
+    public Vector2Int GetMouseDelta()
+    {
+        return InputCheck() ? input!.GetMouseDelta() : Vector2Int.Zero;
+    }
 
     public void SetCursorMode(CursorMode cursorMode)
     {

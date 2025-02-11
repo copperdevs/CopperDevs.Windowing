@@ -76,6 +76,11 @@ public class SDL3Window : Window
     
 #pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
 
+    protected override IInput CreateInput()
+    {
+        return new SDLInput();
+    }
+
     /// <summary>
     /// Create the window
     /// </summary>
