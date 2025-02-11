@@ -17,6 +17,8 @@ public partial class Window
         if (WindowsApi.IsWindows && Options.WindowsApiResizeCallback)
             ConnectWindowEvents();
 
+        SetupInput();
+        
         OnLoad?.Invoke();
 
         while (ShouldRun)
