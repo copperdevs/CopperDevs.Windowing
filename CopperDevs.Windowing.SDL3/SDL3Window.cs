@@ -73,12 +73,12 @@ public class SDL3Window : Window
 
     protected override void WindowFlash(bool untilFocus = true) => window.Flash(untilFocus);
     protected override void StopWindowFlash() => window.StopFlash();
-    
+
 #pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
 
     protected override IInput CreateInput()
     {
-        return new SDLInput();
+        return new SDLInput(this);
     }
 
     /// <summary>
