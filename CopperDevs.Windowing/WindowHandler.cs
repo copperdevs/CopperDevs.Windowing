@@ -43,24 +43,14 @@ public partial class Window
     /// </summary>
     protected void RenderWindow()
     {
+        UpdateInput();
         StartWindowUpdate();
 
-        InternalUpdateWindow();
-        InternalRenderWindow();
+        OnUpdate?.Invoke();
+        OnRender?.Invoke();
 
         Thread.Sleep(10);
 
         StopWindowUpdate();
-    }
-
-    private void InternalUpdateWindow()
-    {
-        UpdateInput();
-        OnUpdate?.Invoke();
-    }
-
-    private void InternalRenderWindow()
-    {
-        OnRender?.Invoke();
     }
 }
