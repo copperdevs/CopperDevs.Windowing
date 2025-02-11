@@ -105,7 +105,7 @@ public class SDL3Window : Window
     {
         deltaTimeStartTime = totalTime;
 
-        window.Update();
+        window.PollEvents();
     }
 
     /// <summary>

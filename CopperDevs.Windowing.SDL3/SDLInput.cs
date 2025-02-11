@@ -14,6 +14,26 @@ public class SDLInput : IInput
     private SDLKeyMap keyMap = new();
     private SDLMouseMap mouseMap = new();
 
+    private Dictionary<SDL_Keycode, bool> keyCurrentlyPressed = new();
+    private Dictionary<SDLButton, bool> buttonCurrentlyPressed = new();
+
+    private Dictionary<SDL_Keycode, bool> previousFrameKeyCurrentlyPressed = new();
+    private Dictionary<SDLButton, bool> previousFrameButtonCurrentlyPressed = new();
+
+    private bool GetKeyPressState(InputKey key, bool previousFrame)
+    {
+        if (previousFrame)
+        {
+            if (previousFrameKeyCurrentlyPressed.TryGetValue(keyMap[key], out var value))
+                return value;
+            return false;
+        }
+        else
+        {
+            return keyCurrentlyPressed.GetValueOrDefault(keyMap[key], false);
+        }
+    }
+
     private readonly List<EventType> targetEvents =
     [
         // EventType.WindowMouseEnter,
@@ -48,31 +68,48 @@ public class SDLInput : IInput
         {
             case EventType.MouseMotion:
                 if (InputLogs)
-                    Log.Info($"Mouse Motion: <{eventData.motion.x},{eventData.motion.y}> | Mouse Motion Relative: <{eventData.motion.xrel},{eventData.motion.yrel}>");
+                    Log.Debug($"Mouse Motion: <{eventData.motion.x},{eventData.motion.y}> | Mouse Motion Relative: <{eventData.motion.xrel},{eventData.motion.yrel}>");
                 break;
             case EventType.MouseButtonDown:
+                buttonCurrentlyPressed[eventData.button.Button] = true;
+
                 if (InputLogs)
-                    Log.Info($"Mouse Button Down: {eventData.button.Button}");
+                    Log.Debug($"Mouse Button Down: {eventData.button.Button}");
                 break;
             case EventType.MouseButtonUp:
+                buttonCurrentlyPressed[eventData.button.Button] = false;
+
                 if (InputLogs)
-                    Log.Info($"Mouse Button Up: {eventData.button.Button}");
+                    Log.Debug($"Mouse Button Up: {eventData.button.Button}");
                 break;
             case EventType.MouseWheel:
                 if (InputLogs)
-                    Log.Info($"Mouse Wheel: <{eventData.wheel.x},{eventData.wheel.y}> | Mouse Wheel Mouse: <{eventData.wheel.mouse_x},{eventData.wheel.mouse_y}> | Direction: <{eventData.wheel.direction}>");
+                    Log.Debug($"Mouse Wheel: <{eventData.wheel.x},{eventData.wheel.y}> | Mouse Wheel Mouse: <{eventData.wheel.mouse_x},{eventData.wheel.mouse_y}> | Direction: <{eventData.wheel.direction}>");
                 break;
             case EventType.KeyDown:
+                keyCurrentlyPressed[eventData.key.key] = true;
+
                 if (InputLogs)
-                    Log.Info($"Key Down: {eventData.key.key} | Modifier: {eventData.key.mod}");
+                    Log.Debug($"Key Down: {eventData.key.key} | Modifier: {eventData.key.mod}");
                 break;
             case EventType.KeyUp:
+                keyCurrentlyPressed[eventData.key.key] = false;
+
                 if (InputLogs)
-                    Log.Info($"Key Up: {eventData.key.key} | Modifier: {eventData.key.mod}");
+                    Log.Debug($"Key Up: {eventData.key.key} | Modifier: {eventData.key.mod}");
                 break;
             default:
                 throw new ArgumentOutOfRangeException(nameof(eventType), eventType, null);
         }
+    }
+
+    public void UpdateInput()
+    {
+        previousFrameKeyCurrentlyPressed = new Dictionary<SDL_Keycode, bool>(keyCurrentlyPressed);
+        previousFrameButtonCurrentlyPressed = new Dictionary<SDLButton, bool>(buttonCurrentlyPressed);
+
+        keyCurrentlyPressed.Clear();
+        buttonCurrentlyPressed.Clear();
     }
 
     public bool SupportsInputKey(InputKey inputKey)
@@ -82,22 +119,22 @@ public class SDLInput : IInput
 
     public bool IsKeyPressed(InputKey key)
     {
-        throw new NotImplementedException();
+        return !GetKeyPressState(key, true) && GetKeyPressState(key, false);
     }
 
     public bool IsKeyDown(InputKey key)
     {
-        throw new NotImplementedException();
+        return GetKeyPressState(key, false);
     }
 
     public bool IsKeyReleased(InputKey key)
     {
-        throw new NotImplementedException();
+        return GetKeyPressState(key, true) && !GetKeyPressState(key, false);
     }
 
     public bool IsKeyUp(InputKey key)
     {
-        throw new NotImplementedException();
+        return GetKeyPressState(key, false);
     }
 
     public bool IsMouseButtonPressed(MouseButton button)
