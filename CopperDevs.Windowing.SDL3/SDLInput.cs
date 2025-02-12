@@ -24,6 +24,8 @@ public class SDLInput : IInput
     private Vector2 mousePosition;
     private Vector2 previousMousePosition;
 
+    private Vector2 mouseScroll;
+
     private bool GetKeyPressState(InputKey key, bool previousFrame)
     {
         return previousFrame ? previousFrameKeyCurrentlyPressed.GetValueOrDefault(keyMap[key], false) : keyCurrentlyPressed.GetValueOrDefault(keyMap[key], false);
@@ -88,8 +90,15 @@ public class SDLInput : IInput
                     Log.Debug($"Mouse Button Up: {eventData.button.Button}");
                 break;
             case EventType.MouseWheel:
+                // lol invert moment
+                mouseScroll = mouseScroll with
+                {
+                    X = eventData.wheel.x * -1,
+                    Y = eventData.wheel.y * -1,
+                };
+
                 if (InputLogs)
-                    Log.Debug($"Mouse Wheel: <{eventData.wheel.x},{eventData.wheel.y}> | Mouse Wheel Mouse: <{eventData.wheel.mouse_x},{eventData.wheel.mouse_y}> | Direction: <{eventData.wheel.direction}>");
+                    Log.Debug($"Mouse Wheel: <{eventData.wheel.x},{eventData.wheel.y}> | Direction: <{eventData.wheel.direction}>");
                 break;
             case EventType.KeyDown:
                 keyCurrentlyPressed[eventData.key.key] = true;
@@ -118,6 +127,8 @@ public class SDLInput : IInput
             X = mousePosition.X,
             Y = mousePosition.Y,
         };
+
+        mouseScroll = Vector2.Zero;
     }
 
     public bool SupportsInputKey(InputKey inputKey)
@@ -177,7 +188,7 @@ public class SDLInput : IInput
 
     public Vector2 GetMouseScroll()
     {
-        throw new NotImplementedException();
+        return mouseScroll;
     }
 
     public void SetCursorMode(CursorMode cursorMode)

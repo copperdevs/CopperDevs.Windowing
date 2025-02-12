@@ -29,8 +29,7 @@ public static class Program
     private static void OnUpdate()
     {
         window.Title = $"{BaseWindowTitle} | Mouse Pos: {window.GetMousePosition()}";
-        
-        Log.Info(window.GetMouseDelta());
+        Log.Info(window.GetMouseScroll());
         
         if (window.IsKeyPressed(InputKey.Space)) Log.Info($"Key pressed {InputKey.Space}");
         if (window.IsKeyReleased(InputKey.Space)) Log.Info($"Key released {InputKey.Space}");
