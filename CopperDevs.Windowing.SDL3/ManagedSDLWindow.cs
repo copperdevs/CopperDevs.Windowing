@@ -167,12 +167,11 @@ public unsafe class ManagedSDLWindow : SafeDisposable
     }
 
     /// <summary>
-    /// Update the window
+    /// Poll the windows events
     /// </summary>
-    public void Update()
+    public void PollEvents()
     {
         events.Poll();
-        OnUpdate?.Invoke();
     }
 
     private void HandleEvents(SDL_Event e)

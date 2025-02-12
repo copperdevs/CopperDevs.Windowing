@@ -44,4 +44,25 @@
         </None>
     </ItemGroup>
 
+    <ItemGroup>
+        <Compile Update="WindowCallbacks.cs">
+            <DependentUpon>Window.cs</DependentUpon>
+        </Compile>
+        <Compile Update="WindowHandler.cs">
+            <DependentUpon>Window.cs</DependentUpon>
+        </Compile>
+        <Compile Update="WindowInfo.cs">
+            <DependentUpon>Window.cs</DependentUpon>
+        </Compile>
+        <Compile Update="WindowInput.cs">
+            <DependentUpon>Window.cs</DependentUpon>
+        </Compile>
+        <Compile Update="WindowMethods.cs">
+            <DependentUpon>Window.cs</DependentUpon>
+        </Compile>
+        <Compile Update="BaseWindow.cs">
+            <DependentUpon>Window.cs</DependentUpon>
+        </Compile>
+    </ItemGroup>
+
 </Project>
