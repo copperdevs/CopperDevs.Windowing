@@ -23,6 +23,8 @@ public record WindowOptions
     /// </summary>
     /// <remarks>Only available on Windows</remarks>
     public bool WindowsApiResizeCallback = false;
+    
+    public AppMetadata Metadata = new();
 
     /// <summary>
     /// Default settings

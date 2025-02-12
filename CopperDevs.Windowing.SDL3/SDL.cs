@@ -86,4 +86,31 @@ internal static unsafe class SDL
             _ => throw new ArgumentOutOfRangeException()
         };
     }
+
+    private static ReadOnlySpan<byte> GetAppMetadataPropertyProp(AppMetadata.MetadataProperty property)
+    {
+        var prop = property switch
+        {
+            AppMetadata.MetadataProperty.Name => SDL_PROP_APP_METADATA_NAME_STRING,
+            AppMetadata.MetadataProperty.Version => SDL_PROP_APP_METADATA_VERSION_STRING,
+            AppMetadata.MetadataProperty.Identifier => SDL_PROP_APP_METADATA_IDENTIFIER_STRING,
+            AppMetadata.MetadataProperty.Creator => SDL_PROP_APP_METADATA_CREATOR_STRING,
+            AppMetadata.MetadataProperty.Copyright => SDL_PROP_APP_METADATA_COPYRIGHT_STRING,
+            AppMetadata.MetadataProperty.Url => SDL_PROP_APP_METADATA_URL_STRING,
+            AppMetadata.MetadataProperty.Type => SDL_PROP_APP_METADATA_TYPE_STRING,
+            _ => throw new ArgumentOutOfRangeException(nameof(property), property, null)
+        };
+
+        return prop;
+    }
+
+    public static bool SetAppMetadataProperty(AppMetadata.MetadataProperty property, string? value)
+    {
+        return SDL_SetAppMetadataProperty(GetAppMetadataPropertyProp(property), value);
+    }
+
+    public static string GetAppMetadataProperty(AppMetadata.MetadataProperty property)
+    {
+        return SDL_GetAppMetadataProperty(GetAppMetadataPropertyProp(property)) ?? string.Empty;
+    }
 }
