@@ -22,19 +22,19 @@
     </PropertyGroup>
 
     <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
-      <DocumentationFile>bin\Debug\CopperDevs.Windowing.SDL3.xml</DocumentationFile>
+        <DocumentationFile>bin\Debug\CopperDevs.Windowing.SDL3.xml</DocumentationFile>
     </PropertyGroup>
 
     <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
-      <DocumentationFile>bin\Release\CopperDevs.Windowing.SDL3.xml</DocumentationFile>
+        <DocumentationFile>bin\Release\CopperDevs.Windowing.SDL3.xml</DocumentationFile>
     </PropertyGroup>
 
     <ItemGroup>
-      <PackageReference Include="ppy.SDL3-CS" Version="2025.127.0" />
+        <PackageReference Include="ppy.SDL3-CS" Version="2025.127.0"/>
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\CopperDevs.Windowing\CopperDevs.Windowing.csproj" />
+        <ProjectReference Include="..\CopperDevs.Windowing\CopperDevs.Windowing.csproj"/>
     </ItemGroup>
 
     <ItemGroup>

@@ -22,6 +22,12 @@ public class SDL3Window : Window
     public ManagedSDLWindow GetManagedSDLWindow() => window;
 
     /// <summary>
+    /// Get the direct SDL Window
+    /// </summary>
+    /// <returns>SDL Window pointer</returns>
+    public unsafe SDL_Window* GetNativeWindow() => window.GetNativeWindow();
+
+    /// <summary>
     /// Get the managed SDL renderer wrapper
     /// </summary>
     /// <returns>Renderer wrapper object</returns>
@@ -73,8 +79,9 @@ public class SDL3Window : Window
 
     protected override void WindowFlash(bool untilFocus = true) => window.Flash(untilFocus);
     protected override void StopWindowFlash() => window.StopFlash();
-    
+    protected override IInput CreateInput() => new SDLInput(this);
 #pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
+
 
     /// <summary>
     /// Create the window
@@ -100,7 +107,7 @@ public class SDL3Window : Window
     {
         deltaTimeStartTime = totalTime;
 
-        window.Update();
+        window.PollEvents();
     }
 
     /// <summary>
