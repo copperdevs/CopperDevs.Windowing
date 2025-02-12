@@ -17,13 +17,12 @@ public record WindowOptions
     /// Starting title of the window on creation
     /// </summary>
     public string Title = "Untitled Window";
-
+    
     /// <summary>
-    /// Should the window rendering function be called via the Win32 api when the window resizes
+    /// Metadata of the app
     /// </summary>
-    /// <remarks>Only available on Windows</remarks>
-    public bool WindowsApiResizeCallback = false;
-
+    public AppMetadata Metadata = new();
+    
     /// <summary>
     /// Default settings
     /// </summary>

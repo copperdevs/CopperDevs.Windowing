@@ -18,9 +18,6 @@ public partial class Window
     /// </summary>
     public void Run()
     {
-        if (WindowsApi.IsWindows && Options.WindowsApiResizeCallback)
-            ConnectWindowEvents();
-
         Time.Setup(this);
         SetupInput();
 
@@ -44,7 +41,7 @@ public partial class Window
     /// <summary>
     /// Render a frame of the window
     /// </summary>
-    protected void RenderWindow()
+    public void RenderWindow()
     {
         fpsCounter.Update();
 

@@ -1,8 +1,7 @@
 using System.Numerics;
 using CopperDevs.Core.Data;
+using CopperDevs.Windowing.Data;
 using CopperDevs.Windowing.SDL3.Data;
-
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
 
 namespace CopperDevs.Windowing.SDL3;
 
@@ -39,8 +38,8 @@ internal static unsafe class SDL
     public static Vector2Int GetWindowPosition(SDL_Window* window)
     {
         var value = new Vector2Int(0);
-
-        if (SDL_GetWindowPosition(window, &value.X, &value.Y))
+        
+        if(SDL_GetWindowPosition(window, &value.X, &value.Y))
             return value;
         return value with { X = 0, Y = 0 };
     }
@@ -92,4 +91,41 @@ internal static unsafe class SDL
     public static void RenderLines(SDL_Renderer* renderer, List<Vector2> points) => SDL_RenderLines(renderer, SDLUtil.ToPointer(points), points.Count);
     public static void RenderPoint(SDL_Renderer* renderer, Vector2 position) => SDL_RenderPoint(renderer, position.X, position.Y);
     public static void RenderPoints(SDL_Renderer* renderer, List<Vector2> points) => SDL_RenderPoints(renderer, SDLUtil.ToPointer(points), points.Count);
+    public static SystemTheme GetSystemTheme()
+    {
+        return SDL_GetSystemTheme() switch
+        {
+            SDL_SystemTheme.SDL_SYSTEM_THEME_UNKNOWN => SystemTheme.Unknown,
+            SDL_SystemTheme.SDL_SYSTEM_THEME_LIGHT => SystemTheme.Light,
+            SDL_SystemTheme.SDL_SYSTEM_THEME_DARK => SystemTheme.Dark,
+            _ => throw new ArgumentOutOfRangeException()
+        };
+    }
+
+    private static ReadOnlySpan<byte> GetAppMetadataPropertyProp(AppMetadata.MetadataProperty property)
+    {
+        var prop = property switch
+        {
+            AppMetadata.MetadataProperty.Name => SDL_PROP_APP_METADATA_NAME_STRING,
+            AppMetadata.MetadataProperty.Version => SDL_PROP_APP_METADATA_VERSION_STRING,
+            AppMetadata.MetadataProperty.Identifier => SDL_PROP_APP_METADATA_IDENTIFIER_STRING,
+            AppMetadata.MetadataProperty.Creator => SDL_PROP_APP_METADATA_CREATOR_STRING,
+            AppMetadata.MetadataProperty.Copyright => SDL_PROP_APP_METADATA_COPYRIGHT_STRING,
+            AppMetadata.MetadataProperty.Url => SDL_PROP_APP_METADATA_URL_STRING,
+            AppMetadata.MetadataProperty.Type => SDL_PROP_APP_METADATA_TYPE_STRING,
+            _ => throw new ArgumentOutOfRangeException(nameof(property), property, null)
+        };
+
+        return prop;
+    }
+
+    public static bool SetAppMetadataProperty(AppMetadata.MetadataProperty property, string? value)
+    {
+        return SDL_SetAppMetadataProperty(GetAppMetadataPropertyProp(property), value);
+    }
+
+    public static string GetAppMetadataProperty(AppMetadata.MetadataProperty property)
+    {
+        return SDL_GetAppMetadataProperty(GetAppMetadataPropertyProp(property)) ?? string.Empty;
+    }
 }

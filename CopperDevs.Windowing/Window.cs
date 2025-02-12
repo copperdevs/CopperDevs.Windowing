@@ -8,6 +8,11 @@ namespace CopperDevs.Windowing;
 public partial class Window
 {
     /// <summary>
+    /// All created windows
+    /// </summary>
+    protected static readonly List<Window> CreatedWindows = [];
+    
+    /// <summary>
     /// Create a new window with <see cref="WindowOptions.Default"/>
     /// </summary>
     /// <typeparam name="TWindow">The type of window to create</typeparam>
@@ -27,6 +32,8 @@ public partial class Window
 
         window.CreateWindow(window.Options);
 
+        CreatedWindows.Add(window);
+        
         return window;
     }
 }

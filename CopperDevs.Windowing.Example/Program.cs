@@ -1,4 +1,4 @@
-﻿using System.Numerics;
+using System.Numerics;
 using CopperDevs.Core.Data;
 using CopperDevs.Windowing.Data;
 using CopperDevs.Windowing.SDL3;
@@ -18,8 +18,21 @@ public static class Program
 
     public static void Main()
     {
-        var options = SDL3WindowOptions.Default with { Title = BaseWindowTitle };
-
+        var options = SDL3WindowOptions.Default with
+        {
+            Title = BaseWindowTitle,
+            Metadata = new AppMetadata
+            {
+                Name = BaseWindowTitle,
+                Version = "1.0.0",
+                Identifier = "com.copperdevs.windowing.example",
+                Creator = "copperdevs",
+                Copyright = "MIT License",
+                Url = "https://github.com/copperdevs/CopperDevs.Windowing",
+                Type = AppMetadata.AppType.Application
+            }
+        };
+        
         window = Window.Create<SDL3Window>(options);
         renderer = window.GetRenderer();
 

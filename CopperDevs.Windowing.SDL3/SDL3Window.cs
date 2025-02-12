@@ -1,5 +1,8 @@
+using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
 using CopperDevs.Core.Data;
 using CopperDevs.Core.Utility;
+using CopperDevs.Logger;
 using CopperDevs.Windowing.Data;
 using CopperDevs.Windowing.SDL3.Data;
 
@@ -63,19 +66,9 @@ public class SDL3Window : Window
     protected override void SetMaximize() => window.Maximize();
     protected override bool GetFocused() => window.Focused;
     protected override bool GetHovered() => window.Hovered;
+    protected override SystemTheme GetSystemTheme() => SDL.GetSystemTheme();
     protected override double GetTotalTime() => totalTime;
     protected override double GetDeltaTime() => deltaTime;
-
-    protected override unsafe void ConnectWindowEvents()
-    {
-        fixed (byte* pointerPointer = SDL_PROP_WINDOW_WIN32_HWND_POINTER)
-        {
-            var pointer = SDL_GetPointerProperty(SDL_GetWindowProperties(window.GetNativeWindow()), pointerPointer, (IntPtr)null);
-
-            WindowsApi.RegisterWindow(pointer);
-            WindowsApi.OnWindowResize += _ => RenderWindow();
-        }
-    }
 
     protected override void WindowFlash(bool untilFocus = true) => window.Flash(untilFocus);
     protected override void StopWindowFlash() => window.StopFlash();
@@ -95,8 +88,32 @@ public class SDL3Window : Window
         SDL.SetHint(SDL_HINT_WINDOWS_CLOSE_ON_ALT_F4, "1"u8);
         SDL.SetHint(SDL_HINT_WINDOWS_CLOSE_ON_ALT_F4, "1");
 
+        {
+            SetProperty(AppMetadata.MetadataProperty.Name, options.Metadata);
+            SetProperty(AppMetadata.MetadataProperty.Version, options.Metadata);
+            SetProperty(AppMetadata.MetadataProperty.Identifier, options.Metadata);
+            SetProperty(AppMetadata.MetadataProperty.Creator, options.Metadata);
+            SetProperty(AppMetadata.MetadataProperty.Copyright, options.Metadata);
+            SetProperty(AppMetadata.MetadataProperty.Url, options.Metadata);
+            SetProperty(AppMetadata.MetadataProperty.Type, options.Metadata);
+
+            void SetProperty(AppMetadata.MetadataProperty property, AppMetadata metadata)
+            {
+                Log.Config($"Setting metadata property {property.ToString()} to '{metadata.GetProperty(property)}'");
+                if (SDL.SetAppMetadataProperty(property, metadata.GetProperty(property)))
+                    Log.Success($"Metadata property {property.ToString()} changed to '{SDL.GetAppMetadataProperty(property)}'");
+                else
+                    Log.Error($"Failed to set metadata property {property.ToString()} to {metadata.GetProperty(property)}. Error: {SDL.GetError()}");
+            }
+        }
+        
         window = new ManagedSDLWindow(options);
         window.HandleEvent += EventsHandler;
+        
+        unsafe
+        {
+            SDL_AddEventWatch(&EventWatcher, new IntPtr(null));
+        }
     }
 
     /// <summary>
@@ -143,5 +160,23 @@ public class SDL3Window : Window
                 ShouldRun = false;
                 break;
         }
+    }
+
+    [UnmanagedCallersOnly(CallConvs = [typeof(CallConvCdecl)])]
+    private static unsafe SDLBool EventWatcher(IntPtr userdata, SDL_Event* eventPtr)
+    {
+        // ReSharper disable once SwitchStatementMissingSomeEnumCasesNoDefault
+        // ReSharper disable once ConvertSwitchStatementToSwitchExpression
+        switch ((EventType)eventPtr->type)
+        {
+            case EventType.WindowExposed:
+                foreach (var window in CreatedWindows)
+                {
+                    window.RenderWindow();
+                }
+                break;
+        }
+        
+        return true;
     }
 }

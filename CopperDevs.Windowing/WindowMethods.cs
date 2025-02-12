@@ -15,14 +15,6 @@ public partial class Window
 
     #region Internal
 
-    /// <summary>
-    /// Windows (OS) exclusive callbacks for hooking into the Win32 api
-    /// </summary>
-    protected virtual void ConnectWindowEvents()
-    {
-        // TODO: Add a way to get the main window pointer regardless of the windowing library used
-    }
-
 #pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
     protected abstract void WindowFlash(bool untilFocus = true);
     protected abstract void StopWindowFlash();
