@@ -27,19 +27,19 @@ public static class Program
 
     private static void OnUpdate()
     {
-        if (window.IsKeyPressed(InputKey.Space))
-            Log.Info($"Key pressed {InputKey.Space}");
+        if (window.IsKeyPressed(InputKey.Space)) Log.Info($"Key pressed {InputKey.Space}");
+        if (window.IsKeyReleased(InputKey.Space)) Log.Info($"Key released {InputKey.Space}");
 
-        if (window.IsKeyReleased(InputKey.Space))
-            Log.Info($"Key released {InputKey.Space}");
-        
+        if (window.IsMouseButtonPressed(MouseButton.Left)) Log.Info($"Mouse Button pressed {MouseButton.Left}");
+        if (window.IsMouseButtonReleased(MouseButton.Left)) Log.Info($"Mouse Button released {MouseButton.Left}");
+
         // i don't want these always spamming the console so i just threw the false in there 
-        
-        if (window.IsKeyDown(InputKey.Space) && false)
-            Log.Info($"Key down {InputKey.Space}");
 
-        if (window.IsKeyUp(InputKey.Space) && false)
-            Log.Info($"Key up {InputKey.Space}");
+        if (window.IsKeyDown(InputKey.Space) && false) Log.Info($"Key down {InputKey.Space}");
+        if (window.IsKeyUp(InputKey.Space) && false) Log.Info($"Key up {InputKey.Space}");
+
+        if (window.IsMouseButtonDown(MouseButton.Left) && false) Log.Info($"Mouse Button down {MouseButton.Left}");
+        if (window.IsMouseButtonUp(MouseButton.Left) && false) Log.Info($"Mouse Button up {MouseButton.Left}");
     }
 
     private static void OnRender()

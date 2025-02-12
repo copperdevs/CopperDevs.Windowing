@@ -13,7 +13,7 @@ public class SDLInput : IInput
 
     private SDLKeyMap keyMap = new();
     private SDLMouseMap mouseMap = new();
-    
+
     private Dictionary<SDL_Keycode, bool> keyCurrentlyPressed = new();
     private Dictionary<SDLButton, bool> buttonCurrentlyPressed = new();
 
@@ -23,6 +23,11 @@ public class SDLInput : IInput
     private bool GetKeyPressState(InputKey key, bool previousFrame)
     {
         return previousFrame ? previousFrameKeyCurrentlyPressed.GetValueOrDefault(keyMap[key], false) : keyCurrentlyPressed.GetValueOrDefault(keyMap[key], false);
+    }
+
+    private bool GetButtonPressState(MouseButton button, bool previousFrame)
+    {
+        return previousFrame ? previousFrameButtonCurrentlyPressed.GetValueOrDefault(mouseMap[button], false) : buttonCurrentlyPressed.GetValueOrDefault(mouseMap[button], false);
     }
 
     private readonly List<EventType> targetEvents =
@@ -98,9 +103,6 @@ public class SDLInput : IInput
     {
         previousFrameKeyCurrentlyPressed = new Dictionary<SDL_Keycode, bool>(keyCurrentlyPressed);
         previousFrameButtonCurrentlyPressed = new Dictionary<SDLButton, bool>(buttonCurrentlyPressed);
-
-        // keyCurrentlyPressed.Clear();
-        // buttonCurrentlyPressed.Clear();
     }
 
     public bool SupportsInputKey(InputKey inputKey)
@@ -130,22 +132,22 @@ public class SDLInput : IInput
 
     public bool IsMouseButtonPressed(MouseButton button)
     {
-        throw new NotImplementedException();
+        return !GetButtonPressState(button, true) && GetButtonPressState(button, false);
     }
 
     public bool IsMouseButtonDown(MouseButton button)
     {
-        throw new NotImplementedException();
+        return GetButtonPressState(button, false);
     }
 
     public bool IsMouseButtonReleased(MouseButton button)
     {
-        throw new NotImplementedException();
+        return GetButtonPressState(button, true) && !GetButtonPressState(button, false);
     }
 
     public bool IsMouseButtonUp(MouseButton button)
     {
-        throw new NotImplementedException();
+        return !GetButtonPressState(button, false);
     }
 
     public Vector2Int GetMousePosition()
