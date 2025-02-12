@@ -1,9 +1,13 @@
 using CopperDevs.Core.Utility;
+using CopperDevs.Windowing.Data;
 
 namespace CopperDevs.Windowing;
 
 public partial class Window
 {
+    private readonly FPSCounter fpsCounter = new();
+    internal int GetFrameRate() => fpsCounter.FrameRate;
+
     /// <summary>
     /// Should the window still be updating
     /// </summary>
@@ -17,14 +21,13 @@ public partial class Window
         if (WindowsApi.IsWindows && Options.WindowsApiResizeCallback)
             ConnectWindowEvents();
 
+        Time.Setup(this);
         SetupInput();
 
         OnLoad?.Invoke();
 
         while (ShouldRun)
-        {
             RenderWindow();
-        }
 
         OnClose?.Invoke();
         DestroyWindow();
@@ -43,6 +46,8 @@ public partial class Window
     /// </summary>
     protected void RenderWindow()
     {
+        fpsCounter.Update();
+
         UpdateInput();
         StartWindowUpdate();
 
