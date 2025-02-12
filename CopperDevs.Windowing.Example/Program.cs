@@ -28,28 +28,27 @@ public static class Program
 
     private static void OnUpdate()
     {
+        if (Input.IsMouseButtonPressed(MouseButton.Left)) 
+            Input.SetCursorMode(CursorMode.Locked);
         
-        if (window.IsMouseButtonPressed(MouseButton.Left)) 
-            window.SetCursorMode(CursorMode.Locked);
-        if (window.IsMouseButtonReleased(MouseButton.Left)) 
-            window.SetCursorMode(CursorMode.Normal);
+        if (Input.IsMouseButtonReleased(MouseButton.Left)) 
+            Input.SetCursorMode(CursorMode.Normal);
         
-        window.Title = $"{BaseWindowTitle} | Mouse Pos: {window.GetMousePosition()}";
-        // Log.Info(window.GetMouseScroll());
+        window.Title = $"{BaseWindowTitle} | Mouse Pos: {Input.GetMousePosition()}";
         
-        if (window.IsKeyPressed(InputKey.Space)) Log.Info($"Key pressed {InputKey.Space}");
-        if (window.IsKeyReleased(InputKey.Space)) Log.Info($"Key released {InputKey.Space}");
+        if (Input.IsKeyPressed(InputKey.Space)) Log.Info($"Key pressed {InputKey.Space}");
+        if (Input.IsKeyReleased(InputKey.Space)) Log.Info($"Key released {InputKey.Space}");
 
-        if (window.IsMouseButtonPressed(MouseButton.Left)) Log.Info($"Mouse Button pressed {MouseButton.Left}");
-        if (window.IsMouseButtonReleased(MouseButton.Left)) Log.Info($"Mouse Button released {MouseButton.Left}");
+        if (Input.IsMouseButtonPressed(MouseButton.Left)) Log.Info($"Mouse Button pressed {MouseButton.Left}");
+        if (Input.IsMouseButtonReleased(MouseButton.Left)) Log.Info($"Mouse Button released {MouseButton.Left}");
 
         // i don't want these always spamming the console so i just threw the false in there 
 
-        if (window.IsKeyDown(InputKey.Space) && false) Log.Info($"Key down {InputKey.Space}");
-        if (window.IsKeyUp(InputKey.Space) && false) Log.Info($"Key up {InputKey.Space}");
+        if (Input.IsKeyDown(InputKey.Space) && false) Log.Info($"Key down {InputKey.Space}");
+        if (Input.IsKeyUp(InputKey.Space) && false) Log.Info($"Key up {InputKey.Space}");
 
-        if (window.IsMouseButtonDown(MouseButton.Left) && false) Log.Info($"Mouse Button down {MouseButton.Left}");
-        if (window.IsMouseButtonUp(MouseButton.Left) && false) Log.Info($"Mouse Button up {MouseButton.Left}");
+        if (Input.IsMouseButtonDown(MouseButton.Left) && false) Log.Info($"Mouse Button down {MouseButton.Left}");
+        if (Input.IsMouseButtonUp(MouseButton.Left) && false) Log.Info($"Mouse Button up {MouseButton.Left}");
     }
 
     private static void OnRender()
