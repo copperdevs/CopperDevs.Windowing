@@ -70,17 +70,6 @@ public class SDL3Window : Window
     protected override double GetTotalTime() => totalTime;
     protected override double GetDeltaTime() => deltaTime;
 
-    protected override unsafe void ConnectWindowEvents()
-    {
-        fixed (byte* pointerPointer = SDL_PROP_WINDOW_WIN32_HWND_POINTER)
-        {
-            var pointer = SDL_GetPointerProperty(SDL_GetWindowProperties(window.GetNativeWindow()), pointerPointer, (IntPtr)null);
-
-            WindowsApi.RegisterWindow(pointer);
-            WindowsApi.OnWindowResize += _ => RenderWindow();
-        }
-    }
-
     protected override void WindowFlash(bool untilFocus = true) => window.Flash(untilFocus);
     protected override void StopWindowFlash() => window.StopFlash();
     protected override IInput CreateInput() => new SDLInput(this);
