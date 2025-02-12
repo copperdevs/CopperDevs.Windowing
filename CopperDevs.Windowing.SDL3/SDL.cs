@@ -86,7 +86,10 @@ internal static unsafe class SDL
     public static void SetMouseRelativeMode(SDL_Window* window, bool enabled) => SDL_SetWindowRelativeMouseMode(window, enabled);
     public static void WarpMouseInWindow(SDL_Window* window, Vector2Int position) => SDL_WarpMouseInWindow(window, position.X, position.Y);
     public static void DestroyRenderer(SDL_Renderer* renderer) => SDL_DestroyRenderer(renderer);
-    public static void RenderLine(SDL_Renderer* renderer, Vector2 positionOne, Vector2 positionTwo) => SDL_RenderLine(renderer, positionOne.X, positionOne.Y, positionTwo.X, positionTwo.Y);
     public static void SetRenderScale(SDL_Renderer* renderer, Vector2 scale) => SDL_SetRenderScale(renderer, scale.X, scale.Y);
     public static void RenderDebugText(SDL_Renderer* renderer, string text, Vector2 position) => SDL_RenderDebugText(renderer, position.X, position.Y, text);
+    public static void RenderLine(SDL_Renderer* renderer, Vector2 positionOne, Vector2 positionTwo) => SDL_RenderLine(renderer, positionOne.X, positionOne.Y, positionTwo.X, positionTwo.Y);
+    public static void RenderLines(SDL_Renderer* renderer, List<Vector2> points) => SDL_RenderLines(renderer, SDLUtil.ToPointer(points), points.Count);
+    public static void RenderPoint(SDL_Renderer* renderer, Vector2 position) => SDL_RenderPoint(renderer, position.X, position.Y);
+    public static void RenderPoints(SDL_Renderer* renderer, List<Vector2> points) => SDL_RenderPoints(renderer, SDLUtil.ToPointer(points), points.Count);
 }

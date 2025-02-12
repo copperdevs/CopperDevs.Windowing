@@ -1,8 +1,8 @@
 ﻿using System.Numerics;
+using CopperDevs.Core.Data;
 using CopperDevs.Windowing.Data;
 using CopperDevs.Windowing.SDL3;
 using CopperDevs.Windowing.SDL3.Data;
-using Point = (System.Numerics.Vector2, System.Numerics.Vector2);
 
 namespace CopperDevs.Windowing.Example;
 
@@ -13,7 +13,8 @@ public static class Program
 
     private const string BaseWindowTitle = "CopperDevs Windowing Example";
 
-    private static readonly List<Point> Points = [];
+    private static readonly List<Vector2> Points = [];
+    private static readonly List<Vector2Int> PointIndexes = []; // represents a line, with X and Y being the index of the point in points (Points[X] -> Points[Y])
 
     public static void Main()
     {
@@ -39,24 +40,32 @@ public static class Program
     private static void OnUpdate()
     {
         if (Input.IsMouseButtonPressed(MouseButton.Left))
-            Points.Add((Input.GetMousePosition(), Input.GetMousePosition()));
+        {
+            Points.AddRange([Input.GetMousePosition(), Input.GetMousePosition()]);
+            PointIndexes.Add(new Vector2Int(Points.Count - 2, Points.Count - 1));
+        }
 
         if (Input.IsMouseButtonReleased(MouseButton.Left) || Input.IsMouseButtonDown(MouseButton.Left))
-            Points[^1] = (Points[^1].Item1, Input.GetMousePosition());
+            Points[PointIndexes[^1].Y] = Input.GetMousePosition();
 
-        if (Input.IsMouseButtonReleased(MouseButton.Left) && Points[^1].Item1 == Points[^1].Item2)
-            Points.Remove(Points[^1]);
+        if (Input.IsMouseButtonReleased(MouseButton.Left) && Points[PointIndexes[^1].X] == Points[PointIndexes[^1].Y])
+            PointIndexes.Remove(PointIndexes[^1]);
     }
 
     private static void OnRender()
     {
         renderer.Clear(Color.DarkGray);
-        
+
+        foreach (var pointIndex in PointIndexes)
+            renderer.DrawLine(Points[pointIndex.X], Points[pointIndex.Y], Color.White);
+
         foreach (var point in Points)
-            renderer.DrawLine(point.Item1, point.Item2, Color.White);
+        {
+            renderer.DrawPoint(point, Color.Red);   
+        }
 
         RenderDebugText();
-        
+
         renderer.Present();
     }
 
@@ -66,13 +75,15 @@ public static class Program
 
         renderer.DrawDebugText($"FPS: {Time.FrameRate}", new Vector2(16, 16), Color.Black);
         renderer.DrawDebugText($"Mouse Pos: {Input.GetMousePosition()}", new Vector2(16, 26), Color.Black);
-        renderer.DrawDebugText($"Line Count: {Points.Count}", new Vector2(16, 36), Color.Black);
+        renderer.DrawDebugText($"Line Count: {PointIndexes.Count}", new Vector2(16, 36), Color.Black);
+        renderer.DrawDebugText($"Points Count: {Points.Count}", new Vector2(16, 46), Color.Black);
 
-        renderer.Scale *= 0.9f;
+
+        renderer.Scale *= 0.9f; // smaller text for these items
         
-        for (var i = 0; i < Points.Count; i++)
-            renderer.DrawDebugText($"Point {i + 1}: {Points[i].Item1} -> {Points[i].Item2}", new Vector2(20, 50 + i * 10), Color.Black);
-        
+        for (var i = 0; i < PointIndexes.Count; i++)
+            renderer.DrawDebugText($"Line {i + 1}:{((9 > i && PointIndexes.Count >= 10) ? " " : "")} {Points[PointIndexes[i].X].Round(2)} -> {Points[PointIndexes[i].Y].Round(2)}", new Vector2(20, 64 + i * 10), Color.Black);
+
         renderer.Scale /= 0.9f;
 
         renderer.Scale /= 1.5f;

@@ -1,6 +1,7 @@
 using System.Numerics;
 using CopperDevs.Core.Utility;
 using CopperDevs.Windowing.Data;
+using CopperDevs.Windowing.SDL3.Data;
 
 #pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
 namespace CopperDevs.Windowing.SDL3;
@@ -60,6 +61,48 @@ public unsafe class SDLRenderer(SDL_Renderer* native) : SafeDisposable
     {
         SetDrawColor(r, g, b, a);
         DrawDebugText(text, position);
+    }
+
+    public void DrawLines(List<Vector2> points) => SDL.RenderLines(native, points);
+    
+    public void DrawLines(List<Vector2> points, Color color)
+    {
+        SetDrawColor(color);
+        DrawLines(points);
+    }
+
+    public void DrawLines(List<Vector2> points, float r, float g, float b, float a = 1)
+    {
+        SetDrawColor(r, g, b, a);
+        DrawLines(points);
+    }
+    
+    public void DrawPoint(Vector2 point) => SDL.RenderPoint(native, point);
+
+    public void DrawPoint(Vector2 point, Color color)
+    {
+        SetDrawColor(color);
+        DrawPoint(point);
+    }
+
+    public void DrawPoint(Vector2 point, float r, float g, float b, float a = 1)
+    {
+        SetDrawColor(r, g, b, a);
+        DrawPoint(point);
+    }
+    
+    public void DrawPoints(List<Vector2> points) => SDL.RenderPoints(native, points);
+
+    public void DrawPoints(List<Vector2> points, Color color)
+    {
+        SetDrawColor(color);
+        DrawPoints(points);
+    }
+
+    public void DrawPoints(List<Vector2> points, float r, float g, float b, float a = 1)
+    {
+        SetDrawColor(r, g, b, a);
+        DrawPoints(points);
     }
 
     /// <summary>
