@@ -19,12 +19,6 @@ public record WindowOptions
     public string Title = "Untitled Window";
 
     /// <summary>
-    /// Should the window rendering function be called via the Win32 api when the window resizes
-    /// </summary>
-    /// <remarks>Only available on Windows</remarks>
-    public bool WindowsApiResizeCallback = false;
-
-    /// <summary>
     /// Default settings
     /// </summary>
     public static WindowOptions Default => new();
