@@ -1,3 +1,4 @@
+using System.Numerics;
 using CopperDevs.Core.Data;
 using CopperDevs.Logger;
 using CopperDevs.Windowing.Data;
@@ -77,14 +78,19 @@ public partial class Window
         return InputCheck() && input!.IsMouseButtonUp(button);
     }
 
-    public Vector2Int GetMousePosition()
+    public Vector2 GetMousePosition()
     {
         return InputCheck() ? input!.GetMousePosition() : Vector2Int.Zero;
     }
 
-    public Vector2Int GetMouseDelta()
+    public Vector2 GetMouseDelta()
     {
         return InputCheck() ? input!.GetMouseDelta() : Vector2Int.Zero;
+    }
+
+    public Vector2 GetMouseScroll()
+    {
+        return InputCheck() ? input!.GetMouseScroll() : Vector2Int.Zero;
     }
 
     public void SetCursorMode(CursorMode cursorMode)

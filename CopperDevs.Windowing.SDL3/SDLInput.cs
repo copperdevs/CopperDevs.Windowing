@@ -1,3 +1,4 @@
+using System.Numerics;
 using CopperDevs.Core.Data;
 using CopperDevs.Logger;
 using CopperDevs.Windowing.Data;
@@ -11,14 +12,17 @@ public class SDLInput : IInput
 
     private SDL3Window connectedWindow;
 
-    private SDLKeyMap keyMap = new();
-    private SDLMouseMap mouseMap = new();
+    private readonly SDLKeyMap keyMap = new();
+    private readonly SDLMouseMap mouseMap = new();
 
-    private Dictionary<SDL_Keycode, bool> keyCurrentlyPressed = new();
-    private Dictionary<SDLButton, bool> buttonCurrentlyPressed = new();
+    private readonly Dictionary<SDL_Keycode, bool> keyCurrentlyPressed = new();
+    private readonly Dictionary<SDLButton, bool> buttonCurrentlyPressed = new();
 
     private Dictionary<SDL_Keycode, bool> previousFrameKeyCurrentlyPressed = new();
     private Dictionary<SDLButton, bool> previousFrameButtonCurrentlyPressed = new();
+
+    private Vector2 mousePosition;
+    private Vector2 previousMousePosition;
 
     private bool GetKeyPressState(InputKey key, bool previousFrame)
     {
@@ -63,6 +67,11 @@ public class SDLInput : IInput
         switch (eventType)
         {
             case EventType.MouseMotion:
+                mousePosition = mousePosition with
+                {
+                    X = eventData.motion.x,
+                    Y = eventData.motion.y,
+                };
                 if (InputLogs)
                     Log.Debug($"Mouse Motion: <{eventData.motion.x},{eventData.motion.y}> | Mouse Motion Relative: <{eventData.motion.xrel},{eventData.motion.yrel}>");
                 break;
@@ -103,6 +112,12 @@ public class SDLInput : IInput
     {
         previousFrameKeyCurrentlyPressed = new Dictionary<SDL_Keycode, bool>(keyCurrentlyPressed);
         previousFrameButtonCurrentlyPressed = new Dictionary<SDLButton, bool>(buttonCurrentlyPressed);
+
+        previousMousePosition = previousMousePosition with
+        {
+            X = mousePosition.X,
+            Y = mousePosition.Y,
+        };
     }
 
     public bool SupportsInputKey(InputKey inputKey)
@@ -150,12 +165,17 @@ public class SDLInput : IInput
         return !GetButtonPressState(button, false);
     }
 
-    public Vector2Int GetMousePosition()
+    public Vector2 GetMousePosition()
     {
-        throw new NotImplementedException();
+        return mousePosition;
     }
 
-    public Vector2Int GetMouseDelta()
+    public Vector2 GetMouseDelta()
+    {
+        return mousePosition - previousMousePosition;
+    }
+
+    public Vector2 GetMouseScroll()
     {
         throw new NotImplementedException();
     }

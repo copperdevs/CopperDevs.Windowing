@@ -1,3 +1,4 @@
+using System.Numerics;
 using CopperDevs.Core.Data;
 using CopperDevs.Windowing.Data;
 
@@ -24,8 +25,9 @@ public interface IInput
     public bool IsMouseButtonUp(MouseButton button);
 
     // mouse values
-    public Vector2Int GetMousePosition();
-    public Vector2Int GetMouseDelta();
+    public Vector2 GetMousePosition();
+    public Vector2 GetMouseDelta();
+    public Vector2 GetMouseScroll();
 
     // cursor settings
     public void SetCursorMode(CursorMode cursorMode);

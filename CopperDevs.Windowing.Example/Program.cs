@@ -10,9 +10,10 @@ public static class Program
     private static SDL3Window window = null!;
     private static SDLRenderer renderer = null!;
 
+    private const string BaseWindowTitle = "CopperDevs Windowing Example";
     public static void Main()
     {
-        var options = SDL3WindowOptions.Default with { Title = "Copper Windowing Example" };
+        var options = SDL3WindowOptions.Default with { Title = BaseWindowTitle };
 
         window = Window.Create<SDL3Window>(options);
         renderer = window.GetRenderer();
@@ -27,6 +28,10 @@ public static class Program
 
     private static void OnUpdate()
     {
+        window.Title = $"{BaseWindowTitle} | Mouse Pos: {window.GetMousePosition()}";
+        
+        Log.Info(window.GetMouseDelta());
+        
         if (window.IsKeyPressed(InputKey.Space)) Log.Info($"Key pressed {InputKey.Space}");
         if (window.IsKeyReleased(InputKey.Space)) Log.Info($"Key released {InputKey.Space}");
 
