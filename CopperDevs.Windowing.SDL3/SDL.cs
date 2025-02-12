@@ -38,8 +38,8 @@ internal static unsafe class SDL
     public static Vector2Int GetWindowPosition(SDL_Window* window)
     {
         var value = new Vector2Int(0);
-        
-        if(SDL_GetWindowPosition(window, &value.X, &value.Y))
+
+        if (SDL_GetWindowPosition(window, &value.X, &value.Y))
             return value;
         return value with { X = 0, Y = 0 };
     }
@@ -52,6 +52,37 @@ internal static unsafe class SDL
             return value;
         return value with { X = 0, Y = 0 };
     }
+
+    /// <summary>
+    /// Get a point in render coordinates when given a point in window coordinates
+    /// </summary>
+    /// <param name="renderer">The rendering context</param>
+    /// <param name="pos">The coordinates in window coordinates</param>
+    /// <returns>The coordinates in render coordinates</returns>
+    public static Vector2 RenderCoordinatesFromWindow(SDL_Renderer* renderer, Vector2 pos)
+    {
+        var value = new Vector2(0);
+
+        if (SDL_RenderCoordinatesFromWindow(renderer, pos.X, pos.Y, &value.X, &value.Y))
+            return value;
+        return value with { X = 0, Y = 0 };
+    }
+
+    /// <summary>
+    /// Get a point in window coordinates when given a point in render coordinates
+    /// </summary>
+    /// <param name="renderer">The rendering context</param>
+    /// <param name="pos">The coordinates in render coordinates</param>
+    /// <returns>Coordinates in window coordinates</returns>
+    public static Vector2 RenderCoordinatesToWindow(SDL_Renderer* renderer, Vector2 pos)
+    {
+        var value = new Vector2(0);
+
+        if (SDL_RenderCoordinatesToWindow(renderer, pos.X, pos.Y, &value.X, &value.Y))
+            return value;
+        return value with { X = 0, Y = 0 };
+    }
+
 
     public static bool InitSubSystem(InitFlags flags) => SDL_InitSubSystem((SDL_InitFlags)flags);
     public static string GetError() => SDL_GetError() ?? string.Empty;
@@ -91,6 +122,7 @@ internal static unsafe class SDL
     public static void RenderLines(SDL_Renderer* renderer, List<Vector2> points) => SDL_RenderLines(renderer, SDLUtil.ToPointer(points), points.Count);
     public static void RenderPoint(SDL_Renderer* renderer, Vector2 position) => SDL_RenderPoint(renderer, position.X, position.Y);
     public static void RenderPoints(SDL_Renderer* renderer, List<Vector2> points) => SDL_RenderPoints(renderer, SDLUtil.ToPointer(points), points.Count);
+
     public static SystemTheme GetSystemTheme()
     {
         return SDL_GetSystemTheme() switch

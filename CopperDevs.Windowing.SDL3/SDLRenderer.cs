@@ -15,6 +15,11 @@ public unsafe class SDLRenderer(SDL_Renderer* native) : SafeDisposable
         get => SDL.GetRenderScale(native);
         set => SDL.SetRenderScale(native, value);
     }
+    
+    
+    public Vector2 RendererToWindowCoordinates(Vector2 position) => SDL.RenderCoordinatesToWindow(native, position);
+
+    public Vector2 WindowToRendererCoordinates(Vector2 position) => SDL.RenderCoordinatesFromWindow(native, position);
 
     public void Present() => SDL.RenderPresent(native);
     public void Clear() => SDL.RenderClear(native);

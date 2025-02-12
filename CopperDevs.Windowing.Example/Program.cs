@@ -32,7 +32,7 @@ public static class Program
                 Type = AppMetadata.AppType.Application
             }
         };
-        
+
         window = Window.Create<SDL3Window>(options);
         renderer = window.GetRenderer();
 
@@ -63,6 +63,9 @@ public static class Program
 
         if (Input.IsMouseButtonReleased(MouseButton.Left) && Points[PointIndexes[^1].X] == Points[PointIndexes[^1].Y])
             PointIndexes.Remove(PointIndexes[^1]);
+
+        // sine wave between 1 - 2
+        // renderer.Scale = Vector2.One * (float)(Math.Abs(Math.Sin(Time.TotalTime)) + 1);
     }
 
     private static void OnRender()
@@ -70,12 +73,11 @@ public static class Program
         renderer.Clear(Color.DarkGray);
 
         foreach (var pointIndex in PointIndexes)
-            renderer.DrawLine(Points[pointIndex.X], Points[pointIndex.Y], Color.White);
+            renderer.DrawLine(renderer.WindowToRendererCoordinates(Points[pointIndex.X]), renderer.WindowToRendererCoordinates(Points[pointIndex.Y]), Color.White);
 
         foreach (var point in Points)
-        {
-            renderer.DrawPoint(point, Color.Red);   
-        }
+            renderer.DrawPoint(renderer.WindowToRendererCoordinates(point), Color.Red);
+
 
         RenderDebugText();
 
@@ -93,7 +95,7 @@ public static class Program
 
 
         renderer.Scale *= 0.9f; // smaller text for these items
-        
+
         for (var i = 0; i < PointIndexes.Count; i++)
             renderer.DrawDebugText($"Line {i + 1}:{((9 > i && PointIndexes.Count >= 10) ? " " : "")} {Points[PointIndexes[i].X].Round(2)} -> {Points[PointIndexes[i].Y].Round(2)}", new Vector2(20, 64 + i * 10), Color.Black);
 
