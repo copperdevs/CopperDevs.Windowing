@@ -216,6 +216,8 @@ public unsafe class ManagedSDLWindow : SafeDisposable
         if (createdSuccessfully)
             SDL.QuitSubSystem(initFlags);
 
+        renderer.Dispose();
+
         SDL.Quit();
     }
 
