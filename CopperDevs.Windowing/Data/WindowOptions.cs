@@ -17,7 +17,9 @@ public record WindowOptions
     /// Starting title of the window on creation
     /// </summary>
     public string Title = "Untitled Window";
-
+    
+    public AppMetadata Metadata = new();
+    
     /// <summary>
     /// Default settings
     /// </summary>
