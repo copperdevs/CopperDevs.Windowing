@@ -1,6 +1,8 @@
+using System.Numerics;
 using System.Text;
 using CopperDevs.Core.Data;
 using CopperDevs.Windowing.SDL3.Data;
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
 
 namespace CopperDevs.Windowing.SDL3;
 
@@ -37,8 +39,17 @@ internal static unsafe class SDL
     public static Vector2Int GetWindowPosition(SDL_Window* window)
     {
         var value = new Vector2Int(0);
-        
-        if(SDL_GetWindowPosition(window, &value.X, &value.Y))
+
+        if (SDL_GetWindowPosition(window, &value.X, &value.Y))
+            return value;
+        return value with { X = 0, Y = 0 };
+    }
+
+    public static Vector2 GetRenderScale(SDL_Renderer* renderer)
+    {
+        var value = new Vector2(0);
+
+        if (SDL_GetRenderScale(renderer, &value.X, &value.Y))
             return value;
         return value with { X = 0, Y = 0 };
     }
@@ -74,4 +85,7 @@ internal static unsafe class SDL
     public static void HideCursor() => SDL_HideCursor();
     public static void SetMouseRelativeMode(SDL_Window* window, bool enabled) => SDL_SetWindowRelativeMouseMode(window, enabled);
     public static void WarpMouseInWindow(SDL_Window* window, Vector2Int position) => SDL_WarpMouseInWindow(window, position.X, position.Y);
+    public static void DestroyRenderer(SDL_Renderer* renderer) => SDL_DestroyRenderer(renderer);
+    public static void RenderLine(SDL_Renderer* renderer, Vector2 positionOne, Vector2 positionTwo) => SDL_RenderLine(renderer, positionOne.X, positionOne.Y, positionTwo.X, positionTwo.Y);
+    public static void SetRenderScale(SDL_Renderer* renderer, Vector2 scale) => SDL_SetRenderScale(renderer, scale.X, scale.Y);
 }

@@ -1,7 +1,8 @@
-﻿using CopperDevs.Logger;
+﻿using System.Numerics;
 using CopperDevs.Windowing.Data;
 using CopperDevs.Windowing.SDL3;
 using CopperDevs.Windowing.SDL3.Data;
+using Point = (System.Numerics.Vector2, System.Numerics.Vector2);
 
 namespace CopperDevs.Windowing.Example;
 
@@ -11,6 +12,9 @@ public static class Program
     private static SDLRenderer renderer = null!;
 
     private const string BaseWindowTitle = "CopperDevs Windowing Example";
+
+    private static List<Point> points = [];
+
     public static void Main()
     {
         var options = SDL3WindowOptions.Default with { Title = BaseWindowTitle };
@@ -18,6 +22,7 @@ public static class Program
         window = Window.Create<SDL3Window>(options);
         renderer = window.GetRenderer();
 
+        window.OnLoad += OnLoad;
         window.OnUpdate += OnUpdate;
         window.OnRender += OnRender;
 
@@ -26,39 +31,31 @@ public static class Program
         window.Dispose();
     }
 
+    private static void OnLoad()
+    {
+        renderer.Scale = Vector2.One * 2;
+    }
+
     private static void OnUpdate()
     {
-        if (Input.IsMouseButtonPressed(MouseButton.Left)) 
-            Input.SetCursorMode(CursorMode.Locked);
-        
-        if (Input.IsMouseButtonReleased(MouseButton.Left)) 
-            Input.SetCursorMode(CursorMode.Normal);
-        
+        if (Input.IsMouseButtonPressed(MouseButton.Left))
+            points.Add((Input.GetMousePosition(), Input.GetMousePosition()));
+
+        if (Input.IsMouseButtonReleased(MouseButton.Left) || Input.IsMouseButtonDown(MouseButton.Left))
+            points[^1] = (points[^1].Item1, Input.GetMousePosition());
+
         window.Title = $"{BaseWindowTitle} | Mouse Pos: {Input.GetMousePosition()}";
-        
-        if (Input.IsKeyPressed(InputKey.Space)) Log.Info($"Key pressed {InputKey.Space}");
-        if (Input.IsKeyReleased(InputKey.Space)) Log.Info($"Key released {InputKey.Space}");
-
-        if (Input.IsMouseButtonPressed(MouseButton.Left)) Log.Info($"Mouse Button pressed {MouseButton.Left}");
-        if (Input.IsMouseButtonReleased(MouseButton.Left)) Log.Info($"Mouse Button released {MouseButton.Left}");
-
-        // i don't want these always spamming the console so i just threw the false in there 
-
-        if (Input.IsKeyDown(InputKey.Space) && false) Log.Info($"Key down {InputKey.Space}");
-        if (Input.IsKeyUp(InputKey.Space) && false) Log.Info($"Key up {InputKey.Space}");
-
-        if (Input.IsMouseButtonDown(MouseButton.Left) && false) Log.Info($"Mouse Button down {MouseButton.Left}");
-        if (Input.IsMouseButtonUp(MouseButton.Left) && false) Log.Info($"Mouse Button up {MouseButton.Left}");
     }
 
     private static void OnRender()
     {
-        renderer.SetDrawColor(
-            Math.Sin(window.TotalTime) / 2 + 0.5,
-            Math.Cos(window.TotalTime) / 2 + 0.5,
-            0.3,
-            1);
-        renderer.Clear();
+        renderer.Clear(Color.DarkGray);
+
+        renderer.SetDrawColor(Color.White);
+
+        foreach (var point in points)
+            renderer.DrawLine(point.Item1, point.Item2);
+
         renderer.Present();
     }
 }
