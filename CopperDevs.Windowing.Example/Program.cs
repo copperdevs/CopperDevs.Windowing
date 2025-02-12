@@ -15,7 +15,20 @@ public static class Program
 
     public static void Main()
     {
-        var options = SDL3WindowOptions.Default with { Title = BaseWindowTitle };
+        var options = SDL3WindowOptions.Default with
+        {
+            Title = BaseWindowTitle,
+            Metadata = new AppMetadata
+            {
+                Name = BaseWindowTitle,
+                Version = "1.0.0",
+                Identifier = "com.copperdevs.windowing.example",
+                Creator = "copperdevs",
+                Copyright = "MIT License",
+                Url = "https://github.com/copperdevs/CopperDevs.Windowing",
+                Type = AppMetadata.AppType.Application
+            }
+        };
 
         window = Window.Create<SDL3Window>(options);
         renderer = window.GetRenderer();
@@ -42,10 +55,10 @@ public static class Program
     private static void OnRender()
     {
         var backgroundColor = (window.SystemTheme == SystemTheme.Dark ? Color.Black : Color.White).ToVector4() / 255f;
-        
+
         renderer.SetDrawColor(backgroundColor.X, backgroundColor.Y, backgroundColor.Z, 1);
         renderer.Clear();
-        
+
         renderer.Present();
     }
 }

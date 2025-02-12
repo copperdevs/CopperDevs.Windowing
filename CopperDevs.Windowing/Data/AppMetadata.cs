@@ -12,9 +12,9 @@ public class AppMetadata
 
     public enum AppType
     {
+        Application,
         Game,
         MediaPlayer,
-        Application,
     }
 
     public enum MetadataProperty
@@ -46,6 +46,6 @@ public class AppMetadata
                 _ => throw new ArgumentOutOfRangeException()
             },
             _ => throw new ArgumentOutOfRangeException(nameof(property), property, null)
-        } ?? string.Empty; 
+        } ?? string.Empty;
     }
 }

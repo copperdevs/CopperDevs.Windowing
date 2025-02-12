@@ -75,7 +75,7 @@ internal static unsafe class SDL
     public static void HideCursor() => SDL_HideCursor();
     public static void SetMouseRelativeMode(SDL_Window* window, bool enabled) => SDL_SetWindowRelativeMouseMode(window, enabled);
     public static void WarpMouseInWindow(SDL_Window* window, Vector2Int position) => SDL_WarpMouseInWindow(window, position.X, position.Y);
-    
+
     public static SystemTheme GetSystemTheme()
     {
         return SDL_GetSystemTheme() switch
@@ -104,10 +104,9 @@ internal static unsafe class SDL
         return prop;
     }
 
-    public static void SetAppMetadataProperty(AppMetadata.MetadataProperty property, string? value)
+    public static bool SetAppMetadataProperty(AppMetadata.MetadataProperty property, string? value)
     {
-        if(value is not null)
-            SDL_SetAppMetadataProperty(GetAppMetadataPropertyProp(property), value);
+        return SDL_SetAppMetadataProperty(GetAppMetadataPropertyProp(property), value);
     }
 
     public static string GetAppMetadataProperty(AppMetadata.MetadataProperty property)
