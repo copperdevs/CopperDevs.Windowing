@@ -1,7 +1,7 @@
 using System.Numerics;
-using System.Text;
 using CopperDevs.Core.Data;
 using CopperDevs.Windowing.SDL3.Data;
+
 #pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
 
 namespace CopperDevs.Windowing.SDL3;
@@ -88,4 +88,5 @@ internal static unsafe class SDL
     public static void DestroyRenderer(SDL_Renderer* renderer) => SDL_DestroyRenderer(renderer);
     public static void RenderLine(SDL_Renderer* renderer, Vector2 positionOne, Vector2 positionTwo) => SDL_RenderLine(renderer, positionOne.X, positionOne.Y, positionTwo.X, positionTwo.Y);
     public static void SetRenderScale(SDL_Renderer* renderer, Vector2 scale) => SDL_SetRenderScale(renderer, scale.X, scale.Y);
+    public static void RenderDebugText(SDL_Renderer* renderer, string text, Vector2 position) => SDL_RenderDebugText(renderer, position.X, position.Y, text);
 }

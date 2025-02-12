@@ -15,6 +15,7 @@ public unsafe class SDLRenderer(SDL_Renderer* native) : SafeDisposable
         set => SDL.SetRenderScale(native, value);
     }
 
+    public void Present() => SDL.RenderPresent(native);
     public void Clear() => SDL.RenderClear(native);
 
     public void Clear(Color color)
@@ -29,19 +30,37 @@ public unsafe class SDLRenderer(SDL_Renderer* native) : SafeDisposable
         Clear();
     }
 
-    public void Clear(double r, double g, double b, double a = 1)
-    {
-        SetDrawColor((float)r, (float)g, (float)b, (float)a);
-        Clear();
-    }
-
-    public void Present() => SDL.RenderPresent(native);
 
     public void SetDrawColor(Color color) => SDL.SetRenderDrawColor(native, color.R / 255f, color.G / 255f, color.B / 255f, color.A / 255f);
     public void SetDrawColor(float r, float g, float b, float a) => SDL.SetRenderDrawColor(native, r, g, b, a);
-    public void SetDrawColor(double r, double g, double b, double a) => SDL.SetRenderDrawColor(native, (float)r, (float)g, (float)b, (float)a);
 
     public void DrawLine(Vector2 posOne, Vector2 posTwo) => SDL.RenderLine(native, posOne, posTwo);
+
+    public void DrawLine(Vector2 posOne, Vector2 posTwo, Color color)
+    {
+        SetDrawColor(color);
+        DrawLine(posOne, posTwo);
+    }
+
+    public void DrawLine(Vector2 posOne, Vector2 posTwo, float r, float g, float b, float a = 1)
+    {
+        SetDrawColor(r, g, b, a);
+        DrawLine(posOne, posTwo);
+    }
+
+    public void DrawDebugText(string text, Vector2 position) => SDL.RenderDebugText(native, text, position);
+
+    public void DrawDebugText(string text, Vector2 position, Color color)
+    {
+        SetDrawColor(color);
+        DrawDebugText(text, position);
+    }
+
+    public void DrawDebugText(string text, Vector2 position, float r, float g, float b, float a = 1)
+    {
+        SetDrawColor(r, g, b, a);
+        DrawDebugText(text, position);
+    }
 
     /// <summary>
     /// Disposes of the renderer and shuts down its SDL counterpart

@@ -13,7 +13,7 @@ public static class Program
 
     private const string BaseWindowTitle = "CopperDevs Windowing Example";
 
-    private static List<Point> points = [];
+    private static readonly List<Point> Points = [];
 
     public static void Main()
     {
@@ -39,23 +39,42 @@ public static class Program
     private static void OnUpdate()
     {
         if (Input.IsMouseButtonPressed(MouseButton.Left))
-            points.Add((Input.GetMousePosition(), Input.GetMousePosition()));
+            Points.Add((Input.GetMousePosition(), Input.GetMousePosition()));
 
         if (Input.IsMouseButtonReleased(MouseButton.Left) || Input.IsMouseButtonDown(MouseButton.Left))
-            points[^1] = (points[^1].Item1, Input.GetMousePosition());
+            Points[^1] = (Points[^1].Item1, Input.GetMousePosition());
 
-        window.Title = $"{BaseWindowTitle} | Mouse Pos: {Input.GetMousePosition()}";
+        if (Input.IsMouseButtonReleased(MouseButton.Left) && Points[^1].Item1 == Points[^1].Item2)
+            Points.Remove(Points[^1]);
     }
 
     private static void OnRender()
     {
         renderer.Clear(Color.DarkGray);
+        
+        foreach (var point in Points)
+            renderer.DrawLine(point.Item1, point.Item2, Color.White);
 
-        renderer.SetDrawColor(Color.White);
-
-        foreach (var point in points)
-            renderer.DrawLine(point.Item1, point.Item2);
-
+        RenderDebugText();
+        
         renderer.Present();
+    }
+
+    private static void RenderDebugText()
+    {
+        renderer.Scale *= 1.5f; // bigger text moment
+
+        renderer.DrawDebugText($"FPS: {Time.FrameRate}", new Vector2(16, 16), Color.Black);
+        renderer.DrawDebugText($"Mouse Pos: {Input.GetMousePosition()}", new Vector2(16, 26), Color.Black);
+        renderer.DrawDebugText($"Line Count: {Points.Count}", new Vector2(16, 36), Color.Black);
+
+        renderer.Scale *= 0.9f;
+        
+        for (var i = 0; i < Points.Count; i++)
+            renderer.DrawDebugText($"Point {i + 1}: {Points[i].Item1} -> {Points[i].Item2}", new Vector2(20, 50 + i * 10), Color.Black);
+        
+        renderer.Scale /= 0.9f;
+
+        renderer.Scale /= 1.5f;
     }
 }
