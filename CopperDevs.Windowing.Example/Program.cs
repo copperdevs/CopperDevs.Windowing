@@ -28,8 +28,14 @@ public static class Program
 
     private static void OnUpdate()
     {
+        
+        if (window.IsMouseButtonPressed(MouseButton.Left)) 
+            window.SetCursorMode(CursorMode.Locked);
+        if (window.IsMouseButtonReleased(MouseButton.Left)) 
+            window.SetCursorMode(CursorMode.Normal);
+        
         window.Title = $"{BaseWindowTitle} | Mouse Pos: {window.GetMousePosition()}";
-        Log.Info(window.GetMouseScroll());
+        // Log.Info(window.GetMouseScroll());
         
         if (window.IsKeyPressed(InputKey.Space)) Log.Info($"Key pressed {InputKey.Space}");
         if (window.IsKeyReleased(InputKey.Space)) Log.Info($"Key released {InputKey.Space}");

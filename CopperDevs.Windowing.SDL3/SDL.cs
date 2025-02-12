@@ -70,4 +70,8 @@ internal static unsafe class SDL
     public static void SetWindowMinimumSize(SDL_Window* window, Vector2Int size) => SDL_SetWindowMinimumSize(window, size.X, size.Y);
     public static void SetWindowPosition(SDL_Window* window, Vector2Int position) => SDL_SetWindowPosition(window, position.X, position.Y);
     public static void FlashWindow(SDL_Window* window, SDL_FlashOperation operation) => SDL_FlashWindow(window, operation);
+    public static void ShowCursor() => SDL_ShowCursor();
+    public static void HideCursor() => SDL_HideCursor();
+    public static void SetMouseRelativeMode(SDL_Window* window, bool enabled) => SDL_SetWindowRelativeMouseMode(window, enabled);
+    public static void WarpMouseInWindow(SDL_Window* window, Vector2Int position) => SDL_WarpMouseInWindow(window, position.X, position.Y);
 }

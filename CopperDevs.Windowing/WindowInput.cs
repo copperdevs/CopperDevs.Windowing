@@ -11,7 +11,11 @@ public partial class Window
 
     private void SetupInput()
     {
-        input ??= CreateInput();
+        if (input is not null)
+            return;
+
+        input = CreateInput();
+        input.SetCursorMode(CursorMode.Normal);
     }
 
     private void UpdateInput()

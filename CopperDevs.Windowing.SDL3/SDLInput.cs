@@ -26,6 +26,8 @@ public class SDLInput : IInput
 
     private Vector2 mouseScroll;
 
+    private CursorMode cursorMode = CursorMode.Normal;
+
     private bool GetKeyPressState(InputKey key, bool previousFrame)
     {
         return previousFrame ? previousFrameKeyCurrentlyPressed.GetValueOrDefault(keyMap[key], false) : keyCurrentlyPressed.GetValueOrDefault(keyMap[key], false);
@@ -129,6 +131,15 @@ public class SDLInput : IInput
         };
 
         mouseScroll = Vector2.Zero;
+
+
+        if (cursorMode == CursorMode.Locked)
+        {
+            unsafe
+            {
+                SDL.WarpMouseInWindow(connectedWindow.GetNativeWindow(), connectedWindow.Size / 2);
+            }
+        }
     }
 
     public bool SupportsInputKey(InputKey inputKey)
@@ -191,8 +202,26 @@ public class SDLInput : IInput
         return mouseScroll;
     }
 
-    public void SetCursorMode(CursorMode cursorMode)
+    public unsafe void SetCursorMode(CursorMode newMode)
     {
-        throw new NotImplementedException();
+        cursorMode = newMode;
+
+        switch (cursorMode)
+        {
+            case CursorMode.Normal:
+                SDL.ShowCursor();
+                SDL.SetMouseRelativeMode(connectedWindow.GetNativeWindow(), false);
+                break;
+            case CursorMode.Hidden:
+                SDL.HideCursor();
+                SDL.SetMouseRelativeMode(connectedWindow.GetNativeWindow(), false);
+                break;
+            case CursorMode.Locked:
+                SDL.HideCursor();
+                SDL.SetMouseRelativeMode(connectedWindow.GetNativeWindow(), true);
+                break;
+            default:
+                throw new ArgumentOutOfRangeException(nameof(cursorMode), cursorMode, null);
+        }
     }
 }

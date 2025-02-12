@@ -22,6 +22,12 @@ public class SDL3Window : Window
     public ManagedSDLWindow GetManagedSDLWindow() => window;
 
     /// <summary>
+    /// Get the direct SDL Window
+    /// </summary>
+    /// <returns>SDL Window pointer</returns>
+    public unsafe SDL_Window* GetNativeWindow() => window.GetNativeWindow();
+
+    /// <summary>
     /// Get the managed SDL renderer wrapper
     /// </summary>
     /// <returns>Renderer wrapper object</returns>
