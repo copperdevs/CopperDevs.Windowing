@@ -6,7 +6,8 @@ using CopperDevs.Windowing.SDL3.Data;
 
 namespace CopperDevs.Windowing.SDL3;
 
-public class SDLInput : IInput
+// ReSharper disable once InconsistentNaming
+internal class SDLInput : IInput
 {
     private const bool InputLogs = false;
 

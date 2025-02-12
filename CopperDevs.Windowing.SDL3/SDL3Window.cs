@@ -79,13 +79,9 @@ public class SDL3Window : Window
 
     protected override void WindowFlash(bool untilFocus = true) => window.Flash(untilFocus);
     protected override void StopWindowFlash() => window.StopFlash();
-
+    protected override IInput CreateInput() => new SDLInput(this);
 #pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
 
-    protected override IInput CreateInput()
-    {
-        return new SDLInput(this);
-    }
 
     /// <summary>
     /// Create the window
