@@ -13,7 +13,7 @@ public partial class Window
 
         input = CreateInput();
         input.SetCursorMode(CursorMode.Normal);
-        
+
         Input.Connect(this, input);
     }
 

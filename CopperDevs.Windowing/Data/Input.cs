@@ -8,13 +8,12 @@ public static class Input
 {
     private static Window window;
     private static IInput? input;
-    
+
     internal static void Connect(Window targetWindow, IInput targetInput)
     {
         window = targetWindow;
         input = targetInput;
     }
-
 
     private static bool InputCheck()
     {
@@ -74,17 +73,17 @@ public static class Input
 
     public static Vector2 GetMousePosition()
     {
-        return InputCheck() ? input!.GetMousePosition() : Vector2Int.Zero;
+        return InputCheck() ? input!.GetMousePosition() : Vector2.Zero;
     }
 
     public static Vector2 GetMouseDelta()
     {
-        return InputCheck() ? input!.GetMouseDelta() : Vector2Int.Zero;
+        return InputCheck() ? input!.GetMouseDelta() : Vector2.Zero;
     }
 
     public static Vector2 GetMouseScroll()
     {
-        return InputCheck() ? input!.GetMouseScroll() : Vector2Int.Zero;
+        return InputCheck() ? input!.GetMouseScroll() : Vector2.Zero;
     }
 
     public static void SetCursorMode(CursorMode cursorMode)

@@ -12,7 +12,7 @@ public record WindowOptions
     /// Starting size of the window on creation
     /// </summary>
     public Vector2Int Size = new(1150, 680);
-    
+
     /// <summary>
     /// Starting title of the window on creation
     /// </summary>
