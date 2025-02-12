@@ -109,6 +109,11 @@ public partial class Window
     /// Minimize the window
     /// </summary>
     public void Minimize() => SetMinimize();
+    
+    /// <summary>
+    /// Get the UI theme for the system
+    /// </summary>
+    public SystemTheme SystemTheme => GetSystemTheme();  
 
 #pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
     // time
@@ -154,5 +159,8 @@ public partial class Window
     // focus
     protected abstract bool GetFocused();
     protected abstract bool GetHovered();
+    
+    // theme
+    protected abstract SystemTheme GetSystemTheme();
 #pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
 }
