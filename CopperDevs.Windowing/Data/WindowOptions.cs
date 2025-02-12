@@ -18,6 +18,9 @@ public record WindowOptions
     /// </summary>
     public string Title = "Untitled Window";
     
+    /// <summary>
+    /// Metadata of the app
+    /// </summary>
     public AppMetadata Metadata = new();
     
     /// <summary>
