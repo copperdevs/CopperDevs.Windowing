@@ -160,6 +160,22 @@ public unsafe class ManagedSDLWindow : SafeDisposable
             throw new InvalidOperationException($"Failed to initialise SDL. Error: {SDL.GetError()}");
         }
 
+        // metadata
+        {
+            SetProperty(AppMetadata.MetadataProperty.Name, options.Metadata);
+            SetProperty(AppMetadata.MetadataProperty.Version, options.Metadata);
+            SetProperty(AppMetadata.MetadataProperty.Identifier, options.Metadata);
+            SetProperty(AppMetadata.MetadataProperty.Creator, options.Metadata);
+            SetProperty(AppMetadata.MetadataProperty.Copyright, options.Metadata);
+            SetProperty(AppMetadata.MetadataProperty.Url, options.Metadata);
+            SetProperty(AppMetadata.MetadataProperty.Type, options.Metadata);
+
+            void SetProperty(AppMetadata.MetadataProperty property, AppMetadata metadata)
+            {
+                SDL.SetAppMetadataProperty(property, metadata.GetProperty(property));
+            }
+        }
+
         events.HandleEvent += HandleEvents;
 
         window = SDL.CreateWindow(options.Title, options.Size, windowFlags);

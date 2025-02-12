@@ -75,7 +75,7 @@ internal static unsafe class SDL
     public static void HideCursor() => SDL_HideCursor();
     public static void SetMouseRelativeMode(SDL_Window* window, bool enabled) => SDL_SetWindowRelativeMouseMode(window, enabled);
     public static void WarpMouseInWindow(SDL_Window* window, Vector2Int position) => SDL_WarpMouseInWindow(window, position.X, position.Y);
-
+    
     public static SystemTheme GetSystemTheme()
     {
         return SDL_GetSystemTheme() switch
@@ -85,5 +85,33 @@ internal static unsafe class SDL
             SDL_SystemTheme.SDL_SYSTEM_THEME_DARK => SystemTheme.Dark,
             _ => throw new ArgumentOutOfRangeException()
         };
+    }
+
+    private static ReadOnlySpan<byte> GetAppMetadataPropertyProp(AppMetadata.MetadataProperty property)
+    {
+        var prop = property switch
+        {
+            AppMetadata.MetadataProperty.Name => SDL_PROP_APP_METADATA_NAME_STRING,
+            AppMetadata.MetadataProperty.Version => SDL_PROP_APP_METADATA_VERSION_STRING,
+            AppMetadata.MetadataProperty.Identifier => SDL_PROP_APP_METADATA_IDENTIFIER_STRING,
+            AppMetadata.MetadataProperty.Creator => SDL_PROP_APP_METADATA_CREATOR_STRING,
+            AppMetadata.MetadataProperty.Copyright => SDL_PROP_APP_METADATA_COPYRIGHT_STRING,
+            AppMetadata.MetadataProperty.Url => SDL_PROP_APP_METADATA_URL_STRING,
+            AppMetadata.MetadataProperty.Type => SDL_PROP_APP_METADATA_TYPE_STRING,
+            _ => throw new ArgumentOutOfRangeException(nameof(property), property, null)
+        };
+
+        return prop;
+    }
+
+    public static void SetAppMetadataProperty(AppMetadata.MetadataProperty property, string? value)
+    {
+        if(value is not null)
+            SDL_SetAppMetadataProperty(GetAppMetadataPropertyProp(property), value);
+    }
+
+    public static string GetAppMetadataProperty(AppMetadata.MetadataProperty property)
+    {
+        return SDL_GetAppMetadataProperty(GetAppMetadataPropertyProp(property)) ?? string.Empty;
     }
 }
