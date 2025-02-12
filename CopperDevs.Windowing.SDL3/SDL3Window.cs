@@ -63,6 +63,7 @@ public class SDL3Window : Window
     protected override void SetMaximize() => window.Maximize();
     protected override bool GetFocused() => window.Focused;
     protected override bool GetHovered() => window.Hovered;
+    protected override SystemTheme GetSystemTheme() => SDL.GetSystemTheme();
     protected override double GetTotalTime() => totalTime;
     protected override double GetDeltaTime() => deltaTime;
 

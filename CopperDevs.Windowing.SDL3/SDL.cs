@@ -1,5 +1,6 @@
 using System.Text;
 using CopperDevs.Core.Data;
+using CopperDevs.Windowing.Data;
 using CopperDevs.Windowing.SDL3.Data;
 
 namespace CopperDevs.Windowing.SDL3;
@@ -37,8 +38,8 @@ internal static unsafe class SDL
     public static Vector2Int GetWindowPosition(SDL_Window* window)
     {
         var value = new Vector2Int(0);
-        
-        if(SDL_GetWindowPosition(window, &value.X, &value.Y))
+
+        if (SDL_GetWindowPosition(window, &value.X, &value.Y))
             return value;
         return value with { X = 0, Y = 0 };
     }
@@ -74,4 +75,15 @@ internal static unsafe class SDL
     public static void HideCursor() => SDL_HideCursor();
     public static void SetMouseRelativeMode(SDL_Window* window, bool enabled) => SDL_SetWindowRelativeMouseMode(window, enabled);
     public static void WarpMouseInWindow(SDL_Window* window, Vector2Int position) => SDL_WarpMouseInWindow(window, position.X, position.Y);
+
+    public static SystemTheme GetSystemTheme()
+    {
+        return SDL_GetSystemTheme() switch
+        {
+            SDL_SystemTheme.SDL_SYSTEM_THEME_UNKNOWN => SystemTheme.Unknown,
+            SDL_SystemTheme.SDL_SYSTEM_THEME_LIGHT => SystemTheme.Light,
+            SDL_SystemTheme.SDL_SYSTEM_THEME_DARK => SystemTheme.Dark,
+            _ => throw new ArgumentOutOfRangeException()
+        };
+    }
 }
