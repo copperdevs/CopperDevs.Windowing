@@ -19,10 +19,6 @@ public static unsafe partial class SDL
 
     public static void QuitSubSystem(InitFlags flags) => SDL_QuitSubSystem((SDL_InitFlags)flags);
 
-    // public static void RunOnMainThread()
-    // {
-    // }
-
     public static bool SetAppMetadata(string appName, string appVersion, string appIdentifier) => SDL_SetAppMetadata(appName, appVersion, appIdentifier);
 
     public static bool SetAppMetadataProperty(string name, string value) => SDL_SetAppMetadataProperty(name, value);
