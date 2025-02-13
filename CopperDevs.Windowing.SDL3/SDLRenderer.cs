@@ -10,13 +10,14 @@ namespace CopperDevs.Windowing.SDL3;
 // TODO: Add support for all SDL rendering functions in https://wiki.libsdl.org/SDL3/CategoryRender
 public unsafe class SDLRenderer(SDL_Renderer* native) : SafeDisposable
 {
+    private SDL_FRect tempRect;
+
     public Vector2 Scale
     {
         get => SDL.GetRenderScale(native);
         set => SDL.SetRenderScale(native, value);
     }
-    
-    
+
     public Vector2 RendererToWindowCoordinates(Vector2 position) => SDL.RenderCoordinatesToWindow(native, position);
 
     public Vector2 WindowToRendererCoordinates(Vector2 position) => SDL.RenderCoordinatesFromWindow(native, position);
@@ -24,17 +25,17 @@ public unsafe class SDLRenderer(SDL_Renderer* native) : SafeDisposable
     public void Screenshot()
     {
         var index = 0;
-        
+
         Directory.CreateDirectory("screenshots");
 
-        while (File.Exists($"screenshots/{index}.bmp")) 
+        while (File.Exists($"screenshots/{index}.bmp"))
             index++;
-        
+
         var pixels = SDL.RenderReadPixels(native, null);
         SDL.SaveBMP(pixels, $"screenshots/{index}.bmp");
         SDL.DestroySurface(pixels);
     }
-    
+
     public void Present() => SDL.RenderPresent(native);
     public void Clear() => SDL.RenderClear(native);
 
@@ -83,7 +84,7 @@ public unsafe class SDLRenderer(SDL_Renderer* native) : SafeDisposable
     }
 
     public void DrawLines(List<Vector2> points) => SDL.RenderLines(native, points);
-    
+
     public void DrawLines(List<Vector2> points, Color color)
     {
         SetDrawColor(color);
@@ -95,7 +96,7 @@ public unsafe class SDLRenderer(SDL_Renderer* native) : SafeDisposable
         SetDrawColor(r, g, b, a);
         DrawLines(points);
     }
-    
+
     public void DrawPoint(Vector2 point) => SDL.RenderPoint(native, point);
 
     public void DrawPoint(Vector2 point, Color color)
@@ -109,7 +110,7 @@ public unsafe class SDLRenderer(SDL_Renderer* native) : SafeDisposable
         SetDrawColor(r, g, b, a);
         DrawPoint(point);
     }
-    
+
     public void DrawPoints(List<Vector2> points) => SDL.RenderPoints(native, points);
 
     public void DrawPoints(List<Vector2> points, Color color)
@@ -122,6 +123,62 @@ public unsafe class SDLRenderer(SDL_Renderer* native) : SafeDisposable
     {
         SetDrawColor(r, g, b, a);
         DrawPoints(points);
+    }
+
+    public void DrawRect(Vector2 position, Vector2 size) => SDL.RenderRect(native, tempRect with { x = position.X, y = position.Y, h = size.X, w = size.Y });
+
+    public void DrawRect(Vector2 position, Vector2 size, Color color)
+    {
+        SetDrawColor(color);
+        DrawRect(position, size);
+    }
+
+    public void DrawRect(Vector2 position, Vector2 size, float r, float g, float b, float a = 1)
+    {
+        SetDrawColor(r, g, b, a);
+        DrawRect(position, size);
+    }
+
+    public void DrawRects(List<SDL_FRect> rects) => SDL.RenderRects(native, rects);
+
+    public void DrawRects(List<SDL_FRect> rects, Color color)
+    {
+        SetDrawColor(color);
+        DrawRects(rects);
+    }
+
+    public void DrawRects(List<SDL_FRect> rects, float r, float g, float b, float a = 1)
+    {
+        SetDrawColor(r, g, b, a);
+        DrawRects(rects);
+    }
+    
+    public void DrawFillRect(Vector2 position, Vector2 size) => SDL.RenderFillRect(native, tempRect with { x = position.X, y = position.Y, h = size.X, w = size.Y });
+
+    public void DrawFillRect(Vector2 position, Vector2 size, Color color)
+    {
+        SetDrawColor(color);
+        DrawFillRect(position, size);
+    }
+
+    public void DrawFillRect(Vector2 position, Vector2 size, float r, float g, float b, float a = 1)
+    {
+        SetDrawColor(r, g, b, a);
+        DrawFillRect(position, size);
+    }
+
+    public void DrawFillRects(List<SDL_FRect> rects) => SDL.RenderFillRects(native, rects);
+
+    public void DrawFillRects(List<SDL_FRect> rects, Color color)
+    {
+        SetDrawColor(color);
+        DrawFillRects(rects);
+    }
+
+    public void DrawFillRects(List<SDL_FRect> rects, float r, float g, float b, float a = 1)
+    {
+        SetDrawColor(r, g, b, a);
+        DrawFillRects(rects);
     }
 
     /// <summary>

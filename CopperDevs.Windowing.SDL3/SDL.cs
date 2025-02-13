@@ -119,9 +119,9 @@ internal static unsafe class SDL
     public static void SetRenderScale(SDL_Renderer* renderer, Vector2 scale) => SDL_SetRenderScale(renderer, scale.X, scale.Y);
     public static void RenderDebugText(SDL_Renderer* renderer, string text, Vector2 position) => SDL_RenderDebugText(renderer, position.X, position.Y, text);
     public static void RenderLine(SDL_Renderer* renderer, Vector2 positionOne, Vector2 positionTwo) => SDL_RenderLine(renderer, positionOne.X, positionOne.Y, positionTwo.X, positionTwo.Y);
-    public static void RenderLines(SDL_Renderer* renderer, List<Vector2> points) => SDL_RenderLines(renderer, SDLUtil.ToPointer(points), points.Count);
+    public static void RenderLines(SDL_Renderer* renderer, List<Vector2> points) => SDL_RenderLines(renderer, SDLUtil.ToPointer(points, static vector => new SDL_FPoint { x = vector.X, y = vector.Y }), points.Count);
     public static void RenderPoint(SDL_Renderer* renderer, Vector2 position) => SDL_RenderPoint(renderer, position.X, position.Y);
-    public static void RenderPoints(SDL_Renderer* renderer, List<Vector2> points) => SDL_RenderPoints(renderer, SDLUtil.ToPointer(points), points.Count);
+    public static void RenderPoints(SDL_Renderer* renderer, List<Vector2> points) => SDL_RenderPoints(renderer, SDLUtil.ToPointer(points, static vector => new SDL_FPoint { x = vector.X, y = vector.Y }), points.Count);
 
     public static SystemTheme GetSystemTheme()
     {
@@ -154,9 +154,15 @@ internal static unsafe class SDL
     public static bool SetAppMetadataProperty(AppMetadata.MetadataProperty property, string? value) => SDL_SetAppMetadataProperty(GetAppMetadataPropertyProp(property), value);
 
     public static string GetAppMetadataProperty(AppMetadata.MetadataProperty property) => SDL_GetAppMetadataProperty(GetAppMetadataPropertyProp(property)) ?? string.Empty;
-    
+
     public static SDL_Surface* RenderReadPixels(SDL_Renderer* renderer, SDL_Rect* rect) => SDL_RenderReadPixels(renderer, rect);
-    
+
     public static bool SaveBMP(SDL_Surface* surface, string filename) => SDL_SaveBMP(surface, filename);
     public static void DestroySurface(SDL_Surface* surface) => SDL_DestroySurface(surface);
+
+    public static void RenderRect(SDL_Renderer* renderer, SDL_FRect rect) => SDL_RenderRect(renderer, &rect);
+    public static void RenderRects(SDL_Renderer* renderer, List<SDL_FRect> rect) => SDL_RenderRects(renderer, SDLUtil.ToPointer(rect), rect.Count);
+
+    public static void RenderFillRect(SDL_Renderer* renderer, SDL_FRect rect) => SDL_RenderFillRect(renderer, &rect);
+    public static void RenderFillRects(SDL_Renderer* renderer, List<SDL_FRect> rect) => SDL_RenderFillRects(renderer, SDLUtil.ToPointer(rect), rect.Count);
 }

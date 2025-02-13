@@ -1,5 +1,6 @@
 using System.Numerics;
 using CopperDevs.Core.Data;
+using CopperDevs.Core.Utility;
 using CopperDevs.Windowing.Data;
 using CopperDevs.Windowing.SDL3;
 using CopperDevs.Windowing.SDL3.Data;
@@ -66,8 +67,10 @@ public static class Program
 
         // sine wave between 1 - 2
         // renderer.Scale = Vector2.One * (float)(Math.Abs(Math.Sin(Time.TotalTime)) + 1);
+
+        position = MathUtil.Lerp(position, Input.GetMousePosition(), 8 * Time.DeltaTimeAsFloat);
     }
-    
+
 
     private static void OnRender()
     {
@@ -79,14 +82,18 @@ public static class Program
         foreach (var point in Points)
             renderer.DrawPoint(renderer.WindowToRendererCoordinates(point), Color.Red);
 
-        if(Input.IsKeyDown(InputKey.Space)) 
+        if (Input.IsKeyDown(InputKey.Space))
             renderer.Screenshot(); // we do this here instead of update, because in update not everything is rendered yet
 
         RenderDebugText();
-        
-        
+
+        renderer.DrawFillRect(renderer.WindowToRendererCoordinates(position) - Vector2.One * 16, Vector2.One * 32, Color.Black);
+        renderer.DrawRect(renderer.WindowToRendererCoordinates(position) - Vector2.One * 16, Vector2.One * 32, Color.White);
+
         renderer.Present();
     }
+
+    private static Vector2 position;
 
     private static void RenderDebugText()
     {

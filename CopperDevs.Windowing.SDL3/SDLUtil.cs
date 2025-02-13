@@ -1,19 +1,27 @@
-using System.Numerics;
-using CopperDevs.Core.Data;
-
 namespace CopperDevs.Windowing.SDL3;
 
 // ReSharper disable once InconsistentNaming
 internal static unsafe class SDLUtil
 {
-    public static SDL_FPoint* ToPointer(List<Vector2> points)
+    public static TTarget* ToPointer<TTarget>(List<TTarget> items) where TTarget : unmanaged
     {
-        var nativePoint = new SDL_FPoint[points.Count];
+        return ToPointer<TTarget, TTarget>(items);
+    }
+    
+    public static TTarget* ToPointer<TType, TTarget>(List<TType> items) where TTarget : unmanaged
+    {
+        fixed (TTarget* nativeArrayPtr = items.Cast<TTarget>().ToArray())
+            return nativeArrayPtr;
+    }
 
-        for (var i = 0; i < points.Count; i++)
-            nativePoint[i] = new SDL_FPoint { x = points[i].X, y = points[i].Y };
+    public static TTarget* ToPointer<TType, TTarget>(List<TType> items, Func<TType, TTarget> targetCreation) where TTarget : unmanaged
+    {
+        var nativePoint = new TTarget[items.Count];
 
-        fixed (SDL_FPoint* pointsPtr = nativePoint)
+        for (var i = 0; i < items.Count; i++)
+            nativePoint[i] = targetCreation.Invoke(items[i]);
+
+        fixed (TTarget* pointsPtr = nativePoint)
             return pointsPtr;
     }
 }
