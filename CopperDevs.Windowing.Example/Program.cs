@@ -12,8 +12,6 @@ public static class Program
     private static SDL3Window window = null!;
     private static SDLRenderer renderer = null!;
 
-    private const string BaseWindowTitle = "CopperDevs Windowing Example";
-
     private static readonly List<Vector2> Points = [];
     private static readonly List<Vector2Int> PointIndexes = []; // represents a line, with X and Y being the index of the point in points (Points[X] -> Points[Y])
 
@@ -21,10 +19,10 @@ public static class Program
     {
         var options = SDL3WindowOptions.Default with
         {
-            Title = BaseWindowTitle,
+            Title = "CopperDevs Windowing Example",
             Metadata = new AppMetadata
             {
-                Name = BaseWindowTitle,
+                Name = "CopperDevs Windowing Example",
                 Version = "1.0.0",
                 Identifier = "com.copperdevs.windowing.example",
                 Creator = "copperdevs",
@@ -48,7 +46,7 @@ public static class Program
 
     private static void OnLoad()
     {
-        renderer.Scale = Vector2.One * 2;
+        renderer.Scale = Vector2.One * 2; // slightly larger rendering scale for easier to see stuff
     }
 
     private static void OnUpdate()
@@ -64,11 +62,6 @@ public static class Program
 
         if (Input.IsMouseButtonReleased(MouseButton.Left) && Points[PointIndexes[^1].X] == Points[PointIndexes[^1].Y])
             PointIndexes.Remove(PointIndexes[^1]);
-
-        // sine wave between 1 - 2
-        // renderer.Scale = Vector2.One * (float)(Math.Abs(Math.Sin(Time.TotalTime)) + 1);
-
-        position = MathUtil.Lerp(position, Input.GetMousePosition(), 8 * Time.DeltaTimeAsFloat);
     }
 
 
@@ -83,17 +76,12 @@ public static class Program
             renderer.DrawPoint(renderer.WindowToRendererCoordinates(point), Color.Red);
 
         if (Input.IsKeyDown(InputKey.Space))
-            renderer.Screenshot(); // we do this here instead of update, because in update not everything is rendered yet
+            renderer.Screenshot(); // we do this here so we only take a screenshot of the lines and not the debug text
 
         RenderDebugText();
 
-        renderer.DrawFillRect(renderer.WindowToRendererCoordinates(position) - Vector2.One * 16, Vector2.One * 32, Color.Black);
-        renderer.DrawRect(renderer.WindowToRendererCoordinates(position) - Vector2.One * 16, Vector2.One * 32, Color.White);
-
         renderer.Present();
     }
-
-    private static Vector2 position;
 
     private static void RenderDebugText()
     {
