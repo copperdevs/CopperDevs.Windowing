@@ -1,6 +1,6 @@
-namespace CopperDevs.Windowing.SDL3.Wrapper.Video;
+namespace CopperDevs.Windowing.SDL3;
 
-public class Video
+public static unsafe partial class SDL
 {
     
 }

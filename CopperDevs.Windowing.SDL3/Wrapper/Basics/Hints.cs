@@ -1,6 +1,6 @@
-namespace CopperDevs.Windowing.SDL3.Wrapper.AdditionalFunctionality;
+namespace CopperDevs.Windowing.SDL3;
 
-public class Hints
+public static unsafe partial class SDL
 {
     
 }

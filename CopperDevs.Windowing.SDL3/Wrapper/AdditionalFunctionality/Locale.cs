@@ -1,6 +1,6 @@
-namespace CopperDevs.Windowing.SDL3.Wrapper.AdditionalFunctionality;
+namespace CopperDevs.Windowing.SDL3;
 
-public class Locale
+public static unsafe partial class SDL
 {
     
 }

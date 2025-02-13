@@ -1,6 +1,6 @@
-namespace CopperDevs.Windowing.SDL3.Wrapper.PlatformInformation;
+namespace CopperDevs.Windowing.SDL3;
 
-public class Platform
+public static unsafe partial class SDL
 {
     
 }

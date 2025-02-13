@@ -1,6 +1,6 @@
-namespace CopperDevs.Windowing.SDL3.Wrapper.GPU;
+namespace CopperDevs.Windowing.SDL3;
 
-public class GPU
+public static unsafe partial class SDL
 {
     
 }

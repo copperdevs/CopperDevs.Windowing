@@ -1,6 +1,6 @@
-namespace CopperDevs.Windowing.SDL3.Wrapper.PlatformInformation;
+namespace CopperDevs.Windowing.SDL3;
 
-public class CPUInfo
+public static unsafe partial class SDL
 {
     
 }

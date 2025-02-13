@@ -1,6 +1,6 @@
-namespace CopperDevs.Windowing.SDL3.Wrapper.Time;
+namespace CopperDevs.Windowing.SDL3;
 
-public class Time
+public static unsafe partial class SDL
 {
     
 }

@@ -1,6 +1,6 @@
-namespace CopperDevs.Windowing.SDL3.Wrapper.FileAbstractions;
+namespace CopperDevs.Windowing.SDL3;
 
-public class Filesystem
+public static unsafe partial class SDL
 {
     
 }

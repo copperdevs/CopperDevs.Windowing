@@ -1,6 +1,6 @@
-namespace CopperDevs.Windowing.SDL3.Wrapper.InputEvents;
+namespace CopperDevs.Windowing.SDL3;
 
-public class Mouse
+public static unsafe partial class SDL
 {
     
 }

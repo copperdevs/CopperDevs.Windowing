@@ -1,6 +1,6 @@
-namespace CopperDevs.Windowing.SDL3.Wrapper.Threads;
+namespace CopperDevs.Windowing.SDL3;
 
-public class Mutex
+public static unsafe partial class SDL
 {
     
 }

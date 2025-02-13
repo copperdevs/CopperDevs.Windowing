@@ -1,6 +1,6 @@
-namespace CopperDevs.Windowing.SDL3.Wrapper.Audio;
+namespace CopperDevs.Windowing.SDL3;
 
-public class Audio
+public static unsafe partial class SDL
 {
     
 }

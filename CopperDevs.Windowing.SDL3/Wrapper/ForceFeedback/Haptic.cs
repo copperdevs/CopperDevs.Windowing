@@ -1,6 +1,6 @@
-namespace CopperDevs.Windowing.SDL3.Wrapper.InputEvents.ForceFeedback;
+namespace CopperDevs.Windowing.SDL3;
 
-public class Haptic
+public static unsafe partial class SDL
 {
     
 }
