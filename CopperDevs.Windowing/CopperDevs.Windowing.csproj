@@ -14,12 +14,12 @@
         <RepositoryType>git</RepositoryType>
         <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
         <Company>copperdevs</Company>
-        <AssemblyVersion>1.1.0</AssemblyVersion>
-        <FileVersion>1.1.0</FileVersion>
+        <AssemblyVersion>1.2.0</AssemblyVersion>
+        <FileVersion>1.2.0</FileVersion>
         <PackageLicenseFile>License.txt</PackageLicenseFile>
         <PackageReadmeFile>ReadMe.md</PackageReadmeFile>
         <LangVersion>13</LangVersion>
-        <Version>1.1.0</Version>
+        <Version>1.2.0</Version>
     </PropertyGroup>
 
     <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
