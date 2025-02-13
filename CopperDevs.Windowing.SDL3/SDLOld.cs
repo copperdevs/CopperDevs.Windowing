@@ -6,7 +6,7 @@ using CopperDevs.Windowing.SDL3.Data;
 namespace CopperDevs.Windowing.SDL3;
 
 // ReSharper disable once InconsistentNaming
-internal static unsafe class SDL
+internal static unsafe class SDLOld
 {
     public static Vector2Int GetWindowSize(SDL_Window* window)
     {

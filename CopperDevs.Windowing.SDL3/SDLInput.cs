@@ -138,7 +138,7 @@ internal class SDLInput : IInput
         {
             unsafe
             {
-                SDL.WarpMouseInWindow(connectedWindow.GetNativeWindow(), connectedWindow.Size / 2);
+                SDLOld.WarpMouseInWindow(connectedWindow.GetNativeWindow(), connectedWindow.Size / 2);
             }
         }
     }
@@ -210,16 +210,16 @@ internal class SDLInput : IInput
         switch (cursorMode)
         {
             case CursorMode.Normal:
-                SDL.ShowCursor();
-                SDL.SetMouseRelativeMode(connectedWindow.GetNativeWindow(), false);
+                SDLOld.ShowCursor();
+                SDLOld.SetMouseRelativeMode(connectedWindow.GetNativeWindow(), false);
                 break;
             case CursorMode.Hidden:
-                SDL.HideCursor();
-                SDL.SetMouseRelativeMode(connectedWindow.GetNativeWindow(), false);
+                SDLOld.HideCursor();
+                SDLOld.SetMouseRelativeMode(connectedWindow.GetNativeWindow(), false);
                 break;
             case CursorMode.Locked:
-                SDL.HideCursor();
-                SDL.SetMouseRelativeMode(connectedWindow.GetNativeWindow(), true);
+                SDLOld.HideCursor();
+                SDLOld.SetMouseRelativeMode(connectedWindow.GetNativeWindow(), true);
                 break;
             default:
                 throw new ArgumentOutOfRangeException(nameof(cursorMode), cursorMode, null);
