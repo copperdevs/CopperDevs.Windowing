@@ -1,4 +1,4 @@
-using System.Text;
+using System.Numerics;
 using CopperDevs.Core.Data;
 using CopperDevs.Windowing.Data;
 using CopperDevs.Windowing.SDL3.Data;
@@ -44,6 +44,46 @@ internal static unsafe class SDL
         return value with { X = 0, Y = 0 };
     }
 
+    public static Vector2 GetRenderScale(SDL_Renderer* renderer)
+    {
+        var value = new Vector2(0);
+
+        if (SDL_GetRenderScale(renderer, &value.X, &value.Y))
+            return value;
+        return value with { X = 0, Y = 0 };
+    }
+
+    /// <summary>
+    /// Get a point in render coordinates when given a point in window coordinates
+    /// </summary>
+    /// <param name="renderer">The rendering context</param>
+    /// <param name="pos">The coordinates in window coordinates</param>
+    /// <returns>The coordinates in render coordinates</returns>
+    public static Vector2 RenderCoordinatesFromWindow(SDL_Renderer* renderer, Vector2 pos)
+    {
+        var value = new Vector2(0);
+
+        if (SDL_RenderCoordinatesFromWindow(renderer, pos.X, pos.Y, &value.X, &value.Y))
+            return value;
+        return value with { X = 0, Y = 0 };
+    }
+
+    /// <summary>
+    /// Get a point in window coordinates when given a point in render coordinates
+    /// </summary>
+    /// <param name="renderer">The rendering context</param>
+    /// <param name="pos">The coordinates in render coordinates</param>
+    /// <returns>Coordinates in window coordinates</returns>
+    public static Vector2 RenderCoordinatesToWindow(SDL_Renderer* renderer, Vector2 pos)
+    {
+        var value = new Vector2(0);
+
+        if (SDL_RenderCoordinatesToWindow(renderer, pos.X, pos.Y, &value.X, &value.Y))
+            return value;
+        return value with { X = 0, Y = 0 };
+    }
+
+
     public static bool InitSubSystem(InitFlags flags) => SDL_InitSubSystem((SDL_InitFlags)flags);
     public static string GetError() => SDL_GetError() ?? string.Empty;
     public static SDL_Window* CreateWindow(string title, Vector2Int size, WindowFlags flags) => SDL_CreateWindow(title, size.X, size.Y, (SDL_WindowFlags)flags);
@@ -75,6 +115,13 @@ internal static unsafe class SDL
     public static void HideCursor() => SDL_HideCursor();
     public static void SetMouseRelativeMode(SDL_Window* window, bool enabled) => SDL_SetWindowRelativeMouseMode(window, enabled);
     public static void WarpMouseInWindow(SDL_Window* window, Vector2Int position) => SDL_WarpMouseInWindow(window, position.X, position.Y);
+    public static void DestroyRenderer(SDL_Renderer* renderer) => SDL_DestroyRenderer(renderer);
+    public static void SetRenderScale(SDL_Renderer* renderer, Vector2 scale) => SDL_SetRenderScale(renderer, scale.X, scale.Y);
+    public static void RenderDebugText(SDL_Renderer* renderer, string text, Vector2 position) => SDL_RenderDebugText(renderer, position.X, position.Y, text);
+    public static void RenderLine(SDL_Renderer* renderer, Vector2 positionOne, Vector2 positionTwo) => SDL_RenderLine(renderer, positionOne.X, positionOne.Y, positionTwo.X, positionTwo.Y);
+    public static void RenderLines(SDL_Renderer* renderer, List<Vector2> points) => SDL_RenderLines(renderer, SDLUtil.ToPointer(points, static vector => new SDL_FPoint { x = vector.X, y = vector.Y }), points.Count);
+    public static void RenderPoint(SDL_Renderer* renderer, Vector2 position) => SDL_RenderPoint(renderer, position.X, position.Y);
+    public static void RenderPoints(SDL_Renderer* renderer, List<Vector2> points) => SDL_RenderPoints(renderer, SDLUtil.ToPointer(points, static vector => new SDL_FPoint { x = vector.X, y = vector.Y }), points.Count);
 
     public static SystemTheme GetSystemTheme()
     {
@@ -104,13 +151,18 @@ internal static unsafe class SDL
         return prop;
     }
 
-    public static bool SetAppMetadataProperty(AppMetadata.MetadataProperty property, string? value)
-    {
-        return SDL_SetAppMetadataProperty(GetAppMetadataPropertyProp(property), value);
-    }
+    public static bool SetAppMetadataProperty(AppMetadata.MetadataProperty property, string? value) => SDL_SetAppMetadataProperty(GetAppMetadataPropertyProp(property), value);
 
-    public static string GetAppMetadataProperty(AppMetadata.MetadataProperty property)
-    {
-        return SDL_GetAppMetadataProperty(GetAppMetadataPropertyProp(property)) ?? string.Empty;
-    }
+    public static string GetAppMetadataProperty(AppMetadata.MetadataProperty property) => SDL_GetAppMetadataProperty(GetAppMetadataPropertyProp(property)) ?? string.Empty;
+
+    public static SDL_Surface* RenderReadPixels(SDL_Renderer* renderer, SDL_Rect* rect) => SDL_RenderReadPixels(renderer, rect);
+
+    public static bool SaveBMP(SDL_Surface* surface, string filename) => SDL_SaveBMP(surface, filename);
+    public static void DestroySurface(SDL_Surface* surface) => SDL_DestroySurface(surface);
+
+    public static void RenderRect(SDL_Renderer* renderer, SDL_FRect rect) => SDL_RenderRect(renderer, &rect);
+    public static void RenderRects(SDL_Renderer* renderer, List<SDL_FRect> rect) => SDL_RenderRects(renderer, SDLUtil.ToPointer(rect), rect.Count);
+
+    public static void RenderFillRect(SDL_Renderer* renderer, SDL_FRect rect) => SDL_RenderFillRect(renderer, &rect);
+    public static void RenderFillRects(SDL_Renderer* renderer, List<SDL_FRect> rect) => SDL_RenderFillRects(renderer, SDLUtil.ToPointer(rect), rect.Count);
 }

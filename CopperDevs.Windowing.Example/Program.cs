@@ -1,5 +1,6 @@
-﻿using System.Drawing;
-using CopperDevs.Logger;
+using System.Numerics;
+using CopperDevs.Core.Data;
+using CopperDevs.Core.Utility;
 using CopperDevs.Windowing.Data;
 using CopperDevs.Windowing.SDL3;
 using CopperDevs.Windowing.SDL3.Data;
@@ -11,16 +12,17 @@ public static class Program
     private static SDL3Window window = null!;
     private static SDLRenderer renderer = null!;
 
-    private const string BaseWindowTitle = "CopperDevs Windowing Example";
+    private static readonly List<Vector2> Points = [];
+    private static readonly List<Vector2Int> PointIndexes = []; // represents a line, with X and Y being the index of the point in points (Points[X] -> Points[Y])
 
     public static void Main()
     {
         var options = SDL3WindowOptions.Default with
         {
-            Title = BaseWindowTitle,
+            Title = "CopperDevs Windowing Example",
             Metadata = new AppMetadata
             {
-                Name = BaseWindowTitle,
+                Name = "CopperDevs Windowing Example",
                 Version = "1.0.0",
                 Identifier = "com.copperdevs.windowing.example",
                 Creator = "copperdevs",
@@ -33,6 +35,7 @@ public static class Program
         window = Window.Create<SDL3Window>(options);
         renderer = window.GetRenderer();
 
+        window.OnLoad += OnLoad;
         window.OnUpdate += OnUpdate;
         window.OnRender += OnRender;
 
@@ -41,24 +44,62 @@ public static class Program
         window.Dispose();
     }
 
+    private static void OnLoad()
+    {
+        renderer.Scale = Vector2.One * 2; // slightly larger rendering scale for easier to see stuff
+    }
+
     private static void OnUpdate()
     {
-        window.Title = $"{BaseWindowTitle} | Mouse Pos: {Input.GetMousePosition()}";
+        if (Input.IsMouseButtonPressed(MouseButton.Left))
+        {
+            Points.AddRange([Input.GetMousePosition(), Input.GetMousePosition()]);
+            PointIndexes.Add(new Vector2Int(Points.Count - 2, Points.Count - 1));
+        }
 
-        if (Input.IsKeyPressed(InputKey.Space)) Log.Info($"Key pressed {InputKey.Space}");
-        if (Input.IsKeyReleased(InputKey.Space)) Log.Info($"Key released {InputKey.Space}");
+        if (Input.IsMouseButtonReleased(MouseButton.Left) || Input.IsMouseButtonDown(MouseButton.Left))
+            Points[PointIndexes[^1].Y] = Input.GetMousePosition();
 
-        if (Input.IsMouseButtonPressed(MouseButton.Left)) Log.Info($"Mouse Button pressed {MouseButton.Left}");
-        if (Input.IsMouseButtonReleased(MouseButton.Left)) Log.Info($"Mouse Button released {MouseButton.Left}");
+        if (Input.IsMouseButtonReleased(MouseButton.Left) && Points[PointIndexes[^1].X] == Points[PointIndexes[^1].Y])
+            PointIndexes.Remove(PointIndexes[^1]);
     }
+
 
     private static void OnRender()
     {
-        var backgroundColor = (window.SystemTheme == SystemTheme.Dark ? Color.Black : Color.White).ToVector4() / 255f;
+        renderer.Clear(Color.DarkGray);
 
-        renderer.SetDrawColor(backgroundColor.X, backgroundColor.Y, backgroundColor.Z, 1);
-        renderer.Clear();
+        foreach (var pointIndex in PointIndexes)
+            renderer.DrawLine(renderer.WindowToRendererCoordinates(Points[pointIndex.X]), renderer.WindowToRendererCoordinates(Points[pointIndex.Y]), Color.White);
+
+        foreach (var point in Points)
+            renderer.DrawPoint(renderer.WindowToRendererCoordinates(point), Color.Red);
+
+        if (Input.IsKeyDown(InputKey.Space))
+            renderer.Screenshot(); // we do this here so we only take a screenshot of the lines and not the debug text
+
+        RenderDebugText();
 
         renderer.Present();
+    }
+
+    private static void RenderDebugText()
+    {
+        renderer.Scale *= 1.5f; // bigger text moment
+
+        renderer.DrawDebugText($"FPS: {Time.FrameRate}", new Vector2(16, 16), Color.Black);
+        renderer.DrawDebugText($"Mouse Pos: {Input.GetMousePosition()}", new Vector2(16, 26), Color.Black);
+        renderer.DrawDebugText($"Line Count: {PointIndexes.Count}", new Vector2(16, 36), Color.Black);
+        renderer.DrawDebugText($"Points Count: {Points.Count}", new Vector2(16, 46), Color.Black);
+
+
+        renderer.Scale *= 0.9f; // smaller text for these items
+
+        for (var i = 0; i < PointIndexes.Count; i++)
+            renderer.DrawDebugText($"Line {i + 1}:{((9 > i && PointIndexes.Count >= 10) ? " " : "")} {Points[PointIndexes[i].X].Round(2)} -> {Points[PointIndexes[i].Y].Round(2)}", new Vector2(20, 64 + i * 10), Color.Black);
+
+        renderer.Scale /= 0.9f;
+
+        renderer.Scale /= 1.5f;
     }
 }
