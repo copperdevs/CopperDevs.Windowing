@@ -21,6 +21,20 @@ public unsafe class SDLRenderer(SDL_Renderer* native) : SafeDisposable
 
     public Vector2 WindowToRendererCoordinates(Vector2 position) => SDL.RenderCoordinatesFromWindow(native, position);
 
+    public void Screenshot()
+    {
+        var index = 0;
+        
+        Directory.CreateDirectory("screenshots");
+
+        while (File.Exists($"screenshots/{index}.bmp")) 
+            index++;
+        
+        var pixels = SDL.RenderReadPixels(native, null);
+        SDL.SaveBMP(pixels, $"screenshots/{index}.bmp");
+        SDL.DestroySurface(pixels);
+    }
+    
     public void Present() => SDL.RenderPresent(native);
     public void Clear() => SDL.RenderClear(native);
 

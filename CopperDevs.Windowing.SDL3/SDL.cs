@@ -151,13 +151,12 @@ internal static unsafe class SDL
         return prop;
     }
 
-    public static bool SetAppMetadataProperty(AppMetadata.MetadataProperty property, string? value)
-    {
-        return SDL_SetAppMetadataProperty(GetAppMetadataPropertyProp(property), value);
-    }
+    public static bool SetAppMetadataProperty(AppMetadata.MetadataProperty property, string? value) => SDL_SetAppMetadataProperty(GetAppMetadataPropertyProp(property), value);
 
-    public static string GetAppMetadataProperty(AppMetadata.MetadataProperty property)
-    {
-        return SDL_GetAppMetadataProperty(GetAppMetadataPropertyProp(property)) ?? string.Empty;
-    }
+    public static string GetAppMetadataProperty(AppMetadata.MetadataProperty property) => SDL_GetAppMetadataProperty(GetAppMetadataPropertyProp(property)) ?? string.Empty;
+    
+    public static SDL_Surface* RenderReadPixels(SDL_Renderer* renderer, SDL_Rect* rect) => SDL_RenderReadPixels(renderer, rect);
+    
+    public static bool SaveBMP(SDL_Surface* surface, string filename) => SDL_SaveBMP(surface, filename);
+    public static void DestroySurface(SDL_Surface* surface) => SDL_DestroySurface(surface);
 }
