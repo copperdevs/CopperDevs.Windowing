@@ -15,6 +15,10 @@ public static class Program
     private static readonly List<Vector2> Points = [];
     private static readonly List<Vector2Int> PointIndexes = []; // represents a line, with X and Y being the index of the point in points (Points[X] -> Points[Y])
 
+    private static Vector2 ScaleRange = new(0.5f, 10f);
+    private static float ArrowChanger = 0.5f;
+    private static float Scale = 1;
+
     public static void Main()
     {
         var options = SDL3WindowOptions.Default with
@@ -46,7 +50,6 @@ public static class Program
 
     private static void OnLoad()
     {
-        renderer.Scale = Vector2.One * 2; // slightly larger rendering scale for easier to see stuff
     }
 
     private static void OnUpdate()
@@ -62,6 +65,16 @@ public static class Program
 
         if (Input.IsMouseButtonReleased(MouseButton.Left) && Points[PointIndexes[^1].X] == Points[PointIndexes[^1].Y])
             PointIndexes.Remove(PointIndexes[^1]);
+
+        if (Input.IsKeyPressed(InputKey.Left))
+            Scale -= ArrowChanger;
+
+        if (Input.IsKeyPressed(InputKey.Right))
+            Scale += ArrowChanger;
+
+        Scale = MathUtil.Clamp(Scale, ScaleRange.X, ScaleRange.Y);
+
+        renderer.Scale = Vector2.One * Scale;
     }
 
 
@@ -85,21 +98,22 @@ public static class Program
 
     private static void RenderDebugText()
     {
-        renderer.Scale *= 1.5f; // bigger text moment
+        var oldScale = renderer.Scale;
+        renderer.Scale = Vector2.One * 1.5f; // bigger text moment
 
         renderer.DrawDebugText($"FPS: {Time.FrameRate}", new Vector2(16, 16), Color.Black);
         renderer.DrawDebugText($"Mouse Pos: {Input.GetMousePosition()}", new Vector2(16, 26), Color.Black);
-        renderer.DrawDebugText($"Line Count: {PointIndexes.Count}", new Vector2(16, 36), Color.Black);
-        renderer.DrawDebugText($"Points Count: {Points.Count}", new Vector2(16, 46), Color.Black);
+        renderer.DrawDebugText($"Scale: {Scale}", new Vector2(16, 36), Color.Black);
+        renderer.DrawDebugText($"Line Count: {PointIndexes.Count}", new Vector2(16, 46), Color.Black);
+        renderer.DrawDebugText($"Points Count: {Points.Count}", new Vector2(16, 56), Color.Black);
 
 
-        renderer.Scale *= 0.9f; // smaller text for these items
+        renderer.Scale = Vector2.One * 1.35f; // smaller text for these items
 
         for (var i = 0; i < PointIndexes.Count; i++)
-            renderer.DrawDebugText($"Line {i + 1}:{((9 > i && PointIndexes.Count >= 10) ? " " : "")} {Points[PointIndexes[i].X].Round(2)} -> {Points[PointIndexes[i].Y].Round(2)}", new Vector2(20, 64 + i * 10), Color.Black);
+            renderer.DrawDebugText($"Line {i + 1}:{(9 > i && PointIndexes.Count >= 10 ? " " : "")} {Points[PointIndexes[i].X].Round(2)} -> {Points[PointIndexes[i].Y].Round(2)}",
+                new Vector2(20, 74 + i * 10), Color.Black);
 
-        renderer.Scale /= 0.9f;
-
-        renderer.Scale /= 1.5f;
+        renderer.Scale = oldScale;
     }
 }
