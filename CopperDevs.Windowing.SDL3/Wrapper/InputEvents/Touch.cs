@@ -8,8 +8,38 @@ namespace CopperDevs.Windowing.SDL3;
 
 public static unsafe partial class SDL
 {
-    public static void GetTouchDeviceName() => SDL_GetTouchDeviceName();
-    public static void GetTouchDevices() => SDL_GetTouchDevices();
-    public static void GetTouchDeviceType() => SDL_GetTouchDeviceType();
-    public static void GetTouchFingers() => SDL_GetTouchFingers();
+    public static string GetTouchDeviceName(SDL_TouchID id) => SDL_GetTouchDeviceName(id) ?? string.Empty;
+
+    public static SDL_TouchID[] GetTouchDevices()
+    {
+        using var sdlArray = SDL_GetTouchDevices();
+
+        if (sdlArray is null)
+            return [];
+
+        var array = new SDL_TouchID[sdlArray.Count];
+
+        for (var i = 0; i < sdlArray.Count; i++)
+            array[i] = sdlArray[i];
+
+        return array;
+    }
+
+    public static SDL_TouchDeviceType GetTouchDeviceType(SDL_TouchID id) => SDL_GetTouchDeviceType(id);
+
+    public static SDL_Finger[] GetTouchFingers(SDL_TouchID id)
+    {
+        using var sdlArray = SDL_GetTouchFingers(id);
+
+        if (sdlArray is null)
+            return [];
+
+        var array = new SDL_Finger[sdlArray.Count];
+
+        for (var i = 0; i < sdlArray.Count; i++)
+            array[i] = sdlArray[i];
+
+        return array;
+        
+    }
 }

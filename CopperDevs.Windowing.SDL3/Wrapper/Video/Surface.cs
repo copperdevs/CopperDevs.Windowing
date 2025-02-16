@@ -59,8 +59,6 @@ public static unsafe partial class SDL
     public static void SetSurfaceColorspace() => SDL_SetSurfaceColorspace();
     public static void SetSurfacePalette() => SDL_SetSurfacePalette();
     public static void SetSurfaceRLE() => SDL_SetSurfaceRLE();
-    public static void SoftStretch() => SDL_SoftStretch();
-    public static void StretchSurface() => SDL_StretchSurface();
     public static void SurfaceHasAlternateImages() => SDL_SurfaceHasAlternateImages();
     public static void SurfaceHasColorKey() => SDL_SurfaceHasColorKey();
     public static void SurfaceHasRLE() => SDL_SurfaceHasRLE();

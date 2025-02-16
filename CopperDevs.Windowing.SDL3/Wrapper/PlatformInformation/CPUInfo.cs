@@ -8,22 +8,22 @@ namespace CopperDevs.Windowing.SDL3;
 
 public static unsafe partial class SDL
 {
-    public static void GetCPUCacheLineSize() => SDL_GetCPUCacheLineSize();
-    public static void GetNumLogicalCPUCores() => SDL_GetNumLogicalCPUCores();
-    public static void GetSIMDAlignment() => SDL_GetSIMDAlignment();
-    public static void GetSystemRAM() => SDL_GetSystemRAM();
-    public static void HasAltiVec() => SDL_HasAltiVec();
-    public static void HasARMSIMD() => SDL_HasARMSIMD();
-    public static void HasAVX() => SDL_HasAVX();
-    public static void HasAVX2() => SDL_HasAVX2();
-    public static void HasAVX512F() => SDL_HasAVX512F();
-    public static void HasLASX() => SDL_HasLASX();
-    public static void HasLSX() => SDL_HasLSX();
-    public static void HasMMX() => SDL_HasMMX();
-    public static void HasNEON() => SDL_HasNEON();
-    public static void HasSSE() => SDL_HasSSE();
-    public static void HasSSE2() => SDL_HasSSE2();
-    public static void HasSSE3() => SDL_HasSSE3();
-    public static void HasSSE41() => SDL_HasSSE41();
-    public static void HasSSE42() => SDL_HasSSE42();
+    public static int GetCPUCacheLineSize() => SDL_GetCPUCacheLineSize();
+    public static int GetNumLogicalCPUCores() => SDL_GetNumLogicalCPUCores();
+    public static nuint GetSIMDAlignment() => SDL_GetSIMDAlignment();
+    public static int GetSystemRAM() => SDL_GetSystemRAM();
+    public static bool HasAltiVec() => SDL_HasAltiVec();
+    public static bool HasARMSIMD() => SDL_HasARMSIMD();
+    public static bool HasAVX() => SDL_HasAVX();
+    public static bool HasAVX2() => SDL_HasAVX2();
+    public static bool HasAVX512F() => SDL_HasAVX512F();
+    public static bool HasLASX() => SDL_HasLASX();
+    public static bool HasLSX() => SDL_HasLSX();
+    public static bool HasMMX() => SDL_HasMMX();
+    public static bool HasNEON() => SDL_HasNEON();
+    public static bool HasSSE() => SDL_HasSSE();
+    public static bool HasSSE2() => SDL_HasSSE2();
+    public static bool HasSSE3() => SDL_HasSSE3();
+    public static bool HasSSE41() => SDL_HasSSE41();
+    public static bool HasSSE42() => SDL_HasSSE42();
 }

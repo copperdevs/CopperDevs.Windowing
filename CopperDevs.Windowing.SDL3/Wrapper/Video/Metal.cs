@@ -8,7 +8,7 @@ namespace CopperDevs.Windowing.SDL3;
 
 public static unsafe partial class SDL
 {
-    public static void Metal_CreateView() => SDL_Metal_CreateView();
-    public static void Metal_DestroyView() => SDL_Metal_DestroyView();
-    public static void Metal_GetLayer() => SDL_Metal_GetLayer();
+    public static nint Metal_CreateView(SDL_Window* window) => SDL_Metal_CreateView(window);
+    public static void Metal_DestroyView(nint view) => SDL_Metal_DestroyView(view);
+    public static nint Metal_GetLayer(nint view) => SDL_Metal_GetLayer(view);
 }

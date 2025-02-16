@@ -1,4 +1,4 @@
-using CopperDevs.Windowing.SDL3.Data;
+using CopperDevs.Windowing.SDL3.Wrapper.Enums;
 
 #pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
 
@@ -8,5 +8,17 @@ namespace CopperDevs.Windowing.SDL3;
 
 public static unsafe partial class SDL
 {
-    public static void BlendMode() => SDL_BlendMode();
+    public static BlendFactor ComposeCustomBlendMode(
+        BlendFactor srcColorFactor,
+        BlendFactor dstColorFactor,
+        BlendOperation colorOperation,
+        BlendFactor srcAlphaFactor,
+        BlendFactor dstAlphaFactor,
+        BlendOperation alphaOperation) => (BlendFactor)SDL_ComposeCustomBlendMode(
+        (SDL_BlendFactor)srcColorFactor,
+        (SDL_BlendFactor)dstColorFactor,
+        (SDL_BlendOperation)colorOperation,
+        (SDL_BlendFactor)srcAlphaFactor,
+        (SDL_BlendFactor)dstAlphaFactor,
+        (SDL_BlendOperation)alphaOperation);
 }

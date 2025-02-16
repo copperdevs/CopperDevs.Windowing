@@ -8,15 +8,17 @@ namespace CopperDevs.Windowing.SDL3;
 
 public static unsafe partial class SDL
 {
-    public static void ClearClipboardData() => SDL_ClearClipboardData();
-    public static void GetClipboardData() => SDL_GetClipboardData();
-    public static void GetClipboardMimeTypes() => SDL_GetClipboardMimeTypes();
-    public static void GetClipboardText() => SDL_GetClipboardText();
-    public static void GetPrimarySelectionText() => SDL_GetPrimarySelectionText();
-    public static void HasClipboardData() => SDL_HasClipboardData();
-    public static void HasClipboardText() => SDL_HasClipboardText();
-    public static void HasPrimarySelectionText() => SDL_HasPrimarySelectionText();
-    public static void SetClipboardData() => SDL_SetClipboardData();
-    public static void SetClipboardText() => SDL_SetClipboardText();
-    public static void SetPrimarySelectionText() => SDL_SetPrimarySelectionText();
+    public static bool ClearClipboardData() => SDL_ClearClipboardData();
+    public static void GetClipboardData(string mimeType, UIntPtr* size) => SDL_GetClipboardData(mimeType, size);
+    public static byte** GetClipboardMimeTypes(UIntPtr* numMimeTypes) => SDL_GetClipboardMimeTypes(numMimeTypes);
+    public static string GetClipboardText() => SDL_GetClipboardText() ?? string.Empty;
+    public static string GetPrimarySelectionText() => SDL_GetPrimarySelectionText() ?? string.Empty;
+    public static bool HasClipboardData(string mimeType) => SDL_HasClipboardData(mimeType);
+    public static bool HasClipboardText() => SDL_HasClipboardText();
+
+    public static bool HasPrimarySelectionText() => SDL_HasPrimarySelectionText();
+
+//    public static void SetClipboardData() => SDL_SetClipboardData();
+    public static bool SetClipboardText(string text) => SDL_SetClipboardText(text);
+    public static bool SetPrimarySelectionText(string text) => SDL_SetPrimarySelectionText(text);
 }

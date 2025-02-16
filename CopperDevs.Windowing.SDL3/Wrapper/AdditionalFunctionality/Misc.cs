@@ -8,5 +8,6 @@ namespace CopperDevs.Windowing.SDL3;
 
 public static unsafe partial class SDL
 {
-    public static void OpenURL() => SDL_OpenURL();
+    // ReSharper disable once InconsistentNaming
+    public static bool OpenURL(string path) => SDL_OpenURL(path);
 }

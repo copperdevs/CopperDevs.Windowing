@@ -8,19 +8,50 @@ namespace CopperDevs.Windowing.SDL3;
 
 public static unsafe partial class SDL
 {
-    public static void AcquireCameraFrame() => SDL_AcquireCameraFrame();
-    public static void CloseCamera() => SDL_CloseCamera();
-    public static void GetCameraDriver() => SDL_GetCameraDriver();
-    public static void GetCameraFormat() => SDL_GetCameraFormat();
-    public static void GetCameraID() => SDL_GetCameraID();
-    public static void GetCameraName() => SDL_GetCameraName();
-    public static void GetCameraPermissionState() => SDL_GetCameraPermissionState();
-    public static void GetCameraPosition() => SDL_GetCameraPosition();
-    public static void GetCameraProperties() => SDL_GetCameraProperties();
-    public static void GetCameras() => SDL_GetCameras();
-    public static void GetCameraSupportedFormats() => SDL_GetCameraSupportedFormats();
-    public static void GetCurrentCameraDriver() => SDL_GetCurrentCameraDriver();
-    public static void GetNumCameraDrivers() => SDL_GetNumCameraDrivers();
-    public static void OpenCamera() => SDL_OpenCamera();
-    public static void ReleaseCameraFrame() => SDL_ReleaseCameraFrame();
+    public static SDL_Surface* AcquireCameraFrame(SDL_Camera* camera, ulong* timestampNS) => SDL_AcquireCameraFrame(camera, timestampNS);
+    public static void CloseCamera(SDL_Camera* camera) => SDL_CloseCamera(camera);
+    public static string GetCameraDriver(int index) => SDL_GetCameraDriver(index) ?? string.Empty;
+    public static bool GetCameraFormat(SDL_Camera* camera, SDL_CameraSpec* spec) => SDL_GetCameraFormat(camera, spec);
+    public static SDL_CameraID GetCameraID(SDL_Camera* camera) => SDL_GetCameraID(camera);
+    public static string GetCameraName(SDL_CameraID instanceId) => SDL_GetCameraName(instanceId) ?? string.Empty;
+    public static int GetCameraPermissionState(SDL_Camera* camera) => SDL_GetCameraPermissionState(camera);
+    public static SDL_CameraPosition GetCameraPosition(SDL_CameraID instanceId) => SDL_GetCameraPosition(instanceId);
+    public static SDL_PropertiesID GetCameraProperties(SDL_Camera* camera) => SDL_GetCameraProperties(camera);
+
+    public static SDL_CameraID[] GetCameras()
+    {
+        using var sdlArray = SDL_GetCameras();
+
+        if (sdlArray is null)
+            return [];
+
+        var array = new SDL_CameraID[sdlArray.Count];
+
+        for (var i = 0; i < sdlArray.Count; i++)
+            array[i] = sdlArray[i];
+
+        return array;
+    }
+
+    public static SDL_CameraSpec[] GetCameraSupportedFormats(SDL_CameraID devid)
+    {
+        using var sdlArray = SDL_GetCameraSupportedFormats(devid);
+
+        if (sdlArray is null)
+            return [];
+
+        var array = new SDL_CameraSpec[sdlArray.Count];
+
+        for (var i = 0; i < sdlArray.Count; i++)
+            array[i] = sdlArray[i];
+
+        return array;
+    }
+
+    public static string GetCurrentCameraDriver() => SDL_GetCurrentCameraDriver() ?? string.Empty;
+    public static int GetNumCameraDrivers() => SDL_GetNumCameraDrivers();
+
+    public static SDL_Camera* OpenCamera(SDL_CameraID instanceId, SDL_CameraSpec* spec) => SDL_OpenCamera(instanceId, spec);
+
+    public static void ReleaseCameraFrame(SDL_Camera* camera, SDL_Surface* frame) => SDL_ReleaseCameraFrame(camera, frame);
 }
