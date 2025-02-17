@@ -8,6 +8,7 @@ namespace CopperDevs.Windowing.SDL3;
 
 public static unsafe partial class SDL
 {
-    public static void ShowMessageBox() => SDL_ShowMessageBox();
-    public static void ShowSimpleMessageBox() => SDL_ShowSimpleMessageBox();
+    public static void ShowMessageBox(SDL_MessageBoxData* messageboxdata, int* buttonid) => SDL_ShowMessageBox(messageboxdata, buttonid);
+
+    public static void ShowSimpleMessageBox(SDL_MessageBoxFlags flags, string title, string message, SDL_Window* window) => SDL_ShowSimpleMessageBox(flags, title, message, window);
 }

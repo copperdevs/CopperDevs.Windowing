@@ -8,8 +8,9 @@ namespace CopperDevs.Windowing.SDL3;
 
 public static unsafe partial class SDL
 {
-    public static void ShowFileDialogWithProperties() => SDL_ShowFileDialogWithProperties();
-    public static void ShowOpenFileDialog() => SDL_ShowOpenFileDialog();
-    public static void ShowOpenFolderDialog() => SDL_ShowOpenFolderDialog();
-    public static void ShowSaveFileDialog() => SDL_ShowSaveFileDialog();
+    // TODO: Support file dialog
+    // public static void ShowFileDialogWithProperties() => SDL_ShowFileDialogWithProperties();
+    // public static void ShowOpenFileDialog() => SDL_ShowOpenFileDialog();
+    // public static void ShowOpenFolderDialog() => SDL_ShowOpenFolderDialog();
+    // public static void ShowSaveFileDialog() => SDL_ShowSaveFileDialog();
 }
