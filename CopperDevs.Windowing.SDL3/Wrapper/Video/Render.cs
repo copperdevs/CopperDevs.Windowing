@@ -8,93 +8,110 @@ namespace CopperDevs.Windowing.SDL3;
 
 public static unsafe partial class SDL
 {
-    public static void AddVulkanRenderSemaphores() => SDL_AddVulkanRenderSemaphores();
-    public static void ConvertEventToRenderCoordinates() => SDL_ConvertEventToRenderCoordinates();
-    public static void CreateRenderer() => SDL_CreateRenderer();
-    public static void CreateRendererWithProperties() => SDL_CreateRendererWithProperties();
-    public static void CreateSoftwareRenderer() => SDL_CreateSoftwareRenderer();
-    public static void CreateTexture() => SDL_CreateTexture();
-    public static void CreateTextureFromSurface() => SDL_CreateTextureFromSurface();
-    public static void CreateTextureWithProperties() => SDL_CreateTextureWithProperties();
-    public static void CreateWindowAndRenderer() => SDL_CreateWindowAndRenderer();
-    public static void DestroyRenderer() => SDL_DestroyRenderer();
-    public static void DestroyTexture() => SDL_DestroyTexture();
-    public static void FlushRenderer() => SDL_FlushRenderer();
-    public static void GetCurrentRenderOutputSize() => SDL_GetCurrentRenderOutputSize();
-    public static void GetNumRenderDrivers() => SDL_GetNumRenderDrivers();
-    public static void GetRenderClipRect() => SDL_GetRenderClipRect();
-    public static void GetRenderColorScale() => SDL_GetRenderColorScale();
-    public static void GetRenderDrawBlendMode() => SDL_GetRenderDrawBlendMode();
-    public static void GetRenderDrawColor() => SDL_GetRenderDrawColor();
-    public static void GetRenderDrawColorFloat() => SDL_GetRenderDrawColorFloat();
-    public static void GetRenderDriver() => SDL_GetRenderDriver();
-    public static void GetRenderer() => SDL_GetRenderer();
-    public static void GetRendererFromTexture() => SDL_GetRendererFromTexture();
-    public static void GetRendererName() => SDL_GetRendererName();
-    public static void GetRendererProperties() => SDL_GetRendererProperties();
-    public static void GetRenderLogicalPresentation() => SDL_GetRenderLogicalPresentation();
-    public static void GetRenderLogicalPresentationRect() => SDL_GetRenderLogicalPresentationRect();
-    public static void GetRenderMetalCommandEncoder() => SDL_GetRenderMetalCommandEncoder();
-    public static void GetRenderMetalLayer() => SDL_GetRenderMetalLayer();
-    public static void GetRenderOutputSize() => SDL_GetRenderOutputSize();
-    public static void GetRenderSafeArea() => SDL_GetRenderSafeArea();
-    public static void GetRenderScale() => SDL_GetRenderScale();
-    public static void GetRenderTarget() => SDL_GetRenderTarget();
-    public static void GetRenderViewport() => SDL_GetRenderViewport();
-    public static void GetRenderVSync() => SDL_GetRenderVSync();
-    public static void GetRenderWindow() => SDL_GetRenderWindow();
-    public static void GetTextureAlphaMod() => SDL_GetTextureAlphaMod();
-    public static void GetTextureAlphaModFloat() => SDL_GetTextureAlphaModFloat();
-    public static void GetTextureBlendMode() => SDL_GetTextureBlendMode();
-    public static void GetTextureColorMod() => SDL_GetTextureColorMod();
-    public static void GetTextureColorModFloat() => SDL_GetTextureColorModFloat();
-    public static void GetTextureProperties() => SDL_GetTextureProperties();
-    public static void GetTextureScaleMode() => SDL_GetTextureScaleMode();
-    public static void GetTextureSize() => SDL_GetTextureSize();
-    public static void LockTexture() => SDL_LockTexture();
-    public static void LockTextureToSurface() => SDL_LockTextureToSurface();
-    public static void RenderClear() => SDL_RenderClear();
-    public static void RenderClipEnabled() => SDL_RenderClipEnabled();
-    public static void RenderCoordinatesFromWindow() => SDL_RenderCoordinatesFromWindow();
-    public static void RenderCoordinatesToWindow() => SDL_RenderCoordinatesToWindow();
-    public static void RenderDebugText() => SDL_RenderDebugText();
-    public static void RenderDebugTextFormat() => SDL_RenderDebugTextFormat();
-    public static void RenderFillRect() => SDL_RenderFillRect();
-    public static void RenderFillRects() => SDL_RenderFillRects();
-    public static void RenderGeometry() => SDL_RenderGeometry();
-    public static void RenderGeometryRaw() => SDL_RenderGeometryRaw();
-    public static void RenderLine() => SDL_RenderLine();
-    public static void RenderLines() => SDL_RenderLines();
-    public static void RenderPoint() => SDL_RenderPoint();
-    public static void RenderPoints() => SDL_RenderPoints();
-    public static void RenderPresent() => SDL_RenderPresent();
-    public static void RenderReadPixels() => SDL_RenderReadPixels();
-    public static void RenderRect() => SDL_RenderRect();
-    public static void RenderRects() => SDL_RenderRects();
-    public static void RenderTexture() => SDL_RenderTexture();
-    public static void RenderTexture9Grid() => SDL_RenderTexture9Grid();
-    public static void RenderTextureAffine() => SDL_RenderTextureAffine();
-    public static void RenderTextureRotated() => SDL_RenderTextureRotated();
-    public static void RenderTextureTiled() => SDL_RenderTextureTiled();
-    public static void RenderViewportSet() => SDL_RenderViewportSet();
-    public static void SetRenderClipRect() => SDL_SetRenderClipRect();
-    public static void SetRenderColorScale() => SDL_SetRenderColorScale();
-    public static void SetRenderDrawBlendMode() => SDL_SetRenderDrawBlendMode();
-    public static void SetRenderDrawColor() => SDL_SetRenderDrawColor();
-    public static void SetRenderDrawColorFloat() => SDL_SetRenderDrawColorFloat();
-    public static void SetRenderLogicalPresentation() => SDL_SetRenderLogicalPresentation();
-    public static void SetRenderScale() => SDL_SetRenderScale();
-    public static void SetRenderTarget() => SDL_SetRenderTarget();
-    public static void SetRenderViewport() => SDL_SetRenderViewport();
-    public static void SetRenderVSync() => SDL_SetRenderVSync();
-    public static void SetTextureAlphaMod() => SDL_SetTextureAlphaMod();
-    public static void SetTextureAlphaModFloat() => SDL_SetTextureAlphaModFloat();
-    public static void SetTextureBlendMode() => SDL_SetTextureBlendMode();
-    public static void SetTextureColorMod() => SDL_SetTextureColorMod();
-    public static void SetTextureColorModFloat() => SDL_SetTextureColorModFloat();
-    public static void SetTextureScaleMode() => SDL_SetTextureScaleMode();
-    public static void UnlockTexture() => SDL_UnlockTexture();
-    public static void UpdateNVTexture() => SDL_UpdateNVTexture();
-    public static void UpdateTexture() => SDL_UpdateTexture();
-    public static void UpdateYUVTexture() => SDL_UpdateYUVTexture();
+    public static bool AddVulkanRenderSemaphores(SDL_Renderer* renderer, uint wait_stage_mask, long wait_semaphore, long signal_semaphore)
+        => SDL_AddVulkanRenderSemaphores(renderer, wait_stage_mask, wait_semaphore, signal_semaphore);
+
+    public static bool ConvertEventToRenderCoordinates(SDL_Renderer* renderer, SDL_Event* @event) => SDL_ConvertEventToRenderCoordinates(renderer, @event);
+
+    public static SDL_Renderer* CreateRenderer(SDL_Window* window, string name) => SDL_CreateRenderer(window, name);
+
+    public static SDL_Renderer* CreateRendererWithProperties(SDL_PropertiesID props) => SDL_CreateRendererWithProperties(props);
+
+    public static SDL_Renderer* CreateSoftwareRenderer(SDL_Surface* surface) => SDL_CreateSoftwareRenderer(surface);
+
+    public static SDL_Texture* CreateTexture(SDL_Renderer* renderer, SDL_PixelFormat format, SDL_TextureAccess access, int w, int h) => SDL_CreateTexture(renderer, format, access, w, h);
+
+    public static SDL_Texture* CreateTextureFromSurface(SDL_Renderer* renderer, SDL_Surface* surface) => SDL_CreateTextureFromSurface(renderer, surface);
+
+    public static SDL_Texture* CreateTextureWithProperties(SDL_Renderer* renderer, SDL_PropertiesID props) => SDL_CreateTextureWithProperties(renderer, props);
+
+    public static bool CreateWindowAndRenderer(string title, int width, int height, SDL_WindowFlags window_flags, SDL_Window** window, SDL_Renderer** renderer) =>
+        SDL_CreateWindowAndRenderer(title, width, height, window_flags, window, renderer);
+
+    public static void DestroyRenderer(SDL_Renderer* renderer) => SDL_DestroyRenderer(renderer);
+
+    public static void DestroyTexture(SDL_Texture* texture) => SDL_DestroyTexture(texture);
+
+    public static bool FlushRenderer(SDL_Renderer* renderer) => SDL_FlushRenderer(renderer);
+
+    public static bool GetCurrentRenderOutputSize(SDL_Renderer* renderer, int* w, int* h) => SDL_GetCurrentRenderOutputSize(renderer, w, h);
+
+    public static int GetNumRenderDrivers() => SDL_GetNumRenderDrivers();
+
+    public static bool GetRenderClipRect(SDL_Renderer* renderer, SDL_Rect* rect) => SDL_GetRenderClipRect(renderer, rect);
+
+    public static void GetRenderColorScale(SDL_Renderer* renderer, float* scale) => SDL_GetRenderColorScale(renderer, scale);
+
+    public static bool GetRenderDrawBlendMode(SDL_Renderer* renderer, SDL_BlendMode* blendMode)
+        => SDL_GetRenderDrawBlendMode(renderer, blendMode);
+
+    public static bool GetRenderDrawColor(SDL_Renderer* renderer, byte* r, byte* g, byte* b, byte* a)
+        => SDL_GetRenderDrawColor(renderer, r, g, b, a);
+
+    public static bool GetRenderDrawColorFloat(SDL_Renderer* renderer, float* r, float* g, float* b, float* a)
+        => SDL_GetRenderDrawColorFloat(renderer, r, g, b, a);
+
+    public static string GetRenderDriver(int index) => SDL_GetRenderDriver(index) ?? string.Empty;
+
+    public static SDL_Renderer* GetRenderer(SDL_Window* window) => SDL_GetRenderer(window);
+
+    public static SDL_Renderer* GetRendererFromTexture(SDL_Texture* texture) => SDL_GetRendererFromTexture(texture);
+
+    public static string GetRendererName(SDL_Renderer* renderer) => SDL_GetRendererName(renderer) ?? string.Empty;
+
+    public static SDL_PropertiesID GetRendererProperties(SDL_Renderer* renderer) => SDL_GetRendererProperties(renderer);
+
+    public static bool GetRenderLogicalPresentation(SDL_Renderer* renderer, int* w, int* h, SDL_RendererLogicalPresentation* mode) => SDL_GetRenderLogicalPresentation(renderer, w, h, mode);
+
+    public static bool GetRenderLogicalPresentationRect(SDL_Renderer* renderer, SDL_FRect* rect) => SDL_GetRenderLogicalPresentationRect(renderer, rect);
+
+    public static IntPtr GetRenderMetalCommandEncoder(SDL_Renderer* renderer) => SDL_GetRenderMetalCommandEncoder(renderer);
+
+    public static IntPtr GetRenderMetalLayer(SDL_Renderer* renderer) => SDL_GetRenderMetalLayer(renderer);
+
+    public static bool GetRenderOutputSize(SDL_Renderer* renderer, int* w, int* h) => SDL_GetRenderOutputSize(renderer, w, h);
+
+    public static void GetRenderSafeArea(SDL_Renderer* renderer, SDL_Rect* rect) => SDL_GetRenderSafeArea(renderer, rect);
+
+    public static bool GetRenderScale(SDL_Renderer* renderer, float* scaleX, float* scaleY) => SDL_GetRenderScale(renderer, scaleX, scaleY);
+
+    public static SDL_Texture* GetRenderTarget(SDL_Renderer* renderer) => SDL_GetRenderTarget(renderer);
+
+    public static void GetRenderViewport(SDL_Renderer* renderer, SDL_Rect* rect) => SDL_GetRenderViewport(renderer, rect);
+
+    public static bool GetRenderVSync(SDL_Renderer* renderer, int* vsync) => SDL_GetRenderVSync(renderer, vsync);
+
+    public static SDL_Window* GetRenderWindow(SDL_Renderer* renderer) => SDL_GetRenderWindow(renderer);
+
+    public static bool GetTextureAlphaMod(SDL_Texture* texture, byte* alpha) => SDL_GetTextureAlphaMod(texture, alpha);
+
+    public static bool GetTextureAlphaModFloat(SDL_Texture* texture, float* alpha) => SDL_GetTextureAlphaModFloat(texture, alpha);
+
+    public static bool GetTextureBlendMode(SDL_Texture* texture, SDL_BlendMode* blendMode) => SDL_GetTextureBlendMode(texture, blendMode);
+
+    public static bool GetTextureColorMod(SDL_Texture* texture, byte* r, byte* g, byte* b) => SDL_GetTextureColorMod(texture, r, g, b);
+
+    public static bool GetTextureColorModFloat(SDL_Texture* texture, float* r, float* g, float* b) => SDL_GetTextureColorModFloat(texture, r, g, b);
+
+    public static SDL_PropertiesID GetTextureProperties(SDL_Texture* texture) => SDL_GetTextureProperties(texture);
+
+    public static bool GetTextureScaleMode(SDL_Texture* texture, SDL_ScaleMode* mode) => SDL_GetTextureScaleMode(texture, mode);
+
+    public static bool GetTextureSize(SDL_Texture* texture, float* w, float* h) => SDL_GetTextureSize(texture, w, h);
+
+    public static bool LockTexture(SDL_Texture* texture, SDL_Rect* rect, nint* pixels, int* pitch) => SDL_LockTexture(texture, rect, pixels, pitch);
+
+    public static bool LockTextureToSurface(SDL_Texture* texture, SDL_Rect* rect, SDL_Surface** surface) => SDL_LockTextureToSurface(texture, rect, surface);
+
+    public static void RenderClear(SDL_Renderer* renderer) => SDL_RenderClear(renderer);
+
+    public static void RenderPresent(SDL_Renderer* renderer) => SDL_RenderPresent(renderer);
+
+    public static void UnlockTexture(SDL_Texture* texture) => SDL_UnlockTexture(texture);
+
+    public static void UpdateTexture(SDL_Texture* texture, SDL_Rect* rect, nint pixels, int pitch) => SDL_UpdateTexture(texture, rect, pixels, pitch);
+
+    public static void UpdateNVTexture(SDL_Texture* texture, SDL_Rect* rect, byte* Yplane, int Ypitch, byte* UVplane, int UVpitch) => SDL_UpdateNVTexture(texture, rect, Yplane, Ypitch, UVplane, UVpitch);
+
+    public static void UpdateYUVTexture(SDL_Texture* texture, SDL_Rect* rect, byte* Yplane, int Ypitch, byte* Uplane, int Upitch, byte* Vplane, int Vpitch) => SDL_UpdateYUVTexture(texture, rect, Yplane, Ypitch, Uplane, Upitch, Vplane, Vpitch);
 }

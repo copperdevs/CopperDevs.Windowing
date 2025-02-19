@@ -8,16 +8,16 @@ namespace CopperDevs.Windowing.SDL3;
 
 public static unsafe partial class SDL
 {
-    public static void CaptureMouse() => SDL_CaptureMouse();
-    public static void CreateColorCursor() => SDL_CreateColorCursor();
-    public static void CreateCursor() => SDL_CreateCursor();
-    public static void CreateSystemCursor() => SDL_CreateSystemCursor();
-    public static void CursorVisible() => SDL_CursorVisible();
-    public static void DestroyCursor() => SDL_DestroyCursor();
-    public static void GetCursor() => SDL_GetCursor();
-    public static void GetDefaultCursor() => SDL_GetDefaultCursor();
-    public static void GetGlobalMouseState() => SDL_GetGlobalMouseState();
-    public static void GetMice() => SDL_GetMice();
+    public static bool CaptureMouse(bool enabled) => SDL_CaptureMouse(enabled);
+    public static SDL_Cursor* CreateColorCursor(SDL_Surface* surface, int hot_x, int hot_y) => SDL_CreateColorCursor(surface, hot_x, hot_y);
+    public static SDL_Cursor* CreateCursor(byte* data, byte* mask, int w, int h, int hot_x, int hot_y) => SDL_CreateCursor(data, mask, w, h, hot_x, hot_y);
+    public static SDL_Cursor* CreateSystemCursor(SDL_SystemCursor cursor) => SDL_CreateSystemCursor(cursor);
+    public static bool CursorVisible() => SDL_CursorVisible();
+    public static void DestroyCursor(SDL_Cursor* cursor) => SDL_DestroyCursor(cursor);
+    public static SDL_Cursor* GetCursor() => SDL_GetCursor();
+    public static SDL_Cursor* GetDefaultCursor() => SDL_GetDefaultCursor();
+    public static SDL_MouseButtonFlags GetGlobalMouseState(float* x, float* y) => SDL_GetGlobalMouseState(x, y);
+    public static SDL_MouseID[] GetMice() => SDLUtil.ToArray(SDL_GetMice());
     public static void GetMouseFocus() => SDL_GetMouseFocus();
     public static void GetMouseNameForID() => SDL_GetMouseNameForID();
     public static void GetMouseState() => SDL_GetMouseState();

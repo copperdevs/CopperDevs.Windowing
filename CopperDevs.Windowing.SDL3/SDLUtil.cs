@@ -35,6 +35,8 @@ internal static unsafe class SDLUtil
         for (var i = 0; i < pointerArray.Count; i++)
             array[i] = pointerArray[i];
 
+        pointerArray.Dispose();
+
         return array;
     }
 
@@ -48,6 +50,20 @@ internal static unsafe class SDLUtil
         for (var i = 0; i < pointerArray.Count; i++)
             array[i] = pointerArray[i];
 
+        pointerArray.Dispose();
+        
         return array;
     }
+}
+
+// ReSharper disable once InconsistentNaming
+internal static unsafe class SDLUtilExtensions
+{
+    public static TTarget* ToPointer<TType, TTarget>(this List<TType> items) where TTarget : unmanaged => SDLUtil.ToPointer<TType, TTarget>(items);
+
+    public static TTarget* ToPointer<TType, TTarget>(this List<TType> items, Func<TType, TTarget> targetCreation) where TTarget : unmanaged => SDLUtil.ToPointer(items, targetCreation);
+
+    public static TTarget[] ToArray<TTarget>(this SDLPointerArray<TTarget>? pointerArray) where TTarget : unmanaged => SDLUtil.ToArray(pointerArray);
+
+    public static TTarget[] ToArray<TTarget>(this SDLArray<TTarget>? pointerArray) where TTarget : unmanaged => SDLUtil.ToArray(pointerArray);
 }
