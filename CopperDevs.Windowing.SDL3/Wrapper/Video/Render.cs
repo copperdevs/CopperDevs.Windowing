@@ -8,8 +8,8 @@ namespace CopperDevs.Windowing.SDL3;
 
 public static unsafe partial class SDL
 {
-    public static bool AddVulkanRenderSemaphores(SDL_Renderer* renderer, uint wait_stage_mask, long wait_semaphore, long signal_semaphore)
-        => SDL_AddVulkanRenderSemaphores(renderer, wait_stage_mask, wait_semaphore, signal_semaphore);
+    public static bool AddVulkanRenderSemaphores(SDL_Renderer* renderer, uint waitStageMask, long waitSemaphore, long signalSemaphore)
+        => SDL_AddVulkanRenderSemaphores(renderer, waitStageMask, waitSemaphore, signalSemaphore);
 
     public static bool ConvertEventToRenderCoordinates(SDL_Renderer* renderer, SDL_Event* @event) => SDL_ConvertEventToRenderCoordinates(renderer, @event);
 
@@ -25,8 +25,8 @@ public static unsafe partial class SDL
 
     public static SDL_Texture* CreateTextureWithProperties(SDL_Renderer* renderer, SDL_PropertiesID props) => SDL_CreateTextureWithProperties(renderer, props);
 
-    public static bool CreateWindowAndRenderer(string title, int width, int height, SDL_WindowFlags window_flags, SDL_Window** window, SDL_Renderer** renderer) =>
-        SDL_CreateWindowAndRenderer(title, width, height, window_flags, window, renderer);
+    public static bool CreateWindowAndRenderer(string title, int width, int height, SDL_WindowFlags windowFlags, SDL_Window** window, SDL_Renderer** renderer) =>
+        SDL_CreateWindowAndRenderer(title, width, height, windowFlags, window, renderer);
 
     public static void DestroyRenderer(SDL_Renderer* renderer) => SDL_DestroyRenderer(renderer);
 
@@ -111,7 +111,7 @@ public static unsafe partial class SDL
 
     public static void UpdateTexture(SDL_Texture* texture, SDL_Rect* rect, nint pixels, int pitch) => SDL_UpdateTexture(texture, rect, pixels, pitch);
 
-    public static void UpdateNVTexture(SDL_Texture* texture, SDL_Rect* rect, byte* Yplane, int Ypitch, byte* UVplane, int UVpitch) => SDL_UpdateNVTexture(texture, rect, Yplane, Ypitch, UVplane, UVpitch);
+    public static void UpdateNvTexture(SDL_Texture* texture, SDL_Rect* rect, byte* yplane, int ypitch, byte* uVplane, int uVpitch) => SDL_UpdateNVTexture(texture, rect, yplane, ypitch, uVplane, uVpitch);
 
-    public static void UpdateYUVTexture(SDL_Texture* texture, SDL_Rect* rect, byte* Yplane, int Ypitch, byte* Uplane, int Upitch, byte* Vplane, int Vpitch) => SDL_UpdateYUVTexture(texture, rect, Yplane, Ypitch, Uplane, Upitch, Vplane, Vpitch);
+    public static void UpdateYuvTexture(SDL_Texture* texture, SDL_Rect* rect, byte* yplane, int ypitch, byte* uplane, int upitch, byte* vplane, int vpitch) => SDL_UpdateYUVTexture(texture, rect, yplane, ypitch, uplane, upitch, vplane, vpitch);
 }

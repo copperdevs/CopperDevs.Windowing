@@ -161,7 +161,7 @@ public class SDL3Window : Window
                 break;
         }
     }
-
+    
     [UnmanagedCallersOnly(CallConvs = [typeof(CallConvCdecl)])]
     private static unsafe SDLBool EventWatcher(IntPtr userdata, SDL_Event* eventPtr)
     {

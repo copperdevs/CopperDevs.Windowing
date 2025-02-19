@@ -53,8 +53,6 @@ public static unsafe partial class SDL
     public static void GetWindowKeyboardGrab() => SDL_GetWindowKeyboardGrab();
     public static void GetWindowMaximumSize() => SDL_GetWindowMaximumSize();
     public static void GetWindowMinimumSize() => SDL_GetWindowMinimumSize();
-    public static void GetWindowMouseGrab() => SDL_GetWindowMouseGrab();
-    public static void GetWindowMouseRect() => SDL_GetWindowMouseRect();
     public static void GetWindowOpacity() => SDL_GetWindowOpacity();
     public static void GetWindowParent() => SDL_GetWindowParent();
     public static void GetWindowPixelDensity() => SDL_GetWindowPixelDensity();
@@ -101,8 +99,6 @@ public static unsafe partial class SDL
     public static void SetWindowMaximumSize() => SDL_SetWindowMaximumSize();
     public static void SetWindowMinimumSize() => SDL_SetWindowMinimumSize();
     public static void SetWindowModal() => SDL_SetWindowModal();
-    public static void SetWindowMouseGrab() => SDL_SetWindowMouseGrab();
-    public static void SetWindowMouseRect() => SDL_SetWindowMouseRect();
     public static void SetWindowOpacity() => SDL_SetWindowOpacity();
     public static void SetWindowParent() => SDL_SetWindowParent();
     public static void SetWindowPosition() => SDL_SetWindowPosition();
