@@ -17,37 +17,8 @@ public static unsafe partial class SDL
     public static int GetCameraPermissionState(SDL_Camera* camera) => SDL_GetCameraPermissionState(camera);
     public static SDL_CameraPosition GetCameraPosition(SDL_CameraID instanceId) => SDL_GetCameraPosition(instanceId);
     public static SDL_PropertiesID GetCameraProperties(SDL_Camera* camera) => SDL_GetCameraProperties(camera);
-
-    public static SDL_CameraID[] GetCameras()
-    {
-        using var sdlArray = SDL_GetCameras();
-
-        if (sdlArray is null)
-            return [];
-
-        var array = new SDL_CameraID[sdlArray.Count];
-
-        for (var i = 0; i < sdlArray.Count; i++)
-            array[i] = sdlArray[i];
-
-        return array;
-    }
-
-    public static SDL_CameraSpec[] GetCameraSupportedFormats(SDL_CameraID devid)
-    {
-        using var sdlArray = SDL_GetCameraSupportedFormats(devid);
-
-        if (sdlArray is null)
-            return [];
-
-        var array = new SDL_CameraSpec[sdlArray.Count];
-
-        for (var i = 0; i < sdlArray.Count; i++)
-            array[i] = sdlArray[i];
-
-        return array;
-    }
-
+    public static SDL_CameraID[] GetCameras() => SDLUtil.ToArray(SDL_GetCameras());
+    public static SDL_CameraSpec[] GetCameraSupportedFormats(SDL_CameraID devid) => SDLUtil.ToArray(SDL_GetCameraSupportedFormats(devid));
     public static string GetCurrentCameraDriver() => SDL_GetCurrentCameraDriver() ?? string.Empty;
     public static int GetNumCameraDrivers() => SDL_GetNumCameraDrivers();
 
