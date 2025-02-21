@@ -5,8 +5,9 @@ using CopperDevs.Windowing.Data;
 using CopperDevs.Windowing.SDL3;
 using CopperDevs.Windowing.SDL3.Data;
 
-namespace CopperDevs.Windowing.Example;
+namespace CopperDevs.Windowing.Testing;
 
+// testing project moment
 public static class Program
 {
     private static SDL3Window window = null!;
