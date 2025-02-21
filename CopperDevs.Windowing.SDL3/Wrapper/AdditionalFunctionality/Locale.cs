@@ -8,5 +8,5 @@ namespace CopperDevs.Windowing.SDL3;
 
 public static unsafe partial class SDL
 {
-    public static void GetPreferredLocales() => SDL_GetPreferredLocales();
+    public static SDL_Locale[] GetPreferredLocales() => SDLUtil.ToArray(SDL_GetPreferredLocales());
 }

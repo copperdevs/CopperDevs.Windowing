@@ -6,6 +6,7 @@ using CopperDevs.Windowing.SDL3.Data;
 // ReSharper disable once InconsistentNaming
 namespace CopperDevs.Windowing.SDL3;
 
+// TODO: wrap this so it doesn't have to be unsafe perchance
 public static unsafe partial class SDL
 {
     // TODO: Support file dialog
