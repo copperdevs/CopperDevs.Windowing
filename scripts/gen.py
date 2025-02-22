@@ -7,11 +7,12 @@ import os
 
 
 def process_file():
-    with open("methods.txt", "r") as methods, open("output.txt", "w") as outputFile:
+    with open("methods.txt", "r") as methods, open("output.txt", "w") as outputFile, open("layer.txt", "w") as layer:
         for line in methods:
             line = line.strip()
             if len(line) >= 4:
                 outputFile.write(f"public static void {line[4:]}() => {line}();\n")
+                layer.write(f"SDL.SDL3.{line}();\n")
 
 
 def watch_file(filename, interval=1):
