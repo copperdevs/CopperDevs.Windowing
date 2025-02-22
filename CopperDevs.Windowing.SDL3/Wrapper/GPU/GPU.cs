@@ -53,8 +53,6 @@ public static unsafe partial class SDL
     public static void EndGPUComputePass() => SDL_EndGPUComputePass();
     public static void EndGPUCopyPass() => SDL_EndGPUCopyPass();
     public static void EndGPURenderPass() => SDL_EndGPURenderPass();
-    public static void GDKResumeGPU() => SDL_GDKResumeGPU();
-    public static void GDKSuspendGPU() => SDL_GDKSuspendGPU();
     public static void GenerateMipmapsForGPUTexture() => SDL_GenerateMipmapsForGPUTexture();
     public static void GetGPUDeviceDriver() => SDL_GetGPUDeviceDriver();
     public static void GetGPUDriver() => SDL_GetGPUDriver();
