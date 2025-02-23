@@ -25,7 +25,6 @@ internal static class HotReloadCallbackReceiver
 // it does what its suppose to do those so 🤷
 
 // TODO: if a method isn't able to be generated fully (unsafe code can't be seen via reflection), then make the line a comment and append "// TODO" to the end of it
-// TODO: fix types with multiple points not being converted correctly (ex: Byte** isn't being converted to byte**)
 public static class Program
 {
     private const bool ExcessiveLogs = true;
@@ -192,10 +191,23 @@ public static class Program
 
     private static string GetName(Type type)
     {
-        var verify = VerifyType(type).FullName!;
-        var isPointer = verify.EndsWith('*');
+        var shortenedString = VerifyType(type).FullName!;
+        var isPointer = shortenedString.EndsWith('*');
 
-        return TypeKeywordsMap.TryGetValue(isPointer ? verify.Remove(verify.Length - 1) : VerifyType(type).FullName!, out var value) ? $"{value}{(isPointer ? "*" : string.Empty)}" : VerifyType(type).Name;
+        var fullString = shortenedString;
+        
+        var pointerString = "";
+
+        while (shortenedString.EndsWith('*'))
+        {
+            shortenedString = shortenedString.Remove(shortenedString.Length - 1);
+            pointerString += "*";
+        }
+        
+        LogDebug($"shortenedString {shortenedString} | isPointer {isPointer} | pointerString {pointerString} | fullString {fullString}");
+        
+
+        return TypeKeywordsMap.TryGetValue(isPointer ? shortenedString : fullString, out var value) ? $"{value}{(isPointer ? pointerString : string.Empty)}" : VerifyType(type).Name;
     }
 
     private static void AppendOutputLine(object line) => File.AppendAllText("output.txt", $"{line}\n");
