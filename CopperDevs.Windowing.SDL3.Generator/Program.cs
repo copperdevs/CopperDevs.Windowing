@@ -23,8 +23,6 @@ internal static class HotReloadCallbackReceiver
 
 // lol this code is lowkey diabolical
 // it does what its suppose to do those so 🤷
-
-// TODO: if a method isn't able to be generated fully (unsafe code can't be seen via reflection), then make the line a comment and append "// TODO" to the end of it
 public static class Program
 {
     private const bool ExcessiveLogs = true;
@@ -140,6 +138,8 @@ public static class Program
 
             foreach (var methodInfo in methodInfos)
             {
+                var wasError = false;
+
                 var returnType = methodInfo.ReturnType != typeof(void) && !string.IsNullOrWhiteSpace(methodInfo.ReturnParameter.ParameterType.FullName) ? GetName(methodInfo.ReturnType) : "void";
 
                 if (ReturnTypeIsArray(methodInfo))
@@ -173,13 +173,14 @@ public static class Program
                     catch (Exception e)
                     {
                         LogError($"Error: {e.Message}");
+                        wasError = true;
                     }
                 }
 
                 LogInfo(parametersInputString);
 
                 AppendOutputLine(
-                    $"public static {returnType} {methodInfo.Name[4..]}({parametersInputString}) => {(ReturnTypeIsArray(methodInfo) ? "SDLUtil.ToArray(" : string.Empty)}SDL.SDL3.{methodInfo.Name}({parametersOutputString}){(ReturnTypeIsArray(methodInfo) ? ")" : string.Empty)}{(methodInfo.ReturnType == typeof(string) ? " ?? string.Empty" : string.Empty)};");
+                    $"{(wasError ? " // TODO: " : string.Empty)}public static {returnType} {methodInfo.Name[4..]}({parametersInputString}) => {(ReturnTypeIsArray(methodInfo) ? "SDLUtil.ToArray(" : string.Empty)}SDL.SDL3.{methodInfo.Name}({parametersOutputString}){(ReturnTypeIsArray(methodInfo) ? ")" : string.Empty)}{(methodInfo.ReturnType == typeof(string) ? " ?? string.Empty" : string.Empty)};");
             }
 
             LogDebug($"{method} {methodInfos.Count}");
@@ -195,7 +196,7 @@ public static class Program
         var isPointer = shortenedString.EndsWith('*');
 
         var fullString = shortenedString;
-        
+
         var pointerString = "";
 
         while (shortenedString.EndsWith('*'))
@@ -203,9 +204,9 @@ public static class Program
             shortenedString = shortenedString.Remove(shortenedString.Length - 1);
             pointerString += "*";
         }
-        
+
         LogDebug($"shortenedString {shortenedString} | isPointer {isPointer} | pointerString {pointerString} | fullString {fullString}");
-        
+
 
         return TypeKeywordsMap.TryGetValue(isPointer ? shortenedString : fullString, out var value) ? $"{value}{(isPointer ? pointerString : string.Empty)}" : VerifyType(type).Name;
     }
