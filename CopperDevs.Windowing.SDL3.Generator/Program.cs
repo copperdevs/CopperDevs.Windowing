@@ -1,11 +1,6 @@
-﻿using System.Net;
-using System.Reflection.Metadata;
-using CopperDevs.Windowing.SDL3.Generator;
-using System.Reflection;
-using System.Reflection.Metadata;
+﻿using System.Reflection;
 using CopperDevs.Logger;
 using CopperDevs.Windowing.SDL3.Wrapper.Enums;
-using JetBrains.Annotations;
 using SDL;
 
 namespace CopperDevs.Windowing.SDL3.Generator;
@@ -25,7 +20,7 @@ internal static class HotReloadCallbackReceiver
 // it does what its suppose to do those so 🤷
 public static class Program
 {
-    private const bool ExcessiveLogs = true;
+    private const bool ExcessiveLogs = false;
 
     private static void LogInfo(string message)
     {
