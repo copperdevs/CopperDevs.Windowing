@@ -2,9 +2,9 @@ using CopperDevs.Windowing.Data;
 
 namespace CopperDevs.Windowing.SDL3.Data;
 
-internal class SDLMouseMap : Dictionary<MouseButton, SDLButton>
+internal class SdlMouseMap : Dictionary<MouseButton, SDLButton>
 {
-    public SDLMouseMap()
+    public SdlMouseMap()
     {
         this[MouseButton.Left] = SDLButton.SDL_BUTTON_LEFT;
         this[MouseButton.Middle] = SDLButton.SDL_BUTTON_MIDDLE;

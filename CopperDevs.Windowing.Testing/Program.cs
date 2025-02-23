@@ -16,9 +16,9 @@ public static class Program
     private static readonly List<Vector2> Points = [];
     private static readonly List<Vector2Int> PointIndexes = []; // represents a line, with X and Y being the index of the point in points (Points[X] -> Points[Y])
 
-    private static Vector2 ScaleRange = new(0.5f, 10f);
-    private static float ArrowChanger = 0.5f;
-    private static float Scale = 1;
+    private static Vector2 scaleRange = new(0.5f, 10f);
+    private static float arrowChanger = 0.5f;
+    private static float scale = 1;
 
     public static void Main()
     {
@@ -68,14 +68,14 @@ public static class Program
             PointIndexes.Remove(PointIndexes[^1]);
 
         if (Input.IsKeyPressed(InputKey.Left))
-            Scale -= ArrowChanger;
+            scale -= arrowChanger;
 
         if (Input.IsKeyPressed(InputKey.Right))
-            Scale += ArrowChanger;
+            scale += arrowChanger;
 
-        Scale = MathUtil.Clamp(Scale, ScaleRange.X, ScaleRange.Y);
+        scale = MathUtil.Clamp(scale, scaleRange.X, scaleRange.Y);
 
-        renderer.Scale = Vector2.One * Scale;
+        renderer.Scale = Vector2.One * scale;
     }
 
 
@@ -104,7 +104,7 @@ public static class Program
 
         renderer.DrawDebugText($"FPS: {Time.FrameRate}", new Vector2(16, 16), Color.Black);
         renderer.DrawDebugText($"Mouse Pos: {Input.GetMousePosition()}", new Vector2(16, 26), Color.Black);
-        renderer.DrawDebugText($"Scale: {Scale}", new Vector2(16, 36), Color.Black);
+        renderer.DrawDebugText($"Scale: {scale}", new Vector2(16, 36), Color.Black);
         renderer.DrawDebugText($"Line Count: {PointIndexes.Count}", new Vector2(16, 46), Color.Black);
         renderer.DrawDebugText($"Points Count: {Points.Count}", new Vector2(16, 56), Color.Black);
 

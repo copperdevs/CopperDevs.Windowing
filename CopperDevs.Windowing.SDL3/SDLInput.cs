@@ -13,8 +13,8 @@ internal class SDLInput : IInput
 
     private SDL3Window connectedWindow;
 
-    private readonly SDLKeyMap keyMap = new();
-    private readonly SDLMouseMap mouseMap = new();
+    private readonly SdlKeyMap keyMap = new();
+    private readonly SdlMouseMap mouseMap = new();
 
     private readonly Dictionary<SDL_Keycode, bool> keyCurrentlyPressed = new();
     private readonly Dictionary<SDLButton, bool> buttonCurrentlyPressed = new();
@@ -138,7 +138,7 @@ internal class SDLInput : IInput
         {
             unsafe
             {
-                SDL.WarpMouseInWindow(connectedWindow.GetNativeWindow(), connectedWindow.Size / 2);
+                SDLAPI.WarpMouseInWindow(connectedWindow.GetNativeWindow(), connectedWindow.Size / 2);
             }
         }
     }
@@ -210,16 +210,16 @@ internal class SDLInput : IInput
         switch (cursorMode)
         {
             case CursorMode.Normal:
-                SDL.ShowCursor();
-                SDL.SetMouseRelativeMode(connectedWindow.GetNativeWindow(), false);
+                SDLAPI.ShowCursor();
+                SDLAPI.SetMouseRelativeMode(connectedWindow.GetNativeWindow(), false);
                 break;
             case CursorMode.Hidden:
-                SDL.HideCursor();
-                SDL.SetMouseRelativeMode(connectedWindow.GetNativeWindow(), false);
+                SDLAPI.HideCursor();
+                SDLAPI.SetMouseRelativeMode(connectedWindow.GetNativeWindow(), false);
                 break;
             case CursorMode.Locked:
-                SDL.HideCursor();
-                SDL.SetMouseRelativeMode(connectedWindow.GetNativeWindow(), true);
+                SDLAPI.HideCursor();
+                SDLAPI.SetMouseRelativeMode(connectedWindow.GetNativeWindow(), true);
                 break;
             default:
                 throw new ArgumentOutOfRangeException(nameof(cursorMode), cursorMode, null);

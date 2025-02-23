@@ -18,3 +18,4 @@ imgui.ini
 .vscode
 CopperDevs.Windowing.sln.DotSettings.user
 WindowingTesting.sln.DotSettings.user
+scripts/*.txt

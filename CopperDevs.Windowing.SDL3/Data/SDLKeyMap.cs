@@ -2,9 +2,9 @@ using CopperDevs.Windowing.Data;
 
 namespace CopperDevs.Windowing.SDL3.Data;
 
-internal class SDLKeyMap : Dictionary<InputKey, SDL_Keycode>
+internal class SdlKeyMap : Dictionary<InputKey, SDL_Keycode>
 {
-    public SDLKeyMap()
+    public SdlKeyMap()
     {
         this[InputKey.Unknown] = SDL_Keycode.SDLK_UNKNOWN;
         this[InputKey.Unknown] = SDL_Keycode.SDLK_UNKNOWN;
