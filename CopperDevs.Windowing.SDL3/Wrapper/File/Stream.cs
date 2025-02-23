@@ -18,9 +18,7 @@ public static unsafe partial class SDLAPI
     public static SDL_IOStream* IoFromFile(byte* file, byte* mode) => SDL_IOFromFile(file, mode);
     public static SDL_IOStream* IoFromFile(string file, string mode) => SDL_IOFromFile(file, mode);
     public static SDL_IOStream* IoFromMem(IntPtr mem, UIntPtr size) => SDL_IOFromMem(mem, size);
-
-    // TODO: public static UIntPtr IOprintf(SDL_IOStream* context, byte* fmt) => NativeSDL.SDL_IOprintf(context, fmt);
-
+    public static UIntPtr IOprintf(SDL_IOStream* context, byte* fmt) => SDL_IOprintf(context, fmt, __arglist());
     public static UIntPtr Ovprintf(SDL_IOStream* context, byte* fmt, byte* ap) => SDL_IOvprintf(context, fmt, ap);
     public static UIntPtr Ovprintf(SDL_IOStream* context, string fmt, byte* ap) => SDL_IOvprintf(context, fmt, ap);
     public static IntPtr LoadFile(byte* file, UIntPtr* datasize) => SDL_LoadFile(file, datasize);

@@ -56,7 +56,9 @@ public static unsafe partial class SDLAPI
 
     public static SDL_AudioDeviceID OpenAudioDevice(SDL_AudioDeviceID devid, SDL_AudioSpec* spec) => SDL_OpenAudioDevice(devid, spec);
 
-    // public static SDL_AudioStream* OpenAudioDeviceStream(SDL_AudioDeviceID devid, SDL_AudioSpec* spec, IntPtr userdata) => SDL.SDL3.SDL_OpenAudioDeviceStream(devid, spec, userdata); // TODO
+    public static SDL_AudioStream* OpenAudioDeviceStream(SDL_AudioDeviceID devid, SDL_AudioSpec* spec, delegate*unmanaged[Cdecl]<IntPtr, SDL_AudioStream*, int, int, void> callback, IntPtr userdata) =>
+        SDL_OpenAudioDeviceStream(devid, spec, callback, userdata);
+
     public static bool PauseAudioDevice(SDL_AudioDeviceID devid) => SDL_PauseAudioDevice(devid);
     public static bool PauseAudioStreamDevice(SDL_AudioStream* stream) => SDL_PauseAudioStreamDevice(stream);
     public static bool PutAudioStreamData(SDL_AudioStream* stream, IntPtr buf, int len) => SDL_PutAudioStreamData(stream, buf, len);
@@ -65,18 +67,24 @@ public static unsafe partial class SDLAPI
 
     public static bool SetAudioDeviceGain(SDL_AudioDeviceID devid, float gain) => SDL_SetAudioDeviceGain(devid, gain);
 
-    // public static bool SetAudioPostmixCallback(SDL_AudioDeviceID devid, IntPtr userdata) => SDL.SDL3.SDL_SetAudioPostmixCallback(devid, userdata); // TODO
+    public static bool SetAudioPostmixCallback(SDL_AudioDeviceID devid, delegate*unmanaged[Cdecl]<IntPtr, SDL_AudioSpec*, float*, int, void> callback, IntPtr userdata) =>
+        SDL_SetAudioPostmixCallback(devid, callback, userdata);
+
     public static bool SetAudioStreamFormat(SDL_AudioStream* stream, SDL_AudioSpec* srcSpec, SDL_AudioSpec* dstSpec) => SDL_SetAudioStreamFormat(stream, srcSpec, dstSpec);
     public static bool SetAudioStreamFrequencyRatio(SDL_AudioStream* stream, float ratio) => SDL_SetAudioStreamFrequencyRatio(stream, ratio);
 
     public static bool SetAudioStreamGain(SDL_AudioStream* stream, float gain) => SDL_SetAudioStreamGain(stream, gain);
 
-    // public static bool SetAudioStreamGetCallback(SDL_AudioStream* stream, IntPtr userdata) => SDL.SDL3.SDL_SetAudioStreamGetCallback(stream, userdata);
+    public static bool SetAudioStreamGetCallback(SDL_AudioStream* stream, delegate*unmanaged[Cdecl]<IntPtr, SDL_AudioStream*, int, int, void> callback, IntPtr userdata) =>
+        SDL_SetAudioStreamGetCallback(stream, callback, userdata);
+
     public static bool SetAudioStreamInputChannelMap(SDL_AudioStream* stream, int* chmap, int count) => SDL_SetAudioStreamInputChannelMap(stream, chmap, count);
 
     public static bool SetAudioStreamOutputChannelMap(SDL_AudioStream* stream, int* chmap, int count) => SDL_SetAudioStreamOutputChannelMap(stream, chmap, count);
 
-    // public static bool SetAudioStreamPutCallback(SDL_AudioStream* stream, IntPtr userdata) => SDL.SDL3.SDL_SetAudioStreamPutCallback(stream, userdata); // TODO
+    public static bool SetAudioStreamPutCallback(SDL_AudioStream* stream, delegate*unmanaged[Cdecl]<IntPtr, SDL_AudioStream*, int, int, void> callback, IntPtr userdata) =>
+        SDL_SetAudioStreamPutCallback(stream, callback, userdata);
+
     public static void UnbindAudioStream(SDL_AudioStream* stream) => SDL_UnbindAudioStream(stream);
     public static void UnbindAudioStreams(SDL_AudioStream** streams, int numStreams) => SDL_UnbindAudioStreams(streams, numStreams);
     public static bool UnlockAudioStream(SDL_AudioStream* stream) => SDL_UnlockAudioStream(stream);

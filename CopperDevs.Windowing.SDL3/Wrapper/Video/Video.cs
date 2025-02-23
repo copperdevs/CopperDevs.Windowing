@@ -22,7 +22,10 @@ public static unsafe partial class SDLAPI
 
     public static IntPtr EGL_GetWindowSurface(SDL_Window* window) => SDL_EGL_GetWindowSurface(window);
 
-    // public static void EGL_SetAttributeCallbacks(IntPtr userdata) => SDL.SDL3.SDL_EGL_SetAttributeCallbacks(userdata); // TODO:
+    public static void EGL_SetAttributeCallbacks(delegate*unmanaged[Cdecl]<IntPtr, IntPtr*> platformAttribCallback, delegate*unmanaged[Cdecl]<IntPtr, IntPtr, IntPtr, int*> surfaceAttribCallback,
+        delegate*unmanaged[Cdecl]<IntPtr, IntPtr, IntPtr, int*> contextAttribCallback, IntPtr userdata) =>
+        SDL_EGL_SetAttributeCallbacks(platformAttribCallback, surfaceAttribCallback, contextAttribCallback, userdata);
+
     public static bool EnableScreenSaver() => SDL_EnableScreenSaver();
     public static bool FlashWindow(SDL_Window* window, SDL_FlashOperation operation) => SDL_FlashWindow(window, operation);
 
@@ -68,10 +71,8 @@ public static unsafe partial class SDLAPI
     public static SDL_PixelFormat GetWindowPixelFormat(SDL_Window* window) => SDL_GetWindowPixelFormat(window);
     public static bool GetWindowPosition(SDL_Window* window, int* x, int* y) => SDL_GetWindowPosition(window, x, y);
     public static SDL_PropertiesID GetWindowProperties(SDL_Window* window) => SDL_GetWindowProperties(window);
-
     public static SDL_Window** GetWindows(int* count) => SDL_GetWindows(count);
-
-    // public static SDLOpaquePointerArray`1 GetWindows() => SDL.SDL3.SDL_GetWindows(); // TODO:
+    public static SDL_Window[] GetWindows() => SDLUtil.ToArray(SDL_GetWindows());
     public static bool GetWindowSafeArea(SDL_Window* window, SDL_Rect* rect) => SDL_GetWindowSafeArea(window, rect);
     public static bool GetWindowSize(SDL_Window* window, int* w, int* h) => SDL_GetWindowSize(window, w, h);
     public static bool GetWindowSizeInPixels(SDL_Window* window, int* w, int* h) => SDL_GetWindowSizeInPixels(window, w, h);
@@ -110,7 +111,7 @@ public static unsafe partial class SDLAPI
 
     public static bool SetWindowFullscreenMode(SDL_Window* window, SDL_DisplayMode* mode) => SDL_SetWindowFullscreenMode(window, mode);
 
-    // public static bool SetWindowHitTest(SDL_Window* window, IntPtr callback_data) => SDL.SDL3.SDL_SetWindowHitTest(window, callback_data); // TODO
+    public static bool SetWindowHitTest(SDL_Window* window, delegate*unmanaged[Cdecl]<SDL_Window*, SDL_Point*, IntPtr, SDL_HitTestResult> callback, IntPtr callback_data) => SDL_SetWindowHitTest(window, callback, callback_data);
     public static bool SetWindowIcon(SDL_Window* window, SDL_Surface* icon) => SDL_SetWindowIcon(window, icon);
     public static bool SetWindowKeyboardGrab(SDL_Window* window, bool grabbed) => SDL_SetWindowKeyboardGrab(window, grabbed);
     public static bool SetWindowMaximumSize(SDL_Window* window, int maxW, int maxH) => SDL_SetWindowMaximumSize(window, maxW, maxH);

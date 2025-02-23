@@ -13,8 +13,11 @@ public static unsafe partial class SDLAPI
     public static bool CreateDirectory(byte* path) => SDL_CreateDirectory(path);
     public static bool CreateDirectory(string path) => SDL_CreateDirectory(path);
 
-    // public static bool EnumerateDirectory(byte* path, IntPtr userdata) => SDL.SDL3.SDL_EnumerateDirectory(path, userdata); // TODO
-    // public static bool EnumerateDirectory(string path, IntPtr userdata) => SDL.SDL3.SDL_EnumerateDirectory(path, userdata); // TODO
+    public static bool EnumerateDirectory(byte* path, delegate*unmanaged[Cdecl]<IntPtr, byte*, byte*, SDL_EnumerationResult> callback, IntPtr userdata) =>
+        SDL_EnumerateDirectory(path, callback, userdata);
+
+    public static bool EnumerateDirectory(string path, delegate*unmanaged[Cdecl]<IntPtr, byte*, byte*, SDL_EnumerationResult> callback, IntPtr userdata) =>
+        SDL_EnumerateDirectory(path, callback, userdata);
 
     public static string GetBasePath() => SDL_GetBasePath() ?? string.Empty;
     public static string GetCurrentDirectory() => SDL_GetCurrentDirectory() ?? string.Empty;

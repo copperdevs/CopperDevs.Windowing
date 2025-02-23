@@ -13,10 +13,8 @@ public static unsafe partial class SDLAPI
     public static bool CopyStorageFile(SDL_Storage* storage, string oldpath, string newpath) => SDL_CopyStorageFile(storage, oldpath, newpath);
     public static bool CreateStorageDirectory(SDL_Storage* storage, byte* path) => SDL_CreateStorageDirectory(storage, path);
     public static bool CreateStorageDirectory(SDL_Storage* storage, string path) => SDL_CreateStorageDirectory(storage, path);
-
-    // TODO: public static bool EnumerateStorageDirectory(SDL_Storage* storage, byte* path, IntPtr userdata) => SDL.SDL3.SDL_EnumerateStorageDirectory(storage, path, userdata);
-    // TODO: public static bool EnumerateStorageDirectory(SDL_Storage* storage, string path, IntPtr userdata) => SDL.SDL3.SDL_EnumerateStorageDirectory(storage, path, userdata);
-
+    public static bool EnumerateStorageDirectory(SDL_Storage* storage, byte* path, delegate*unmanaged[Cdecl]<IntPtr, byte*, byte*, SDL_EnumerationResult> callback, IntPtr userdata) => SDL_EnumerateStorageDirectory(storage, path, callback, userdata);
+    public static bool EnumerateStorageDirectory(SDL_Storage* storage, string path, delegate*unmanaged[Cdecl]<IntPtr, byte*, byte*, SDL_EnumerationResult> callback, IntPtr userdata) => SDL_EnumerateStorageDirectory(storage, path, callback, userdata);
     public static bool GetStorageFileSize(SDL_Storage* storage, byte* path, ulong* length) => SDL_GetStorageFileSize(storage, path, length);
     public static bool GetStorageFileSize(SDL_Storage* storage, string path, ulong* length) => SDL_GetStorageFileSize(storage, path, length);
     public static bool GetStoragePathInfo(SDL_Storage* storage, byte* path, SDL_PathInfo* info) => SDL_GetStoragePathInfo(storage, path, info);

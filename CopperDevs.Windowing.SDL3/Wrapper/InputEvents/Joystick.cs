@@ -6,7 +6,6 @@ using CopperDevs.Windowing.SDL3.Data;
 // ReSharper disable once InconsistentNaming
 namespace CopperDevs.Windowing.SDL3;
 
-// TODO: Support joystick
 public static unsafe partial class SDLAPI
 {
     public static SDL_JoystickID AttachVirtualJoystick(SDL_VirtualJoystickDesc* desc) => SDL_AttachVirtualJoystick(desc);
