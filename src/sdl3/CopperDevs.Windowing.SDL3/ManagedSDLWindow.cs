@@ -132,11 +132,6 @@ public unsafe class ManagedSDLWindow : SafeDisposable
     public Action<EventType, SDL_Event> HandleEvent = null!;
 
     /// <summary>
-    /// Called when updating the window, after events are polled
-    /// </summary>
-    public Action OnUpdate = null!;
-
-    /// <summary>
     /// Create
     /// </summary>
     /// <param name="options">Info to use when creating the window.</param>

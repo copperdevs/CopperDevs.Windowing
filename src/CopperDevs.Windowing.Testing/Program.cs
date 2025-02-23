@@ -4,12 +4,15 @@ using CopperDevs.Core.Utility;
 using CopperDevs.Windowing.Data;
 using CopperDevs.Windowing.SDL3;
 using CopperDevs.Windowing.SDL3.Data;
+using SDL;
 
 namespace CopperDevs.Windowing.Testing;
 
 // testing project moment
 public static class Program
 {
+    private static ManagedSDLWindow subWindow;
+
     private static SDL3Window window = null!;
     private static SDLRenderer renderer = null!;
 
@@ -47,6 +50,8 @@ public static class Program
         window.Run();
 
         window.Dispose();
+
+        subWindow = new ManagedSDLWindow(options);
     }
 
     private static void OnLoad()
