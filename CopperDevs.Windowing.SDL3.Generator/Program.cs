@@ -1,6 +1,5 @@
 ﻿using System.Reflection;
 using CopperDevs.Logger;
-using CopperDevs.Windowing.SDL3.Wrapper.Enums;
 using SDL;
 
 namespace CopperDevs.Windowing.SDL3.Generator;

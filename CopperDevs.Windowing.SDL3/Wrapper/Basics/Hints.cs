@@ -1,6 +1,3 @@
-using CopperDevs.Windowing.SDL3.Data;
-using CopperDevs.Windowing.SDL3.Wrapper.Enums;
-
 #pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
 
 // ReSharper disable once CheckNamespace
