@@ -8,11 +8,11 @@ namespace CopperDevs.Windowing.SDL3;
 
 public static unsafe partial class SDLAPI
 {
-    public static SDL_Surface* AcquireCameraFrame(SDL_Camera* camera, ulong* timestampNS) => SDL_AcquireCameraFrame(camera, timestampNS);
+    public static SDL_Surface* AcquireCameraFrame(SDL_Camera* camera, ulong* timestampNs) => SDL_AcquireCameraFrame(camera, timestampNs);
     public static void CloseCamera(SDL_Camera* camera) => SDL_CloseCamera(camera);
     public static string GetCameraDriver(int index) => SDL_GetCameraDriver(index) ?? string.Empty;
     public static bool GetCameraFormat(SDL_Camera* camera, SDL_CameraSpec* spec) => SDL_GetCameraFormat(camera, spec);
-    public static SDL_CameraID GetCameraID(SDL_Camera* camera) => SDL_GetCameraID(camera);
+    public static SDL_CameraID GetCameraId(SDL_Camera* camera) => SDL_GetCameraID(camera);
     public static string GetCameraName(SDL_CameraID instanceId) => SDL_GetCameraName(instanceId) ?? string.Empty;
     public static int GetCameraPermissionState(SDL_Camera* camera) => SDL_GetCameraPermissionState(camera);
     public static SDL_CameraPosition GetCameraPosition(SDL_CameraID instanceId) => SDL_GetCameraPosition(instanceId);

@@ -23,6 +23,9 @@ internal static class HotReloadCallbackReceiver
 
 // lol this code is lowkey diabolical
 // it does what its suppose to do those so 🤷
+
+// TODO: if a method isn't able to be generated fully (unsafe code can't be seen via reflection), then make the line a comment and append "// TODO" to the end of it
+// TODO: fix types with multiple points not being converted correctly (ex: Byte** isn't being converted to byte**)
 public static class Program
 {
     private const bool ExcessiveLogs = true;
@@ -62,6 +65,7 @@ public static class Program
         { "System.Int32", "int" },
         { "System.String", "string" },
         { "System.Void", "void" },
+        { "System.UInt16", "ushort" },
         { "System.UInt32", "uint" },
         { "System.UInt64", "ulong" },
         { "System.IntPtr", "IntPtr" },
@@ -76,7 +80,7 @@ public static class Program
         { "System.TimeSpan", "TimeSpan" },
         { "System.Guid", "Guid" },
         { "System.Object", "object" },
-        { "System.Array", "Array" }
+        { "System.Array", "Array" },
     };
 
     public static void Main()
@@ -176,7 +180,7 @@ public static class Program
                 LogInfo(parametersInputString);
 
                 AppendOutputLine(
-                    $"public static {returnType} {methodInfo.Name[4..]}({parametersInputString}) => {(ReturnTypeIsArray(methodInfo) ? "SDLUtil.ToArray(" : string.Empty)}SDL.SDL3.{methodInfo.Name}({parametersOutputString}){(ReturnTypeIsArray(methodInfo) ? ")" : string.Empty)};");
+                    $"public static {returnType} {methodInfo.Name[4..]}({parametersInputString}) => {(ReturnTypeIsArray(methodInfo) ? "SDLUtil.ToArray(" : string.Empty)}SDL.SDL3.{methodInfo.Name}({parametersOutputString}){(ReturnTypeIsArray(methodInfo) ? ")" : string.Empty)}{(methodInfo.ReturnType == typeof(string) ? " ?? string.Empty" : string.Empty)};");
             }
 
             LogDebug($"{method} {methodInfos.Count}");

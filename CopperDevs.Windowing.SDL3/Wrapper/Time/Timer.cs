@@ -9,5 +9,5 @@ namespace CopperDevs.Windowing.SDL3;
 public static unsafe partial class SDLAPI
 {
     public static ulong GetTicks() => SDL_GetTicks();
-    public static ulong GetTicksNS() => SDL_GetTicksNS();
+    public static ulong GetTicksNs() => SDL_GetTicksNS();
 }

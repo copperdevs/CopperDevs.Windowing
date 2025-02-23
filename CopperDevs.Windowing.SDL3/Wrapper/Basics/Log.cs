@@ -71,7 +71,7 @@ public static unsafe partial class SDLAPI
 
     public static void ResetLogPriorities() => SDL_ResetLogPriorities();
 
-    public static void SetLogOutputFunction(delegate*unmanaged[Cdecl]<System.IntPtr, int, SDL_LogPriority, byte*, void> callback, IntPtr userdata) => SDL_SetLogOutputFunction(callback, userdata);
+    public static void SetLogOutputFunction(delegate*unmanaged[Cdecl]<IntPtr, int, SDL_LogPriority, byte*, void> callback, IntPtr userdata) => SDL_SetLogOutputFunction(callback, userdata);
 
     public static void SetLogPriorities(LogPriority priority) => SDL_SetLogPriorities((SDL_LogPriority)priority);
 

@@ -32,7 +32,7 @@ public unsafe class SDLRenderer(SDL_Renderer* native) : SafeDisposable
             index++;
 
         var pixels = SDLOld.RenderReadPixels(native, null);
-        SDLOld.SaveBMP(pixels, $"screenshots/{index}.bmp");
+        SDLOld.SaveBmp(pixels, $"screenshots/{index}.bmp");
         SDLOld.DestroySurface(pixels);
     }
 

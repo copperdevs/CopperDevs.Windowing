@@ -13,10 +13,10 @@ public static unsafe partial class SDLAPI
     public static void DestroyHapticEffect(SDL_Haptic* haptic, int effect) => SDL_DestroyHapticEffect(haptic, effect);
     public static bool GetHapticEffectStatus(SDL_Haptic* haptic, int effect) => SDL_GetHapticEffectStatus(haptic, effect);
     public static uint GetHapticFeatures(SDL_Haptic* haptic) => SDL_GetHapticFeatures(haptic);
-    public static SDL_Haptic* GetHapticFromID(SDL_HapticID id) => SDL_GetHapticFromID(id);
-    public static SDL_HapticID GetHapticID(SDL_Haptic* haptic) => SDL_GetHapticID(haptic);
+    public static SDL_Haptic* GetHapticFromId(SDL_HapticID id) => SDL_GetHapticFromID(id);
+    public static SDL_HapticID GetHapticId(SDL_Haptic* haptic) => SDL_GetHapticID(haptic);
     public static string GetHapticName(SDL_Haptic* haptic) => SDL_GetHapticName(haptic) ?? string.Empty;
-    public static string GetHapticNameForID(SDL_HapticID id) => SDL_GetHapticNameForID(id) ?? string.Empty;
+    public static string GetHapticNameForId(SDL_HapticID id) => SDL_GetHapticNameForID(id) ?? string.Empty;
     public static SDL_HapticID[] GetHaptics() => SDLUtil.ToArray(SDL_GetHaptics());
     public static int GetMaxHapticEffects(SDL_Haptic* haptic) => SDL_GetMaxHapticEffects(haptic);
     public static int GetMaxHapticEffectsPlaying(SDL_Haptic* haptic) => SDL_GetMaxHapticEffectsPlaying(haptic);

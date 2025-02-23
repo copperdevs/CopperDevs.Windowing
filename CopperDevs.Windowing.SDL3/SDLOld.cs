@@ -157,7 +157,7 @@ internal static unsafe class SDLOld
 
     public static SDL_Surface* RenderReadPixels(SDL_Renderer* renderer, SDL_Rect* rect) => SDL_RenderReadPixels(renderer, rect);
 
-    public static bool SaveBMP(SDL_Surface* surface, string filename) => SDL_SaveBMP(surface, filename);
+    public static bool SaveBmp(SDL_Surface* surface, string filename) => SDL_SaveBMP(surface, filename);
     public static void DestroySurface(SDL_Surface* surface) => SDL_DestroySurface(surface);
 
     public static void RenderRect(SDL_Renderer* renderer, SDL_FRect rect) => SDL_RenderRect(renderer, &rect);

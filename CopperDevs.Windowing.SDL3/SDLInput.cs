@@ -13,8 +13,8 @@ internal class SDLInput : IInput
 
     private SDL3Window connectedWindow;
 
-    private readonly SDLKeyMap keyMap = new();
-    private readonly SDLMouseMap mouseMap = new();
+    private readonly SdlKeyMap keyMap = new();
+    private readonly SdlMouseMap mouseMap = new();
 
     private readonly Dictionary<SDL_Keycode, bool> keyCurrentlyPressed = new();
     private readonly Dictionary<SDLButton, bool> buttonCurrentlyPressed = new();
