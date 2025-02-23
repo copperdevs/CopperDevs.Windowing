@@ -78,6 +78,8 @@ public static class Program
         { "System.Guid", "Guid" },
         { "System.Object", "object" },
         { "System.Array", "Array" },
+        { "System.Int64", "long" },
+        { "System.Int16", "short" },
     };
 
     public static void Main()
