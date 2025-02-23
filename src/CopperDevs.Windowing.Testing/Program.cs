@@ -51,15 +51,17 @@ public static class Program
 
         window.Dispose();
 
-        subWindow = new ManagedSDLWindow(options);
     }
 
     private static void OnLoad()
     {
+        subWindow = new ManagedSDLWindow(SDL3WindowOptions.Default);
     }
 
     private static void OnUpdate()
     {
+        subWindow?.PollEvents();
+        
         if (Input.IsMouseButtonPressed(MouseButton.Left))
         {
             Points.AddRange([Input.GetMousePosition(), Input.GetMousePosition()]);
