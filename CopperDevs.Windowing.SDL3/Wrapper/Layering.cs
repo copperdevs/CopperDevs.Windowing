@@ -68,7 +68,7 @@ public static unsafe partial class SDLAPI
     {
         var value = new Vector2(0);
 
-        if (SDL_RenderCoordinatesFromWindow(renderer, pos.X, pos.Y, &value.X, &value.Y))
+        if (RenderCoordinatesFromWindow(renderer, pos.X, pos.Y, &value.X, &value.Y))
             return value;
         return value with { X = 0, Y = 0 };
     }
@@ -83,39 +83,39 @@ public static unsafe partial class SDLAPI
     {
         var value = new Vector2(0);
 
-        if (SDL_RenderCoordinatesToWindow(renderer, pos.X, pos.Y, &value.X, &value.Y))
+        if (RenderCoordinatesToWindow(renderer, pos.X, pos.Y, &value.X, &value.Y))
             return value;
         return value with { X = 0, Y = 0 };
     }
 
-    public static SDL_Window* CreateWindow(string title, Vector2Int size, WindowFlags flags) => SDL_CreateWindow(title, size.X, size.Y, (SDL_WindowFlags)flags);
+    public static SDL_Window* CreateWindow(string title, Vector2Int size, WindowFlags flags) => CreateWindow(title, size.X, size.Y, (SDL_WindowFlags)flags);
 
-    public static SDL_Renderer* CreateRenderer(SDL_Window* window) => SDL_CreateRenderer(window, (Utf8String)null);
+    public static SDL_Renderer* CreateRenderer(SDL_Window* window) => CreateRenderer(window, (byte*)null);
     public static bool SetHint(Utf8String name, string value) => SetHint(name, (Utf8String)value);
     public static bool SetHint(Utf8String name, Utf8String value) => SDL_SetHint(name, value);
-    public static void SetRenderDrawColor(SDL_Renderer* renderer, float r, float g, float b, float a) => SDL_SetRenderDrawColorFloat(renderer, r, g, b, a);
-    public static void SetWindowSize(SDL_Window* window, Vector2Int size) => SDL_SetWindowSize(window, size.X, size.Y);
-    public static void SetFullscreen(SDL_Window* window, bool fullscreen) => SDL_SetWindowFullscreen(window, fullscreen);
-    public static WindowFlags GetFlags(SDL_Window* window) => (WindowFlags)SDL_GetWindowFlags(window);
-    public static void SetAlwaysOnTop(SDL_Window* window, bool onTop) => SDL_SetWindowAlwaysOnTop(window, onTop);
-    public static void Minimize(SDL_Window* window) => SDL_MinimizeWindow(window);
-    public static void Maximize(SDL_Window* window) => SDL_MaximizeWindow(window);
-    public static void SetWindowMaximumSize(SDL_Window* window, Vector2Int size) => SDL_SetWindowMaximumSize(window, size.X, size.Y);
-    public static void SetWindowMinimumSize(SDL_Window* window, Vector2Int size) => SDL_SetWindowMinimumSize(window, size.X, size.Y);
-    public static void SetWindowPosition(SDL_Window* window, Vector2Int position) => SDL_SetWindowPosition(window, position.X, position.Y);
-    public static void SetMouseRelativeMode(SDL_Window* window, bool enabled) => SDL_SetWindowRelativeMouseMode(window, enabled);
-    public static void WarpMouseInWindow(SDL_Window* window, Vector2Int position) => SDL_WarpMouseInWindow(window, position.X, position.Y);
-    public static void SetRenderScale(SDL_Renderer* renderer, Vector2 scale) => SDL_SetRenderScale(renderer, scale.X, scale.Y);
-    public static void RenderDebugText(SDL_Renderer* renderer, string text, Vector2 position) => SDL_RenderDebugText(renderer, position.X, position.Y, text);
-    public static void RenderLine(SDL_Renderer* renderer, Vector2 positionOne, Vector2 positionTwo) => SDL_RenderLine(renderer, positionOne.X, positionOne.Y, positionTwo.X, positionTwo.Y);
+    public static void SetRenderDrawColor(SDL_Renderer* renderer, float r, float g, float b, float a) => SetRenderDrawColorFloat(renderer, r, g, b, a);
+    public static void SetWindowSize(SDL_Window* window, Vector2Int size) => SetWindowSize(window, size.X, size.Y);
+    public static void SetFullscreen(SDL_Window* window, bool fullscreen) => SetWindowFullscreen(window, fullscreen);
+    public static WindowFlags GetFlags(SDL_Window* window) => (WindowFlags)GetWindowFlags(window);
+    public static void SetAlwaysOnTop(SDL_Window* window, bool onTop) => SetWindowAlwaysOnTop(window, onTop);
+    public static void Minimize(SDL_Window* window) => MinimizeWindow(window);
+    public static void Maximize(SDL_Window* window) => MaximizeWindow(window);
+    public static void SetWindowMaximumSize(SDL_Window* window, Vector2Int size) => SetWindowMaximumSize(window, size.X, size.Y);
+    public static void SetWindowMinimumSize(SDL_Window* window, Vector2Int size) => SetWindowMinimumSize(window, size.X, size.Y);
+    public static void SetWindowPosition(SDL_Window* window, Vector2Int position) => SetWindowPosition(window, position.X, position.Y);
+    public static void SetMouseRelativeMode(SDL_Window* window, bool enabled) => SetWindowRelativeMouseMode(window, enabled);
+    public static void WarpMouseInWindow(SDL_Window* window, Vector2Int position) => WarpMouseInWindow(window, position.X, position.Y);
+    public static void SetRenderScale(SDL_Renderer* renderer, Vector2 scale) => SetRenderScale(renderer, scale.X, scale.Y);
+    public static void RenderDebugText(SDL_Renderer* renderer, string text, Vector2 position) => RenderDebugText(renderer, position.X, position.Y, text);
+    public static void RenderLine(SDL_Renderer* renderer, Vector2 positionOne, Vector2 positionTwo) => RenderLine(renderer, positionOne.X, positionOne.Y, positionTwo.X, positionTwo.Y);
 
     public static void RenderLines(SDL_Renderer* renderer, List<Vector2> points) =>
-        SDL_RenderLines(renderer, SDLUtil.ToPointer(points, static vector => new SDL_FPoint { x = vector.X, y = vector.Y }), points.Count);
+        RenderLines(renderer, SDLUtil.ToPointer(points, static vector => new SDL_FPoint { x = vector.X, y = vector.Y }), points.Count);
 
-    public static void RenderPoint(SDL_Renderer* renderer, Vector2 position) => SDL_RenderPoint(renderer, position.X, position.Y);
+    public static void RenderPoint(SDL_Renderer* renderer, Vector2 position) => RenderPoint(renderer, position.X, position.Y);
 
     public static void RenderPoints(SDL_Renderer* renderer, List<Vector2> points) =>
-        SDL_RenderPoints(renderer, SDLUtil.ToPointer(points, static vector => new SDL_FPoint { x = vector.X, y = vector.Y }), points.Count);
+        RenderPoints(renderer, SDLUtil.ToPointer(points, static vector => new SDL_FPoint { x = vector.X, y = vector.Y }), points.Count);
 
     public static SystemTheme GetSystemTheme()
     {
@@ -147,8 +147,8 @@ public static unsafe partial class SDLAPI
 
     public static bool SetAppMetadataProperty(AppMetadata.MetadataProperty property, string? value) => SDL_SetAppMetadataProperty(GetAppMetadataPropertyProp(property), value);
     public static string GetAppMetadataProperty(AppMetadata.MetadataProperty property) => SDL_GetAppMetadataProperty(GetAppMetadataPropertyProp(property)) ?? string.Empty;
-    public static void RenderRect(SDL_Renderer* renderer, SDL_FRect rect) => SDL_RenderRect(renderer, &rect);
-    public static void RenderRects(SDL_Renderer* renderer, List<SDL_FRect> rect) => SDL_RenderRects(renderer, SDLUtil.ToPointer(rect), rect.Count);
-    public static void RenderFillRect(SDL_Renderer* renderer, SDL_FRect rect) => SDL_RenderFillRect(renderer, &rect);
-    public static void RenderFillRects(SDL_Renderer* renderer, List<SDL_FRect> rect) => SDL_RenderFillRects(renderer, SDLUtil.ToPointer(rect), rect.Count);
+    public static void RenderRect(SDL_Renderer* renderer, SDL_FRect rect) => RenderRect(renderer, &rect);
+    public static void RenderRects(SDL_Renderer* renderer, List<SDL_FRect> rect) => RenderRects(renderer, SDLUtil.ToPointer(rect), rect.Count);
+    public static void RenderFillRect(SDL_Renderer* renderer, SDL_FRect rect) => RenderFillRect(renderer, &rect);
+    public static void RenderFillRects(SDL_Renderer* renderer, List<SDL_FRect> rect) => RenderFillRects(renderer, SDLUtil.ToPointer(rect), rect.Count);
 }

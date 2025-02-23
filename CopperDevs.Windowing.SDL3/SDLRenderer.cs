@@ -152,7 +152,7 @@ public unsafe class SDLRenderer(SDL_Renderer* native) : SafeDisposable
         SetDrawColor(r, g, b, a);
         DrawRects(rects);
     }
-    
+
     public void DrawFillRect(Vector2 position, Vector2 size) => SDLAPI.RenderFillRect(native, tempRect with { x = position.X, y = position.Y, h = size.X, w = size.Y });
 
     public void DrawFillRect(Vector2 position, Vector2 size, Color color)
