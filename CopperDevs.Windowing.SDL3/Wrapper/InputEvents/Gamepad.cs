@@ -7,7 +7,7 @@ using CopperDevs.Windowing.SDL3.Data;
 namespace CopperDevs.Windowing.SDL3;
 
 // TODO: Support gamepad
-public static unsafe partial class SDL
+public static unsafe partial class SDLAPI
 {
 //    public static void AddGamepadMapping() => SDL_AddGamepadMapping();
 //    public static void AddGamepadMappingsFromFile() => SDL_AddGamepadMappingsFromFile();

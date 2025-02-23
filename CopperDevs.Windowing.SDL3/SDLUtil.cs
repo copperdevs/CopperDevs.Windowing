@@ -1,7 +1,8 @@
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
 namespace CopperDevs.Windowing.SDL3;
 
 // ReSharper disable once InconsistentNaming
-internal static unsafe class SDLUtil
+public static unsafe class SDLUtil
 {
     public static TTarget* ToPointer<TTarget>(List<TTarget> items) where TTarget : unmanaged
     {
@@ -54,16 +55,4 @@ internal static unsafe class SDLUtil
         
         return array;
     }
-}
-
-// ReSharper disable once InconsistentNaming
-internal static unsafe class SDLUtilExtensions
-{
-    public static TTarget* ToPointer<TType, TTarget>(this List<TType> items) where TTarget : unmanaged => SDLUtil.ToPointer<TType, TTarget>(items);
-
-    public static TTarget* ToPointer<TType, TTarget>(this List<TType> items, Func<TType, TTarget> targetCreation) where TTarget : unmanaged => SDLUtil.ToPointer(items, targetCreation);
-
-    public static TTarget[] ToArray<TTarget>(this SDLPointerArray<TTarget>? pointerArray) where TTarget : unmanaged => SDLUtil.ToArray(pointerArray);
-
-    public static TTarget[] ToArray<TTarget>(this SDLArray<TTarget>? pointerArray) where TTarget : unmanaged => SDLUtil.ToArray(pointerArray);
 }

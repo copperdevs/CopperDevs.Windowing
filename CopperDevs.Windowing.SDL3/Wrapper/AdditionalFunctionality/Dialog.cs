@@ -7,7 +7,7 @@ using CopperDevs.Windowing.SDL3.Data;
 namespace CopperDevs.Windowing.SDL3;
 
 // TODO: wrap this so it doesn't have to be unsafe perchance
-public static unsafe partial class SDL
+public static unsafe partial class SDLAPI
 {
     // TODO: Support file dialog
     // public static void ShowFileDialogWithProperties() => SDL_ShowFileDialogWithProperties();

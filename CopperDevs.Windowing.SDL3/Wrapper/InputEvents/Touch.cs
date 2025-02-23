@@ -6,7 +6,7 @@ using CopperDevs.Windowing.SDL3.Data;
 // ReSharper disable once InconsistentNaming
 namespace CopperDevs.Windowing.SDL3;
 
-public static unsafe partial class SDL
+public static unsafe partial class SDLAPI
 {
     public static string GetTouchDeviceName(SDL_TouchID id) => SDL_GetTouchDeviceName(id) ?? string.Empty;
 

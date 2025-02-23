@@ -7,7 +7,7 @@ using CopperDevs.Windowing.SDL3.Data;
 namespace CopperDevs.Windowing.SDL3;
 
 //TODO: Change this to properly use arrays
-public static unsafe partial class SDL
+public static unsafe partial class SDLAPI
 {
     public static bool GetRectAndLineIntersection(SDL_Rect* rect, int* x1, int* y1, int* x2, int* y2) => SDL_GetRectAndLineIntersection(rect, x1, y1, x2, y2);
 

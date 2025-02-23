@@ -6,7 +6,7 @@ using CopperDevs.Windowing.SDL3.Data;
 // ReSharper disable once InconsistentNaming
 namespace CopperDevs.Windowing.SDL3;
 
-public static unsafe partial class SDL
+public static unsafe partial class SDLAPI
 {
     public static bool CaptureMouse(bool enabled) => SDL_CaptureMouse(enabled);
     public static SDL_Cursor* CreateColorCursor(SDL_Surface* surface, int hotX, int hotY) => SDL_CreateColorCursor(surface, hotX, hotY);

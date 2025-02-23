@@ -7,7 +7,7 @@ using CopperDevs.Windowing.SDL3.Data;
 namespace CopperDevs.Windowing.SDL3;
 
 // TODO: Support joystick
-public static unsafe partial class SDL
+public static unsafe partial class SDLAPI
 {
 //    public static void AttachVirtualJoystick() => SDL_AttachVirtualJoystick();
 //    public static void CloseJoystick() => SDL_CloseJoystick();

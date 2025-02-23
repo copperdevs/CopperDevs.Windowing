@@ -1,4 +1,5 @@
 # simple script to quickly generate functions
+# wouldn't recommend using, has now been replaced with the CopperDevs.Windowing.SDL3.Generator project
 # input  | SDL_OpenURL
 # output | public static void OpenURL() => SDL_OpenURL();
 

@@ -6,7 +6,7 @@ using CopperDevs.Windowing.SDL3.Data;
 // ReSharper disable once InconsistentNaming
 namespace CopperDevs.Windowing.SDL3;
 
-public static unsafe partial class SDL
+public static unsafe partial class SDLAPI
 {
     public static bool ClearClipboardData() => SDL_ClearClipboardData();
     public static void GetClipboardData(string mimeType, UIntPtr* size) => SDL_GetClipboardData(mimeType, size);

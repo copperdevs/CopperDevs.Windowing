@@ -6,7 +6,7 @@ using CopperDevs.Windowing.SDL3.Data;
 // ReSharper disable once InconsistentNaming
 namespace CopperDevs.Windowing.SDL3;
 
-public static unsafe partial class SDL
+public static unsafe partial class SDLAPI
 {
     public static ulong GetTicks() => SDL_GetTicks();
     public static ulong GetTicksNS() => SDL_GetTicksNS();

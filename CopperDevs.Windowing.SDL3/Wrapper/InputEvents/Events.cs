@@ -7,7 +7,7 @@ using CopperDevs.Windowing.SDL3.Data;
 namespace CopperDevs.Windowing.SDL3;
 
 // TODO: wrap this so it doesn't have to be unsafe perchance
-public static unsafe partial class SDL
+public static unsafe partial class SDLAPI
 {
     public static bool AddEventWatch(delegate* unmanaged[Cdecl]<IntPtr, SDL_Event*, SDLBool> watcher, IntPtr userData) => SDL_AddEventWatch(watcher, userData);
     public static bool EventEnabled(EventType type) => SDL_EventEnabled((uint)type);

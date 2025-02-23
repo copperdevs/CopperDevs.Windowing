@@ -6,7 +6,7 @@ using CopperDevs.Windowing.SDL3.Data;
 // ReSharper disable once InconsistentNaming
 namespace CopperDevs.Windowing.SDL3;
 
-public static unsafe partial class SDL
+public static unsafe partial class SDLAPI
 {
     public static nint Metal_CreateView(SDL_Window* window) => SDL_Metal_CreateView(window);
     public static void Metal_DestroyView(nint view) => SDL_Metal_DestroyView(view);

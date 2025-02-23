@@ -6,7 +6,7 @@ using CopperDevs.Windowing.SDL3.Data;
 // ReSharper disable once InconsistentNaming
 namespace CopperDevs.Windowing.SDL3;
 
-public static unsafe partial class SDL
+public static unsafe partial class SDLAPI
 {
     public static SDL_Palette* CreatePalette(int colors) => SDL_CreatePalette(colors);
     public static void DestroyPalette(SDL_Palette* palette) => SDL_DestroyPalette(palette);
