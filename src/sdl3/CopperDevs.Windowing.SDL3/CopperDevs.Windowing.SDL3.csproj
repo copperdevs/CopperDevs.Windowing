@@ -4,10 +4,11 @@
         <TargetFramework>net8.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
+        <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-        <Title>CopperDevs.Windowing</Title>
+        <Title>CopperDevs.Windowing.SDL3</Title>
         <Authors>copperdevs</Authors>
-        <Description>Simple windowing system abstraction</Description>
+        <Description>SDL3 support for my windowing abstraction</Description>
         <Copyright>MIT</Copyright>
         <PackageProjectUrl>https://github.com/copperdevs/CopperDevs.Windowing</PackageProjectUrl>
         <RepositoryUrl>https://github.com/copperdevs/CopperDevs.Windowing.git</RepositoryUrl>
@@ -23,48 +24,29 @@
     </PropertyGroup>
 
     <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
-        <DocumentationFile>bin\Debug\CopperDevs.Windowing.xml</DocumentationFile>
+        <DocumentationFile>bin\Debug\CopperDevs.Windowing.SDL3.xml</DocumentationFile>
     </PropertyGroup>
 
     <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
-        <DocumentationFile>bin\Release\CopperDevs.Windowing.xml</DocumentationFile>
+        <DocumentationFile>bin\Release\CopperDevs.Windowing.SDL3.xml</DocumentationFile>
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="CopperDevs.Core" Version="1.1.11"/>
-        <PackageReference Include="CopperDevs.Logger" Version="1.0.1"/>
+        <PackageReference Include="ppy.SDL3-CS" Version="2025.127.0"/>
     </ItemGroup>
 
     <ItemGroup>
-        <None Include="..\ReadMe.md">
+        <None Include="..\..\..\ReadMe.md">
             <Pack>True</Pack>
             <PackagePath>\</PackagePath>
         </None>
-        <None Include="..\License.txt">
+        <None Include="..\..\..\License.txt">
             <Pack>True</Pack>
             <PackagePath>\</PackagePath>
         </None>
     </ItemGroup>
 
     <ItemGroup>
-        <Compile Update="WindowCallbacks.cs">
-            <DependentUpon>Window.cs</DependentUpon>
-        </Compile>
-        <Compile Update="WindowHandler.cs">
-            <DependentUpon>Window.cs</DependentUpon>
-        </Compile>
-        <Compile Update="WindowInfo.cs">
-            <DependentUpon>Window.cs</DependentUpon>
-        </Compile>
-        <Compile Update="WindowInput.cs">
-            <DependentUpon>Window.cs</DependentUpon>
-        </Compile>
-        <Compile Update="WindowMethods.cs">
-            <DependentUpon>Window.cs</DependentUpon>
-        </Compile>
-        <Compile Update="BaseWindow.cs">
-            <DependentUpon>Window.cs</DependentUpon>
-        </Compile>
+      <ProjectReference Include="..\..\CopperDevs.Windowing\CopperDevs.Windowing.csproj" />
     </ItemGroup>
-
 </Project>

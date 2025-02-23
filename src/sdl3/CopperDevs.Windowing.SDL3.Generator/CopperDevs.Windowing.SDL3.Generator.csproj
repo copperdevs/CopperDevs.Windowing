@@ -30,8 +30,8 @@
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\CopperDevs.Windowing.Testing\CopperDevs.Windowing.Testing.csproj"/>
-        <ProjectReference Include="..\CopperDevs.Windowing\CopperDevs.Windowing.csproj"/>
+      <ProjectReference Include="..\..\CopperDevs.Windowing\CopperDevs.Windowing.csproj" />
+      <ProjectReference Include="..\CopperDevs.Windowing.SDL3\CopperDevs.Windowing.SDL3.csproj" />
     </ItemGroup>
 
 </Project>
