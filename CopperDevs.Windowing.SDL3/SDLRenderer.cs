@@ -14,13 +14,13 @@ public unsafe class SDLRenderer(SDL_Renderer* native) : SafeDisposable
 
     public Vector2 Scale
     {
-        get => SDLOld.GetRenderScale(native);
-        set => SDLOld.SetRenderScale(native, value);
+        get => SDLAPI.GetRenderScale(native);
+        set => SDLAPI.SetRenderScale(native, value);
     }
 
-    public Vector2 RendererToWindowCoordinates(Vector2 position) => SDLOld.RenderCoordinatesToWindow(native, position);
+    public Vector2 RendererToWindowCoordinates(Vector2 position) => SDLAPI.RenderCoordinatesToWindow(native, position);
 
-    public Vector2 WindowToRendererCoordinates(Vector2 position) => SDLOld.RenderCoordinatesFromWindow(native, position);
+    public Vector2 WindowToRendererCoordinates(Vector2 position) => SDLAPI.RenderCoordinatesFromWindow(native, position);
 
     public void Screenshot()
     {
@@ -31,13 +31,13 @@ public unsafe class SDLRenderer(SDL_Renderer* native) : SafeDisposable
         while (File.Exists($"screenshots/{index}.bmp"))
             index++;
 
-        var pixels = SDLOld.RenderReadPixels(native, null);
-        SDLOld.SaveBmp(pixels, $"screenshots/{index}.bmp");
-        SDLOld.DestroySurface(pixels);
+        var pixels = SDLAPI.RenderReadPixels(native, null);
+        SDLAPI.SaveBmp(pixels, $"screenshots/{index}.bmp");
+        SDLAPI.DestroySurface(pixels);
     }
 
-    public void Present() => SDLOld.RenderPresent(native);
-    public void Clear() => SDLOld.RenderClear(native);
+    public void Present() => SDLAPI.RenderPresent(native);
+    public void Clear() => SDLAPI.RenderClear(native);
 
     public void Clear(Color color)
     {
@@ -52,10 +52,10 @@ public unsafe class SDLRenderer(SDL_Renderer* native) : SafeDisposable
     }
 
 
-    public void SetDrawColor(Color color) => SDLOld.SetRenderDrawColor(native, color.R / 255f, color.G / 255f, color.B / 255f, color.A / 255f);
-    public void SetDrawColor(float r, float g, float b, float a) => SDLOld.SetRenderDrawColor(native, r, g, b, a);
+    public void SetDrawColor(Color color) => SDLAPI.SetRenderDrawColor(native, color.R / 255f, color.G / 255f, color.B / 255f, color.A / 255f);
+    public void SetDrawColor(float r, float g, float b, float a) => SDLAPI.SetRenderDrawColor(native, r, g, b, a);
 
-    public void DrawLine(Vector2 posOne, Vector2 posTwo) => SDLOld.RenderLine(native, posOne, posTwo);
+    public void DrawLine(Vector2 posOne, Vector2 posTwo) => SDLAPI.RenderLine(native, posOne, posTwo);
 
     public void DrawLine(Vector2 posOne, Vector2 posTwo, Color color)
     {
@@ -69,7 +69,7 @@ public unsafe class SDLRenderer(SDL_Renderer* native) : SafeDisposable
         DrawLine(posOne, posTwo);
     }
 
-    public void DrawDebugText(string text, Vector2 position) => SDLOld.RenderDebugText(native, text, position);
+    public void DrawDebugText(string text, Vector2 position) => SDLAPI.RenderDebugText(native, text, position);
 
     public void DrawDebugText(string text, Vector2 position, Color color)
     {
@@ -83,7 +83,7 @@ public unsafe class SDLRenderer(SDL_Renderer* native) : SafeDisposable
         DrawDebugText(text, position);
     }
 
-    public void DrawLines(List<Vector2> points) => SDLOld.RenderLines(native, points);
+    public void DrawLines(List<Vector2> points) => SDLAPI.RenderLines(native, points);
 
     public void DrawLines(List<Vector2> points, Color color)
     {
@@ -97,7 +97,7 @@ public unsafe class SDLRenderer(SDL_Renderer* native) : SafeDisposable
         DrawLines(points);
     }
 
-    public void DrawPoint(Vector2 point) => SDLOld.RenderPoint(native, point);
+    public void DrawPoint(Vector2 point) => SDLAPI.RenderPoint(native, point);
 
     public void DrawPoint(Vector2 point, Color color)
     {
@@ -111,7 +111,7 @@ public unsafe class SDLRenderer(SDL_Renderer* native) : SafeDisposable
         DrawPoint(point);
     }
 
-    public void DrawPoints(List<Vector2> points) => SDLOld.RenderPoints(native, points);
+    public void DrawPoints(List<Vector2> points) => SDLAPI.RenderPoints(native, points);
 
     public void DrawPoints(List<Vector2> points, Color color)
     {
@@ -125,7 +125,7 @@ public unsafe class SDLRenderer(SDL_Renderer* native) : SafeDisposable
         DrawPoints(points);
     }
 
-    public void DrawRect(Vector2 position, Vector2 size) => SDLOld.RenderRect(native, tempRect with { x = position.X, y = position.Y, h = size.X, w = size.Y });
+    public void DrawRect(Vector2 position, Vector2 size) => SDLAPI.RenderRect(native, tempRect with { x = position.X, y = position.Y, h = size.X, w = size.Y });
 
     public void DrawRect(Vector2 position, Vector2 size, Color color)
     {
@@ -139,7 +139,7 @@ public unsafe class SDLRenderer(SDL_Renderer* native) : SafeDisposable
         DrawRect(position, size);
     }
 
-    public void DrawRects(List<SDL_FRect> rects) => SDLOld.RenderRects(native, rects);
+    public void DrawRects(List<SDL_FRect> rects) => SDLAPI.RenderRects(native, rects);
 
     public void DrawRects(List<SDL_FRect> rects, Color color)
     {
@@ -153,7 +153,7 @@ public unsafe class SDLRenderer(SDL_Renderer* native) : SafeDisposable
         DrawRects(rects);
     }
     
-    public void DrawFillRect(Vector2 position, Vector2 size) => SDLOld.RenderFillRect(native, tempRect with { x = position.X, y = position.Y, h = size.X, w = size.Y });
+    public void DrawFillRect(Vector2 position, Vector2 size) => SDLAPI.RenderFillRect(native, tempRect with { x = position.X, y = position.Y, h = size.X, w = size.Y });
 
     public void DrawFillRect(Vector2 position, Vector2 size, Color color)
     {
@@ -167,7 +167,7 @@ public unsafe class SDLRenderer(SDL_Renderer* native) : SafeDisposable
         DrawFillRect(position, size);
     }
 
-    public void DrawFillRects(List<SDL_FRect> rects) => SDLOld.RenderFillRects(native, rects);
+    public void DrawFillRects(List<SDL_FRect> rects) => SDLAPI.RenderFillRects(native, rects);
 
     public void DrawFillRects(List<SDL_FRect> rects, Color color)
     {
@@ -187,6 +187,6 @@ public unsafe class SDLRenderer(SDL_Renderer* native) : SafeDisposable
     /// <remarks>Call <see cref="SDLRenderer.Dispose"/> instead to make sure resources aren't attempted to be disposed of multiple times</remarks>
     public override void DisposeResources()
     {
-        SDLOld.DestroyRenderer(native);
+        SDLAPI.DestroyRenderer(native);
     }
 }

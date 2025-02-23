@@ -66,7 +66,7 @@ public class SDL3Window : Window
     protected override void SetMaximize() => window.Maximize();
     protected override bool GetFocused() => window.Focused;
     protected override bool GetHovered() => window.Hovered;
-    protected override SystemTheme GetSystemTheme() => SDLOld.GetSystemTheme();
+    protected override SystemTheme GetSystemTheme() => SDLAPI.GetSystemTheme();
     protected override double GetTotalTime() => totalTime;
     protected override double GetDeltaTime() => deltaTime;
 
@@ -83,10 +83,10 @@ public class SDL3Window : Window
     /// <remarks>Use <see cref="CopperDevs.Windowing.Window.Create{TWindow}()"/> or <see cref="CopperDevs.Windowing.Window.Create{TWindow}(WindowOptions)"/> instead to properly set up the windowing system</remarks>
     protected override void CreateWindow(WindowOptions options)
     {
-        SDLOld.SetHint(SDL_HINT_WINDOWS_CLOSE_ON_ALT_F4, "null byte \0 in string"u8);
+        SDLAPI.SetHint(SDL_HINT_WINDOWS_CLOSE_ON_ALT_F4, "null byte \0 in string"u8);
 
-        SDLOld.SetHint(SDL_HINT_WINDOWS_CLOSE_ON_ALT_F4, "1"u8);
-        SDLOld.SetHint(SDL_HINT_WINDOWS_CLOSE_ON_ALT_F4, "1");
+        SDLAPI.SetHint(SDL_HINT_WINDOWS_CLOSE_ON_ALT_F4, "1"u8);
+        SDLAPI.SetHint(SDL_HINT_WINDOWS_CLOSE_ON_ALT_F4, "1");
 
         {
             SetProperty(AppMetadata.MetadataProperty.Name, options.Metadata);
@@ -100,10 +100,10 @@ public class SDL3Window : Window
             void SetProperty(AppMetadata.MetadataProperty property, AppMetadata metadata)
             {
                 Log.Config($"Setting metadata property {property.ToString()} to '{metadata.GetProperty(property)}'");
-                if (SDLOld.SetAppMetadataProperty(property, metadata.GetProperty(property)))
-                    Log.Success($"Metadata property {property.ToString()} changed to '{SDLOld.GetAppMetadataProperty(property)}'");
+                if (SDLAPI.SetAppMetadataProperty(property, metadata.GetProperty(property)))
+                    Log.Success($"Metadata property {property.ToString()} changed to '{SDLAPI.GetAppMetadataProperty(property)}'");
                 else
-                    Log.Error($"Failed to set metadata property {property.ToString()} to {metadata.GetProperty(property)}. Error: {SDLOld.GetError()}");
+                    Log.Error($"Failed to set metadata property {property.ToString()} to {metadata.GetProperty(property)}. Error: {SDLAPI.GetError()}");
             }
         }
         
@@ -137,7 +137,7 @@ public class SDL3Window : Window
     }
 
     // ReSharper disable once InconsistentNaming
-    private double totalTime => SDLOld.GetTicks() / (double)1000;
+    private double totalTime => SDLAPI.GetTicks() / (double)1000;
     private double deltaTime;
     private double deltaTimeStartTime;
 

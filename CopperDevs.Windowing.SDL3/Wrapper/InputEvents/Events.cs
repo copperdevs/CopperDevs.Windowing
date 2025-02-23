@@ -18,7 +18,7 @@ public static unsafe partial class SDLAPI
     public static SDL_Window* GetWindowFromEvent(SDL_Event* @event) => SDL_GetWindowFromEvent(@event);
     public static bool HasEvent(EventType type) => SDL_HasEvent((SDL_EventType)type);
     public static bool HasEvents(EventType minType, EventType maxType) => SDL_HasEvents((uint)minType, (uint)maxType);
-    public static void PeepEvents(SDL_Event[] events, SDL_EventAction action, SDL_EventType minType, SDL_EventType maxType) => SDL_PeepEvents(events, action, minType, maxType);
+    public static int PeepEvents(SDL_Event[] events, SDL_EventAction action, SDL_EventType minType, SDL_EventType maxType) => SDL_PeepEvents(events, action, minType, maxType);
     public static bool PollEvent(SDL_Event* @event) => SDL_PollEvent(@event);
     public static void PumpEvents() => SDL_PumpEvents();
     public static bool PushEvent(SDL_Event* @event) => SDL_PushEvent(@event);

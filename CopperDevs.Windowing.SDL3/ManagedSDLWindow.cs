@@ -41,8 +41,8 @@ public unsafe class ManagedSDLWindow : SafeDisposable
     /// </summary>
     public Vector2Int Position
     {
-        get => SDLOld.GetWindowPosition(window);
-        set => SDLOld.SetWindowPosition(window, value);
+        get => SDLAPI.GetWindowPosition(window);
+        set => SDLAPI.SetWindowPosition(window, value);
     }
 
     /// <summary>
@@ -50,8 +50,8 @@ public unsafe class ManagedSDLWindow : SafeDisposable
     /// </summary>
     public Vector2Int Size
     {
-        get => SDLOld.GetWindowSize(window);
-        set => SDLOld.SetWindowSize(window, value);
+        get => SDLAPI.GetWindowSize(window);
+        set => SDLAPI.SetWindowSize(window, value);
     }
 
     /// <summary>
@@ -59,8 +59,8 @@ public unsafe class ManagedSDLWindow : SafeDisposable
     /// </summary>
     public Vector2Int MinimumSize
     {
-        get => SDLOld.GetWindowMinimumSize(window);
-        set => SDLOld.SetWindowMinimumSize(window, value);
+        get => SDLAPI.GetWindowMinimumSize(window);
+        set => SDLAPI.SetWindowMinimumSize(window, value);
     }
 
     /// <summary>
@@ -68,8 +68,8 @@ public unsafe class ManagedSDLWindow : SafeDisposable
     /// </summary>
     public Vector2Int MaximumSize
     {
-        get => SDLOld.GetWindowMaximumSize(window);
-        set => SDLOld.SetWindowMaximumSize(window, value);
+        get => SDLAPI.GetWindowMaximumSize(window);
+        set => SDLAPI.SetWindowMaximumSize(window, value);
     }
 
 
@@ -78,8 +78,8 @@ public unsafe class ManagedSDLWindow : SafeDisposable
     /// </summary>
     public string Title
     {
-        get => SDLOld.GetWindowTitle(window);
-        set => SDLOld.SetWindowTitle(window, value);
+        get => SDLAPI.GetWindowTitle(window);
+        set => SDLAPI.SetWindowTitle(window, value);
     }
 
     /// <summary>
@@ -87,8 +87,8 @@ public unsafe class ManagedSDLWindow : SafeDisposable
     /// </summary>
     public bool Fullscreen
     {
-        get => SDLOld.GetFlags(window).HasFlag(WindowFlags.Fullscreen);
-        set => SDLOld.SetFullscreen(window, value);
+        get => SDLAPI.GetFlags(window).HasFlag(WindowFlags.Fullscreen);
+        set => SDLAPI.SetFullscreen(window, value);
     }
 
     /// <summary>
@@ -96,29 +96,29 @@ public unsafe class ManagedSDLWindow : SafeDisposable
     /// </summary>
     public bool AlwaysOnTop
     {
-        get => SDLOld.GetFlags(window).HasFlag(WindowFlags.AlwaysOnTop);
-        set => SDLOld.SetAlwaysOnTop(window, value);
+        get => SDLAPI.GetFlags(window).HasFlag(WindowFlags.AlwaysOnTop);
+        set => SDLAPI.SetAlwaysOnTop(window, value);
     }
 
     /// <summary>
     /// Is the window currently minimized
     /// </summary>
-    public bool Minimized => SDLOld.GetFlags(window).HasFlag(WindowFlags.Minimized);
+    public bool Minimized => SDLAPI.GetFlags(window).HasFlag(WindowFlags.Minimized);
 
     /// <summary>
     /// Is the window currently maximized
     /// </summary>
-    public bool Maximized => SDLOld.GetFlags(window).HasFlag(WindowFlags.Maximized);
+    public bool Maximized => SDLAPI.GetFlags(window).HasFlag(WindowFlags.Maximized);
 
     /// <summary>
     /// Is the window currently being focused
     /// </summary>
-    public bool Focused => SDLOld.GetFlags(window).HasFlag(WindowFlags.InputFocus);
+    public bool Focused => SDLAPI.GetFlags(window).HasFlag(WindowFlags.InputFocus);
 
     /// <summary>
     /// Is the window currently being hovered by the mouse
     /// </summary>
-    public bool Hovered => SDLOld.GetFlags(window).HasFlag(WindowFlags.MouseFocus);
+    public bool Hovered => SDLAPI.GetFlags(window).HasFlag(WindowFlags.MouseFocus);
 
     /// <summary>
     /// Callback for when an event is called
@@ -155,15 +155,15 @@ public unsafe class ManagedSDLWindow : SafeDisposable
             windowFlags = windowOptions.WindowFlags;
         }
 
-        if (!(createdSuccessfully = SDLOld.InitSubSystem(initFlags)))
+        if (!(createdSuccessfully = SDLAPI.InitSubSystem(initFlags)))
         {
-            throw new InvalidOperationException($"Failed to initialise SDL. Error: {SDLOld.GetError()}");
+            throw new InvalidOperationException($"Failed to initialise SDL. Error: {SDLAPI.GetError()}");
         }
 
         events.HandleEvent += HandleEvents;
 
-        window = SDLOld.CreateWindow(options.Title, options.Size, windowFlags);
-        renderer = new SDLRenderer(SDLOld.CreateRenderer(window));
+        window = SDLAPI.CreateWindow(options.Title, options.Size, windowFlags);
+        renderer = new SDLRenderer(SDLAPI.CreateRenderer(window));
     }
 
     /// <summary>
@@ -183,12 +183,12 @@ public unsafe class ManagedSDLWindow : SafeDisposable
     /// <summary>
     /// Maximize the window 
     /// </summary>
-    public void Maximize() => SDLOld.Maximize(window);
+    public void Maximize() => SDLAPI.Maximize(window);
 
     /// <summary>
     /// Minimize the window
     /// </summary>
-    public void Minimize() => SDLOld.Minimize(window);
+    public void Minimize() => SDLAPI.Minimize(window);
 
     /// <summary>
     /// Flash the window
@@ -196,7 +196,7 @@ public unsafe class ManagedSDLWindow : SafeDisposable
     /// <param name="untilFocus">If true, flashes the window until focused, otherwise only briefly flashes</param>
     public void Flash(bool untilFocus = true)
     {
-        SDLOld.FlashWindow(window, untilFocus ? SDL_FlashOperation.SDL_FLASH_UNTIL_FOCUSED : SDL_FlashOperation.SDL_FLASH_BRIEFLY);
+        SDLAPI.FlashWindow(window, untilFocus ? SDL_FlashOperation.SDL_FLASH_UNTIL_FOCUSED : SDL_FlashOperation.SDL_FLASH_BRIEFLY);
     }
 
     /// <summary>
@@ -204,7 +204,7 @@ public unsafe class ManagedSDLWindow : SafeDisposable
     /// </summary>
     public void StopFlash()
     {
-        SDLOld.FlashWindow(window, SDL_FlashOperation.SDL_FLASH_CANCEL);
+        SDLAPI.FlashWindow(window, SDL_FlashOperation.SDL_FLASH_CANCEL);
     }
 
     /// <summary>
@@ -214,11 +214,11 @@ public unsafe class ManagedSDLWindow : SafeDisposable
     public override void DisposeResources()
     {
         if (createdSuccessfully)
-            SDLOld.QuitSubSystem(initFlags);
+            SDLAPI.QuitSubSystem(initFlags);
 
         renderer.Dispose();
 
-        SDLOld.Quit();
+        SDLAPI.Quit();
     }
 
     private class Events
@@ -230,13 +230,13 @@ public unsafe class ManagedSDLWindow : SafeDisposable
 
         public void Poll()
         {
-            SDLOld.PumpEvents();
+            SDLAPI.PumpEvents();
 
             int eventsRead;
 
             do
             {
-                eventsRead = SDLOld.PeepEvents(events, SDL_EventAction.SDL_GETEVENT, SDL_EventType.SDL_EVENT_FIRST, SDL_EventType.SDL_EVENT_LAST);
+                eventsRead = SDLAPI.PeepEvents(events, SDL_EventAction.SDL_GETEVENT, SDL_EventType.SDL_EVENT_FIRST, SDL_EventType.SDL_EVENT_LAST);
                 for (var i = 0; i < eventsRead; i++)
                     HandleEvent?.Invoke(events[i]);
             } while (eventsRead == EventsPerPeep);

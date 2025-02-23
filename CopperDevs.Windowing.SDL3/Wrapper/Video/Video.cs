@@ -52,7 +52,6 @@ public static unsafe partial class SDLAPI
     public static SDL_DisplayOrientation GetNaturalDisplayOrientation(SDL_DisplayID displayId) => SDL_GetNaturalDisplayOrientation(displayId);
     public static int GetNumVideoDrivers() => SDL_GetNumVideoDrivers();
     public static SDL_DisplayID GetPrimaryDisplay() => SDL_GetPrimaryDisplay();
-    public static SDL_SystemTheme GetSystemTheme() => SDL_GetSystemTheme();
     public static string GetVideoDriver(int index) => SDL_GetVideoDriver(index) ?? string.Empty;
     public static bool GetWindowAspectRatio(SDL_Window* window, float* minAspect, float* maxAspect) => SDL_GetWindowAspectRatio(window, minAspect, maxAspect);
     public static bool GetWindowBordersSize(SDL_Window* window, int* top, int* left, int* bottom, int* right) => SDL_GetWindowBordersSize(window, top, left, bottom, right);
