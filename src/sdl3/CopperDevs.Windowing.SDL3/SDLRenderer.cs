@@ -8,9 +8,17 @@ namespace CopperDevs.Windowing.SDL3;
 
 // ReSharper disable once InconsistentNaming
 // TODO: Add support for all SDL rendering functions in https://wiki.libsdl.org/SDL3/CategoryRender
-public unsafe class SDLRenderer(SDL_Renderer* native) : SafeDisposable
+public unsafe class SDLRenderer : SafeDisposable, IRenderer<SDL_Renderer>
 {
     private SDL_FRect tempRect;
+    private SDL_Renderer* native;
+
+    public SDL_Renderer* GetNativeRenderer() => native;
+    
+    public void CreateRenderer(ManagedSDLWindow window, RendererOptions options)
+    {
+        native = SDLAPI.CreateRenderer(window.GetNativeWindow());
+    }
 
     public Vector2 Scale
     {

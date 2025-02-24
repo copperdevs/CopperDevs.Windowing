@@ -10,8 +10,19 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\CopperDevs.Windowing\CopperDevs.Windowing.csproj" />
-      <ProjectReference Include="..\sdl3\CopperDevs.Windowing.SDL3\CopperDevs.Windowing.SDL3.csproj" />
+        <ProjectReference Include="..\CopperDevs.Windowing\CopperDevs.Windowing.csproj"/>
+        <ProjectReference Include="..\sdl3\CopperDevs.Windowing.SDL3\CopperDevs.Windowing.SDL3.csproj"/>
+    </ItemGroup>
+
+    <ItemGroup>
+        <PackageReference Include="ImGui.NET" Version="1.91.6.1"/>
+    </ItemGroup>
+    
+    <!-- Default Shader Content -->
+    <ItemGroup>
+        <EmbeddedResource Include="$(ProjectDir)Shaders/Compiled/**" Visible="false">
+            <LogicalName>%(Filename)%(Extension)</LogicalName>
+        </EmbeddedResource>
     </ItemGroup>
 
 </Project>

@@ -107,7 +107,7 @@ public class AppMetadata
     /// </summary>
     /// <param name="property">Property to get the value from</param>
     /// <returns>The value</returns>
-    public string GetProperty(MetadataProperty property)
+    public string? GetProperty(MetadataProperty property)
     {
         return property switch
         {

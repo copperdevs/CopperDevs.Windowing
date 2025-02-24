@@ -145,7 +145,13 @@ public static unsafe partial class SDLAPI
         return prop;
     }
 
-    public static bool SetAppMetadataProperty(AppMetadata.MetadataProperty property, string? value) => SDL_SetAppMetadataProperty(GetAppMetadataPropertyProp(property), value);
+    public static bool SetAppMetadataProperty(AppMetadata.MetadataProperty property, string? value)
+    {
+        if (value is not null)
+            return SDL_SetAppMetadataProperty(GetAppMetadataPropertyProp(property), value);
+        return false;
+    }
+
     public static string GetAppMetadataProperty(AppMetadata.MetadataProperty property) => SDL_GetAppMetadataProperty(GetAppMetadataPropertyProp(property)) ?? string.Empty;
     public static void RenderRect(SDL_Renderer* renderer, SDL_FRect rect) => RenderRect(renderer, &rect);
     public static void RenderRects(SDL_Renderer* renderer, List<SDL_FRect> rect) => RenderRects(renderer, SDLUtil.ToPointer(rect), rect.Count);

@@ -19,6 +19,8 @@ public record SDL3WindowOptions : WindowOptions
     /// </summary>
     public WindowFlags WindowFlags { get; set; } = WindowFlags.Resizable | WindowFlags.HighPixelDensity;
 
+    public RendererOptions RendererOptions { get; set; } = new();
+    
     /// <summary>
     /// Default settings
     /// </summary>

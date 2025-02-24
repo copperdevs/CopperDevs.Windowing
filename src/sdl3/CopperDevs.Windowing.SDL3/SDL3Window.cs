@@ -34,7 +34,25 @@ public class SDL3Window : Window
     /// Get the managed SDL renderer wrapper
     /// </summary>
     /// <returns>Renderer wrapper object</returns>
-    public SDLRenderer GetRenderer() => window.GetRenderer();
+    public SDLRenderer? GetRenderer() => window.GetRenderer();
+
+    /// <summary>
+    /// Get the SDL GPU API wrapper
+    /// </summary>
+    /// <returns>GPU API wrapper object</returns>
+    // ReSharper disable once InconsistentNaming
+    public SDLGPU? GetGPU() => window.GetGPU();
+    
+    /// <summary>
+    /// Callback for when an event is called
+    /// </summary>
+    /// <remarks>If you need the <see cref="SDL_Event"/> info, use <see cref="HandleEvent"/></remarks>
+    public Action<EventType> OnEvent = null!;
+
+    /// <summary>
+    /// Callback for when an event is called and gives the events data
+    /// </summary>
+    public Action<EventType, SDL_Event> HandleEvent = null!;
 
     /// <summary>
     /// Disposes of the windows resources and shuts down SDL
@@ -99,6 +117,9 @@ public class SDL3Window : Window
 
             void SetProperty(AppMetadata.MetadataProperty property, AppMetadata metadata)
             {
+                if (metadata.GetProperty(property) is null)
+                    return;
+
                 Log.Config($"Setting metadata property {property.ToString()} to '{metadata.GetProperty(property)}'");
                 if (SDLAPI.SetAppMetadataProperty(property, metadata.GetProperty(property)))
                     Log.Success($"Metadata property {property.ToString()} changed to '{SDLAPI.GetAppMetadataProperty(property)}'");
@@ -106,10 +127,11 @@ public class SDL3Window : Window
                     Log.Error($"Failed to set metadata property {property.ToString()} to {metadata.GetProperty(property)}. Error: {SDLAPI.GetError()}");
             }
         }
-        
+
         window = new ManagedSDLWindow(options);
         window.HandleEvent += EventsHandler;
-        
+        window.OnEvent += HandleOnEvent;
+
         unsafe
         {
             SDL_AddEventWatch(&EventWatcher, new IntPtr(null));
@@ -152,16 +174,21 @@ public class SDL3Window : Window
 
     private void EventsHandler(EventType type, SDL_Event e)
     {
+        HandleEvent?.Invoke(type, e);
+        
         // ReSharper disable once SwitchStatementMissingSomeEnumCasesNoDefault
         // ReSharper disable once ConvertSwitchStatementToSwitchExpression
         switch (type)
         {
+            case EventType.WindowCloseRequested:
             case EventType.Quit:
                 ShouldRun = false;
                 break;
         }
     }
     
+    private void HandleOnEvent(EventType type) => OnEvent?.Invoke(type);
+
     [UnmanagedCallersOnly(CallConvs = [typeof(CallConvCdecl)])]
     private static unsafe SDLBool EventWatcher(IntPtr userdata, SDL_Event* eventPtr)
     {
@@ -174,9 +201,10 @@ public class SDL3Window : Window
                 {
                     window.RenderWindow();
                 }
+
                 break;
         }
-        
+
         return true;
     }
 }
