@@ -89,8 +89,9 @@ public static unsafe class Program
         ImGui.End();
         ImGui.ShowDemoWindow();
         ImGui.EndFrame();
-
-        renderer.Render(new SDL_FColor { r = 0.1f, g = 0.05f, b = 0.08f, a = 1.0f });
+        
+        
+        renderer.Render(Color.Gray.AsSDLColor());
     }
 
     private static void OnClose()
