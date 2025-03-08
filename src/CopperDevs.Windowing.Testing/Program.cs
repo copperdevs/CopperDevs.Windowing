@@ -11,7 +11,7 @@ namespace CopperDevs.Windowing.Testing;
 // testing project moment
 public static class Program
 {
-    private static ManagedSDLWindow subWindow;
+    // private static ManagedSDLWindow subWindow;
 
     private static SDL3Window window = null!;
     private static SDLRenderer renderer = null!;
@@ -55,12 +55,12 @@ public static class Program
 
     private static void OnLoad()
     {
-        subWindow = new ManagedSDLWindow(SDL3WindowOptions.Default);
+        // subWindow = new ManagedSDLWindow(SDL3WindowOptions.Default);
     }
 
     private static void OnUpdate()
     {
-        subWindow?.PollEvents();
+        // subWindow?.PollEvents();
         
         if (Input.IsMouseButtonPressed(MouseButton.Left))
         {
