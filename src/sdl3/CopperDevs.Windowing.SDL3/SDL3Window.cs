@@ -196,7 +196,7 @@ public class SDL3Window : Window
         // ReSharper disable once ConvertSwitchStatementToSwitchExpression
         switch ((EventType)eventPtr->type)
         {
-            case EventType.WindowExposed:
+            case EventType.WindowResized:
                 foreach (var window in CreatedWindows)
                 {
                     window.RenderWindow();
