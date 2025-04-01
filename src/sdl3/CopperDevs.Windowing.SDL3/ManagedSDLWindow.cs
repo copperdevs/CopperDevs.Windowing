@@ -16,7 +16,8 @@ public unsafe class ManagedSDLWindow : SafeDisposable
 
     // ReSharper disable once PrivateFieldCanBeConvertedToLocalVariable
     private readonly SDL_Window* window;
-    private readonly SDLRenderer renderer;
+    private readonly SDLRenderer? renderer;
+    private readonly SDLGPU? gpu;
 
     /// <summary>
     /// Get the direct SDL Window
@@ -28,7 +29,14 @@ public unsafe class ManagedSDLWindow : SafeDisposable
     /// Get the SDL renderer wrapper
     /// </summary>
     /// <returns>Renderer wrapper object</returns>
-    public SDLRenderer GetRenderer() => renderer;
+    public SDLRenderer? GetRenderer() => renderer;
+
+    /// <summary>
+    /// Get the SDL GPU API wrapper
+    /// </summary>
+    /// <returns>GPU API wrapper object</returns>
+    // ReSharper disable once InconsistentNaming
+    public SDLGPU? GetGPU() => gpu;
 
     // ReSharper disable once PrivateFieldCanBeConvertedToLocalVariable
     private readonly WindowFlags windowFlags;
@@ -144,10 +152,8 @@ public unsafe class ManagedSDLWindow : SafeDisposable
 
         if (options.GetType() == typeof(SDL3WindowOptions))
         {
-            var windowOptions = (SDL3WindowOptions)options;
-
-            initFlags = windowOptions.InitFlags;
-            windowFlags = windowOptions.WindowFlags;
+            initFlags = ((SDL3WindowOptions)options).InitFlags;
+            windowFlags = ((SDL3WindowOptions)options).WindowFlags;
         }
 
         if (!(createdSuccessfully = SDLAPI.InitSubSystem(initFlags)))
@@ -158,7 +164,32 @@ public unsafe class ManagedSDLWindow : SafeDisposable
         events.HandleEvent += HandleEvents;
 
         window = SDLAPI.CreateWindow(options.Title, options.Size, windowFlags);
-        renderer = new SDLRenderer(SDLAPI.CreateRenderer(window));
+//        renderer = new SDLRenderer(SDLAPI.CreateRenderer(window));
+
+        if (options.GetType() != typeof(SDL3WindowOptions))
+            return;
+
+        var windowOptions = (SDL3WindowOptions)options;
+
+        switch (windowOptions.RendererOptions.TargetRenderer)
+        {
+            case SDLRenderers.GPU:
+                renderer = null;
+                gpu = new SDLGPU();
+                break;
+            case SDLRenderers.Renderer:
+                renderer = new SDLRenderer();
+                gpu = null;
+                break;
+            case SDLRenderers.None:
+            default:
+                renderer = null;
+                gpu = null;
+                break;
+        }
+
+        gpu?.CreateRenderer(this, windowOptions.RendererOptions);
+        renderer?.CreateRenderer(this, windowOptions.RendererOptions);
     }
 
     /// <summary>
@@ -211,7 +242,8 @@ public unsafe class ManagedSDLWindow : SafeDisposable
         if (createdSuccessfully)
             SDLAPI.QuitSubSystem(initFlags);
 
-        renderer.Dispose();
+        renderer?.Dispose();
+        gpu?.Dispose();
 
         SDLAPI.Quit();
     }

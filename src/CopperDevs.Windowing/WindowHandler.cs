@@ -51,7 +51,7 @@ public partial class Window
         OnUpdate?.Invoke();
         OnRender?.Invoke();
 
-        Thread.Sleep(10);
+        // Thread.Sleep(10);
 
         StopWindowUpdate();
     }
