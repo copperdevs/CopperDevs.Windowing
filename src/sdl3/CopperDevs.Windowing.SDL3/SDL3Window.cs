@@ -42,7 +42,7 @@ public class SDL3Window : Window
     /// <returns>GPU API wrapper object</returns>
     // ReSharper disable once InconsistentNaming
     public SDLGPU? GetGPU() => window.GetGPU();
-    
+
     /// <summary>
     /// Callback for when an event is called
     /// </summary>
@@ -117,14 +117,16 @@ public class SDL3Window : Window
 
             void SetProperty(AppMetadata.MetadataProperty property, AppMetadata metadata)
             {
-                if (metadata.GetProperty(property) is null)
+                if (string.IsNullOrWhiteSpace(metadata.GetProperty(property)))
                     return;
 
                 Log.Config($"Setting metadata property {property.ToString()} to '{metadata.GetProperty(property)}'");
                 if (SDLAPI.SetAppMetadataProperty(property, metadata.GetProperty(property)))
-                    Log.Success($"Metadata property {property.ToString()} changed to '{SDLAPI.GetAppMetadataProperty(property)}'");
+                    Log.Success(
+                        $"Metadata property {property.ToString()} changed to '{SDLAPI.GetAppMetadataProperty(property)}'");
                 else
-                    Log.Error($"Failed to set metadata property {property.ToString()} to {metadata.GetProperty(property)}. Error: {SDLAPI.GetError()}");
+                    Log.Error(
+                        $"Failed to set metadata property {property.ToString()} to {metadata.GetProperty(property)}. Error: {SDLAPI.GetError()}");
             }
         }
 
@@ -175,7 +177,7 @@ public class SDL3Window : Window
     private void EventsHandler(EventType type, SDL_Event e)
     {
         HandleEvent?.Invoke(type, e);
-        
+
         // ReSharper disable once SwitchStatementMissingSomeEnumCasesNoDefault
         // ReSharper disable once ConvertSwitchStatementToSwitchExpression
         switch (type)
@@ -186,7 +188,7 @@ public class SDL3Window : Window
                 break;
         }
     }
-    
+
     private void HandleOnEvent(EventType type) => OnEvent?.Invoke(type);
 
     [UnmanagedCallersOnly(CallConvs = [typeof(CallConvCdecl)])]

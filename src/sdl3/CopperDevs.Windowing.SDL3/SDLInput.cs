@@ -122,6 +122,7 @@ internal class SDLInput : IInput
 
     public void UpdateInput()
     {
+        // TODO: fix this shit bro
         previousFrameKeyCurrentlyPressed = new Dictionary<SDL_Keycode, bool>(keyCurrentlyPressed);
         previousFrameButtonCurrentlyPressed = new Dictionary<SDLButton, bool>(buttonCurrentlyPressed);
 

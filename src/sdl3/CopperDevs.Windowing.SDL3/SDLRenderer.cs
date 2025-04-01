@@ -1,5 +1,6 @@
 using System.Numerics;
 using CopperDevs.Core.Utility;
+using CopperDevs.Logger;
 using CopperDevs.Windowing.Data;
 using CopperDevs.Windowing.SDL3.Data;
 
@@ -187,6 +188,12 @@ public unsafe class SDLRenderer : SafeDisposable, IRenderer<SDL_Renderer>
     {
         SetDrawColor(r, g, b, a);
         DrawFillRects(rects);
+    }
+
+    public void SetVSync(int count)
+    {
+        if (!SDLAPI.SetRenderVSync(native, count))
+            Log.Error($"Failed to set Vsync: {SDLAPI.GetError()}");
     }
 
     /// <summary>

@@ -28,11 +28,15 @@ public static class Program
                 Copyright = "MIT License",
                 Url = "https://github.com/copperdevs/CopperDevs.Windowing",
                 Type = AppMetadata.AppType.Application
+            },
+            RendererOptions = new RendererOptions
+            {
+                TargetRenderer = SDLRenderers.Renderer
             }
         };
 
         window = Window.Create<SDL3Window>(options);
-        renderer = window.GetRenderer();
+        renderer = window.GetRenderer()!;
 
         window.OnUpdate += OnUpdate;
         window.OnRender += OnRender;
