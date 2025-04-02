@@ -16,8 +16,8 @@ public static class Program
     // represents a line, with X and Y being the index of the point in points (Points[X] -> Points[Y])
     private static readonly List<Vector2Int> PointIndexes = [];
 
-    private static Vector2 scaleRange = new(0.5f, 10f);
-    private static float arrowChanger = 0.5f;
+    private static readonly Vector2 ScaleRange = new(0.5f, 10f);
+    private const float ArrowChanger = 0.5f;
     private static float scale = 1;
 
     public static void Main()
@@ -67,12 +67,12 @@ public static class Program
             PointIndexes.Remove(PointIndexes[^1]);
 
         if (Input.IsKeyPressed(InputKey.Left))
-            scale -= arrowChanger;
+            scale -= ArrowChanger;
 
         if (Input.IsKeyPressed(InputKey.Right))
-            scale += arrowChanger;
+            scale += ArrowChanger;
 
-        scale = MathUtil.Clamp(scale, scaleRange.X, scaleRange.Y);
+        scale = MathUtil.Clamp(scale, ScaleRange.X, ScaleRange.Y);
 
         renderer.Scale = Vector2.One * scale;
     }
