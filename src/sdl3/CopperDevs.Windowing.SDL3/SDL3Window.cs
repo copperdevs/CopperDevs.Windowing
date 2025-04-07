@@ -106,30 +106,6 @@ public class SDL3Window : Window
         SDLAPI.SetHint(SDL_HINT_WINDOWS_CLOSE_ON_ALT_F4, "1"u8);
         SDLAPI.SetHint(SDL_HINT_WINDOWS_CLOSE_ON_ALT_F4, "1");
 
-        {
-            SetProperty(AppMetadata.MetadataProperty.Name, options.Metadata);
-            SetProperty(AppMetadata.MetadataProperty.Version, options.Metadata);
-            SetProperty(AppMetadata.MetadataProperty.Identifier, options.Metadata);
-            SetProperty(AppMetadata.MetadataProperty.Creator, options.Metadata);
-            SetProperty(AppMetadata.MetadataProperty.Copyright, options.Metadata);
-            SetProperty(AppMetadata.MetadataProperty.Url, options.Metadata);
-            SetProperty(AppMetadata.MetadataProperty.Type, options.Metadata);
-
-            void SetProperty(AppMetadata.MetadataProperty property, AppMetadata metadata)
-            {
-                if (string.IsNullOrWhiteSpace(metadata.GetProperty(property)))
-                    return;
-
-                Log.Config($"Setting metadata property {property.ToString()} to '{metadata.GetProperty(property)}'");
-                if (SDLAPI.SetAppMetadataProperty(property, metadata.GetProperty(property)))
-                    Log.Success(
-                        $"Metadata property {property.ToString()} changed to '{SDLAPI.GetAppMetadataProperty(property)}'");
-                else
-                    Log.Error(
-                        $"Failed to set metadata property {property.ToString()} to {metadata.GetProperty(property)}. Error: {SDLAPI.GetError()}");
-            }
-        }
-
         window = new ManagedSDLWindow(options);
         window.HandleEvent += EventsHandler;
         window.OnEvent += HandleOnEvent;

@@ -25,16 +25,6 @@ public static class Program
         var options = SDL3WindowOptions.Default with
         {
             Title = "CopperDevs SDL3 Windowing Example",
-            Metadata = new AppMetadata
-            {
-                Name = "CopperDevs SDL3 Windowing Example",
-                Version = "1.0.0",
-                Identifier = "com.copperdevs.windowing.sdl3.example",
-                Creator = "copperdevs",
-                Copyright = "MIT License",
-                Url = "https://github.com/copperdevs/CopperDevs.Windowing",
-                Type = AppMetadata.AppType.Application
-            },
             RendererOptions = new RendererOptions
             {
                 TargetRenderer = SDLRenderers.Renderer
