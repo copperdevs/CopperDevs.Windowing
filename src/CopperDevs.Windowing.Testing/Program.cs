@@ -1,23 +1,21 @@
-using CopperDevs.Windowing.SDL3;
-using CopperDevs.Windowing.SDL3.Data;
+using CopperDevs.Windowing.Data;
+using CopperDevs.Windowing.Win32;
 
 namespace CopperDevs.Windowing.Testing;
 
 // testing project moment
 public static class Program
 {
-    private static SDL3Window window = null!;
-    private static SDLRenderer renderer = null!;
+    private static Window window = null!;
 
     public static void Main()
     {
-        var options = SDL3WindowOptions.Default with
+        var options = WindowOptions.Default with
         {
             Title = "CopperDevs Windowing Example"
         };
 
-        window = Window.Create<SDL3Window>(options);
-        renderer = window.GetRenderer()!;
+        window = Window.Create<Win32Window>(options);
 
         window.OnLoad += OnLoad;
         window.OnUpdate += OnUpdate;
@@ -28,7 +26,6 @@ public static class Program
 
         window.Dispose();
     }
-
 
     private static void OnLoad()
     {
