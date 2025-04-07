@@ -1,4 +1,3 @@
-using CopperDevs.Windowing.Data;
 using CopperDevs.Windowing.SDL3;
 using CopperDevs.Windowing.SDL3.Data;
 
@@ -38,7 +37,6 @@ public static class Program
     private static void OnUpdate()
     {
     }
-
 
     private static void OnRender()
     {
