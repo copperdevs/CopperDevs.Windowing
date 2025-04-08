@@ -6,25 +6,30 @@ namespace CopperDevs.Windowing.Testing;
 // testing project moment
 public static class Program
 {
-    private static Window window = null!;
+    // private static Window window = null!;
 
     public static void Main()
     {
-        var options = WindowOptions.Default with
-        {
-            Title = "CopperDevs Windowing Example"
-        };
+        var window = new ManagedWin32Window(Win32WindowOptions.Default);
 
-        window = Window.Create<Win32Window>(options);
+        Console.ReadLine();
+        return;
 
-        window.OnLoad += OnLoad;
-        window.OnUpdate += OnUpdate;
-        window.OnRender += OnRender;
-        window.OnClose += OnClose;
+        // var options = Win32WindowOptions.Default with
+        // {
+        //     Title = "CopperDevs Windowing Example"
+        // };
 
-        window.Run();
+        // window = Window.Create<Win32Window>(options);
 
-        window.Dispose();
+        // window.OnLoad += OnLoad;
+        // window.OnUpdate += OnUpdate;
+        // window.OnRender += OnRender;
+        // window.OnClose += OnClose;
+
+        // window.Run();
+
+        // window.Dispose();
     }
 
     private static void OnLoad()

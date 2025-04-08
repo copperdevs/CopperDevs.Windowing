@@ -1,4 +1,5 @@
 using System;
+using System.Runtime.Versioning;
 using CopperDevs.Core.Data;
 using CopperDevs.Windowing.Data;
 
@@ -6,160 +7,156 @@ namespace CopperDevs.Windowing.Win32;
 
 #pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
 
+[SupportedOSPlatform("windows5.0")]
 public class Win32Window : Window
 {
+    private ManagedWin32Window managed = null!;
+
     public override void DisposeResources()
     {
-        throw new NotImplementedException();
+        managed.Dispose();
     }
 
     protected override IInput CreateInput()
     {
-        throw new NotImplementedException();
+        return new Win32Input();
     }
 
     protected override void CreateWindow(WindowOptions options)
     {
-        throw new NotImplementedException();
+        managed = new(options);
     }
 
     protected override void DestroyWindow()
     {
-        throw new NotImplementedException();
+        Dispose();
     }
 
     protected override bool GetAlwaysOnTop()
     {
-        throw new NotImplementedException();
+        return false;
     }
 
     protected override double GetDeltaTime()
     {
-        throw new NotImplementedException();
+        return 0;
     }
 
     protected override bool GetFocused()
     {
-        throw new NotImplementedException();
+        return false;
     }
 
     protected override bool GetFullscreen()
     {
-        throw new NotImplementedException();
+        return false;
     }
 
     protected override bool GetHovered()
     {
-        throw new NotImplementedException();
+        return false;
     }
 
     protected override bool GetMaximized()
     {
-        throw new NotImplementedException();
+        return false;
     }
 
     protected override bool GetMinimized()
     {
-        throw new NotImplementedException();
+        return false;
     }
 
     protected override SystemTheme GetSystemTheme()
     {
-        throw new NotImplementedException();
+        return SystemTheme.Unknown;
     }
 
     protected override double GetTotalTime()
     {
-        throw new NotImplementedException();
+        return 0;
     }
 
     protected override Vector2Int GetWindowMaximumSize()
     {
-        throw new NotImplementedException();
+        return Vector2Int.Zero;
     }
 
     protected override Vector2Int GetWindowMinimumSize()
     {
-        throw new NotImplementedException();
+        return Vector2Int.Zero;
     }
 
     protected override Vector2Int GetWindowPosition()
     {
-        throw new NotImplementedException();
+        return Vector2Int.Zero;
     }
 
     protected override Vector2Int GetWindowSize()
     {
-        throw new NotImplementedException();
+        return Vector2Int.Zero;
     }
 
     protected override string GetWindowTitle()
     {
-        throw new NotImplementedException();
+        return string.Empty;
     }
 
     protected override void SetAlwaysOnTop(bool alwaysOnTop)
     {
-        throw new NotImplementedException();
     }
 
     protected override void SetFullscreen(bool fullscreen)
     {
-        throw new NotImplementedException();
     }
 
     protected override void SetMaximize()
     {
-        throw new NotImplementedException();
     }
 
     protected override void SetMinimize()
     {
-        throw new NotImplementedException();
     }
 
     protected override void SetWindowMaximumSize(Vector2Int size)
     {
-        throw new NotImplementedException();
     }
 
     protected override void SetWindowMinimumSize(Vector2Int size)
     {
-        throw new NotImplementedException();
     }
 
     protected override void SetWindowPosition(Vector2Int position)
     {
-        throw new NotImplementedException();
     }
 
     protected override void SetWindowSize(Vector2Int size)
     {
-        throw new NotImplementedException();
+
     }
 
     protected override void SetWindowTitle(string title)
     {
-        throw new NotImplementedException();
+
     }
 
     protected override void StartWindowUpdate()
     {
-        throw new NotImplementedException();
+
     }
 
     protected override void StopWindowFlash()
     {
-        throw new NotImplementedException();
+
     }
 
     protected override void StopWindowUpdate()
     {
-        throw new NotImplementedException();
+
     }
 
     protected override void WindowFlash(bool untilFocus = true)
     {
-        throw new NotImplementedException();
+
     }
 }

@@ -1,80 +1,80 @@
 using System;
 using System.Numerics;
+using System.Runtime.Versioning;
 using CopperDevs.Windowing.Data;
 
 namespace CopperDevs.Windowing.Win32;
 
 #pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
 
+[SupportedOSPlatform("windows5.0")]
 public class Win32Input : IInput
 {
     Vector2 IInput.GetMouseDelta()
     {
-        throw new NotImplementedException();
+        return Vector2.Zero;
     }
 
     Vector2 IInput.GetMousePosition()
     {
-        throw new NotImplementedException();
+        return Vector2.Zero;
     }
 
     Vector2 IInput.GetMouseScroll()
     {
-        throw new NotImplementedException();
+        return Vector2.Zero;
     }
 
     bool IInput.IsKeyDown(InputKey key)
     {
-        throw new NotImplementedException();
+        return false;
     }
 
     bool IInput.IsKeyPressed(InputKey key)
     {
-        throw new NotImplementedException();
+        return false;
     }
 
     bool IInput.IsKeyReleased(InputKey key)
     {
-        throw new NotImplementedException();
+        return false;
     }
 
     bool IInput.IsKeyUp(InputKey key)
     {
-        throw new NotImplementedException();
+        return false;
     }
 
     bool IInput.IsMouseButtonDown(MouseButton button)
     {
-        throw new NotImplementedException();
+        return false;
     }
 
     bool IInput.IsMouseButtonPressed(MouseButton button)
     {
-        throw new NotImplementedException();
+        return false;
     }
 
     bool IInput.IsMouseButtonReleased(MouseButton button)
     {
-        throw new NotImplementedException();
+        return false;
     }
 
     bool IInput.IsMouseButtonUp(MouseButton button)
     {
-        throw new NotImplementedException();
+        return false;
     }
 
     void IInput.SetCursorMode(CursorMode cursorMode)
     {
-        throw new NotImplementedException();
     }
 
     bool IInput.SupportsInputKey(InputKey inputKey)
     {
-        throw new NotImplementedException();
+        return false;
     }
 
     void IInput.UpdateInput()
     {
-        throw new NotImplementedException();
     }
 }
