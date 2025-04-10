@@ -1,4 +1,4 @@
-﻿
+
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CopperDevs.Windowing", "src\CopperDevs.Windowing\CopperDevs.Windowing.csproj", "{FBC126A3-DE91-45F8-9169-20AABF655423}"
 EndProject
