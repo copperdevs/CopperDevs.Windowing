@@ -1,34 +1,36 @@
-using CopperDevs.Windowing.SDL3;
-using CopperDevs.Windowing.SDL3.Data;
+using CopperDevs.Windowing.Data;
+using CopperDevs.Windowing.Win32;
 
 namespace CopperDevs.Windowing.Testing;
 
 // testing project moment
 public static class Program
 {
-    private static SDL3Window window = null!;
-    private static SDLRenderer renderer = null!;
+    // private static Window window = null!;
 
     public static void Main()
     {
-        var options = SDL3WindowOptions.Default with
-        {
-            Title = "CopperDevs Windowing Example"
-        };
+        var window = new ManagedWin32Window(Win32WindowOptions.Default);
 
-        window = Window.Create<SDL3Window>(options);
-        renderer = window.GetRenderer()!;
+        Console.ReadLine();
+        return;
 
-        window.OnLoad += OnLoad;
-        window.OnUpdate += OnUpdate;
-        window.OnRender += OnRender;
-        window.OnClose += OnClose;
+        // var options = Win32WindowOptions.Default with
+        // {
+        //     Title = "CopperDevs Windowing Example"
+        // };
 
-        window.Run();
+        // window = Window.Create<Win32Window>(options);
 
-        window.Dispose();
+        // window.OnLoad += OnLoad;
+        // window.OnUpdate += OnUpdate;
+        // window.OnRender += OnRender;
+        // window.OnClose += OnClose;
+
+        // window.Run();
+
+        // window.Dispose();
     }
-
 
     private static void OnLoad()
     {
