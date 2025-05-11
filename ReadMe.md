@@ -7,7 +7,7 @@
 - SDL3 Support: https://www.nuget.org/packages/CopperDevs.Windowing.SDL3/
 
 ## Example
-*A full, simple, example project can be found [here](./CopperDevs.Windowing.Example)*
+*A full, simple, example project based off of SDL3 can be found [here](./src/sdl3/CopperDevs.Windowing.SDL3.Example/Program.cs)*
 
 Example of the creation of an empty window using SDL3
 ```csharp
