@@ -1,8 +1,6 @@
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using CopperDevs.Core.Data;
-using CopperDevs.Core.Utility;
-using CopperDevs.Logger;
 using CopperDevs.Windowing.Data;
 using CopperDevs.Windowing.SDL3.Data;
 

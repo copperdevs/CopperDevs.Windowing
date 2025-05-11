@@ -1,4 +1,3 @@
-using CopperDevs.Core.Utility;
 using CopperDevs.Windowing.Data;
 
 namespace CopperDevs.Windowing;

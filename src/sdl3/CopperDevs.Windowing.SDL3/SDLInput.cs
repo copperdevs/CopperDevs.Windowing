@@ -1,5 +1,4 @@
 using System.Numerics;
-using CopperDevs.Core.Data;
 using CopperDevs.Logger;
 using CopperDevs.Windowing.Data;
 using CopperDevs.Windowing.SDL3.Data;
