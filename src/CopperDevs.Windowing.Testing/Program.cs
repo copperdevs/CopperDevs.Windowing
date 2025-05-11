@@ -1,3 +1,4 @@
+using CopperDevs.Core.Utility;
 using CopperDevs.Windowing.SDL3;
 using CopperDevs.Windowing.SDL3.Data;
 
