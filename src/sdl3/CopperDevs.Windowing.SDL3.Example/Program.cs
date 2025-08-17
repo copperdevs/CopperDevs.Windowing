@@ -9,6 +9,7 @@ namespace CopperDevs.Windowing.SDL3.Example;
 public static class Program
 {
     private static SDL3Window window = null!;
+
     private static SDLRenderer renderer = null!;
 
     private static readonly List<Vector2> Points = [];
@@ -24,22 +25,24 @@ public static class Program
     {
         var options = SDL3WindowOptions.Default with
         {
-            Title = "CopperDevs SDL3 Windowing Example",
-            RendererOptions = new RendererOptions
-            {
-                TargetRenderer = SDLRenderers.Renderer
-            }
+            Title = "CopperDevs SDL3 Windowing Example"
         };
 
         window = Window.Create<SDL3Window>(options);
-        renderer = window.GetRenderer()!;
 
+        window.OnLoad += OnLoad;
         window.OnUpdate += OnUpdate;
         window.OnRender += OnRender;
 
         window.Run();
 
         window.Dispose();
+    }
+
+    private static void OnLoad()
+    {
+        renderer = new SDLRenderer();
+        renderer.CreateRenderer(window.GetManagedSDLWindow());
     }
 
     private static void OnUpdate()
