@@ -7,7 +7,6 @@ namespace CopperDevs.Windowing.Testing;
 public static class Program
 {
     private static SDL3Window window = null!;
-    private static SDLRenderer renderer = null!;
 
     public static void Main()
     {
@@ -17,7 +16,6 @@ public static class Program
         };
 
         window = Window.Create<SDL3Window>(options);
-        renderer = window.GetRenderer()!;
 
         window.OnLoad += OnLoad;
         window.OnUpdate += OnUpdate;

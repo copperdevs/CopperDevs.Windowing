@@ -15,11 +15,11 @@ internal class SDLInput : IInput
     private readonly SdlKeyMap keyMap = new();
     private readonly SdlMouseMap mouseMap = new();
 
-    private readonly Dictionary<SDL_Keycode, bool> keyCurrentlyPressed = new();
-    private readonly Dictionary<SDLButton, bool> buttonCurrentlyPressed = new();
+    private readonly Dictionary<SDLScancode, bool> keyCurrentlyPressed = new();
+    private readonly Dictionary<SDLMouseButtonFlags, bool> buttonCurrentlyPressed = new();
 
-    private Dictionary<SDL_Keycode, bool> previousFrameKeyCurrentlyPressed = new();
-    private Dictionary<SDLButton, bool> previousFrameButtonCurrentlyPressed = new();
+    private Dictionary<SDLScancode, bool> previousFrameKeyCurrentlyPressed = new();
+    private Dictionary<SDLMouseButtonFlags, bool> previousFrameButtonCurrentlyPressed = new();
 
     private Vector2 mousePosition;
     private Vector2 previousMousePosition;
@@ -38,18 +38,17 @@ internal class SDLInput : IInput
         return previousFrame ? previousFrameButtonCurrentlyPressed.GetValueOrDefault(mouseMap[button], false) : buttonCurrentlyPressed.GetValueOrDefault(mouseMap[button], false);
     }
 
-    private readonly List<EventType> targetEvents =
+    private readonly List<SDLEventType> targetEvents =
     [
         // EventType.WindowMouseEnter,
         // EventType.WindowMouseLeave,
-        EventType.MouseMotion,
-        EventType.MouseButtonDown,
-        EventType.MouseButtonUp,
-        EventType.MouseWheel,
+        SDLEventType.MouseButtonDown,
+        SDLEventType.MouseButtonUp,
+        SDLEventType.MouseWheel,
         // EventType.MouseAdded,
         // EventType.MouseRemoved,
-        EventType.KeyDown,
-        EventType.KeyUp,
+        SDLEventType.KeyDown,
+        SDLEventType.KeyUp,
         // EventType.KeymapChanged,
         // EventType.KeyboardAdded,
         // EventType.KeyboardRemoved,
@@ -62,7 +61,7 @@ internal class SDLInput : IInput
         connectedWindow.GetManagedSDLWindow().HandleEvent += EventHandler;
     }
 
-    private void EventHandler(EventType eventType, SDL_Event eventData)
+    private void EventHandler(SDLEventType eventType, SDLEvent eventData)
     {
         if (!targetEvents.Contains(eventType))
             return;
@@ -70,49 +69,49 @@ internal class SDLInput : IInput
         // ReSharper disable once SwitchStatementHandlesSomeKnownEnumValuesWithDefault
         switch (eventType)
         {
-            case EventType.MouseMotion:
+            case SDLEventType.MouseMotion:
                 mousePosition = mousePosition with
                 {
-                    X = eventData.motion.x,
-                    Y = eventData.motion.y,
+                    X = eventData.Motion.X,
+                    Y = eventData.Motion.Y,
                 };
                 if (InputLogs)
-                    Log.Debug($"Mouse Motion: <{eventData.motion.x},{eventData.motion.y}> | Mouse Motion Relative: <{eventData.motion.xrel},{eventData.motion.yrel}>");
+                    Log.Debug($"Mouse Motion: <{eventData.Motion.X},{eventData.Motion.Y}> | Mouse Motion Relative: <{eventData.Motion.Xrel},{eventData.Motion.Yrel}>");
                 break;
-            case EventType.MouseButtonDown:
-                buttonCurrentlyPressed[eventData.button.Button] = true;
+            case SDLEventType.MouseButtonDown:
+                buttonCurrentlyPressed[(SDLMouseButtonFlags)eventData.Button.Button] = true;
 
                 if (InputLogs)
-                    Log.Debug($"Mouse Button Down: {eventData.button.Button}");
+                    Log.Debug($"Mouse Button Down: {eventData.Button.Button}");
                 break;
-            case EventType.MouseButtonUp:
-                buttonCurrentlyPressed[eventData.button.Button] = false;
+            case SDLEventType.MouseButtonUp:
+                buttonCurrentlyPressed[(SDLMouseButtonFlags)eventData.Button.Button] = false;
 
                 if (InputLogs)
-                    Log.Debug($"Mouse Button Up: {eventData.button.Button}");
+                    Log.Debug($"Mouse Button Up: {eventData.Button.Button}");
                 break;
-            case EventType.MouseWheel:
+            case SDLEventType.MouseWheel:
                 // lol invert moment
                 mouseScroll = mouseScroll with
                 {
-                    X = eventData.wheel.x * -1,
-                    Y = eventData.wheel.y * -1,
+                    X = eventData.Wheel.X * -1,
+                    Y = eventData.Wheel.Y * -1,
                 };
 
                 if (InputLogs)
-                    Log.Debug($"Mouse Wheel: <{eventData.wheel.x},{eventData.wheel.y}> | Direction: <{eventData.wheel.direction}>");
+                    Log.Debug($"Mouse Wheel: <{eventData.Wheel.X},{eventData.Wheel.Y}> | Direction: <{eventData.Wheel.Direction}>");
                 break;
-            case EventType.KeyDown:
-                keyCurrentlyPressed[eventData.key.key] = true;
+            case SDLEventType.KeyDown:
+                keyCurrentlyPressed[(SDLScancode)eventData.Key.Key] = true;
 
                 if (InputLogs)
-                    Log.Debug($"Key Down: {eventData.key.key} | Modifier: {eventData.key.mod}");
+                    Log.Debug($"Key Down: {(SDLScancode)eventData.Key.Key} | Modifier: {eventData.Key.Mod}");
                 break;
-            case EventType.KeyUp:
-                keyCurrentlyPressed[eventData.key.key] = false;
+            case SDLEventType.KeyUp:
+                keyCurrentlyPressed[(SDLScancode)eventData.Key.Key] = false;
 
                 if (InputLogs)
-                    Log.Debug($"Key Up: {eventData.key.key} | Modifier: {eventData.key.mod}");
+                    Log.Debug($"Key Up: {(SDLScancode)eventData.Key.Key} | Modifier: {eventData.Key.Mod}");
                 break;
             default:
                 throw new ArgumentOutOfRangeException(nameof(eventType), eventType, null);
@@ -122,8 +121,8 @@ internal class SDLInput : IInput
     public void UpdateInput()
     {
         // TODO: fix this shit bro
-        previousFrameKeyCurrentlyPressed = new Dictionary<SDL_Keycode, bool>(keyCurrentlyPressed);
-        previousFrameButtonCurrentlyPressed = new Dictionary<SDLButton, bool>(buttonCurrentlyPressed);
+        previousFrameKeyCurrentlyPressed = new Dictionary<SDLScancode, bool>(keyCurrentlyPressed);
+        previousFrameButtonCurrentlyPressed = new Dictionary<SDLMouseButtonFlags, bool>(buttonCurrentlyPressed);
 
         previousMousePosition = previousMousePosition with
         {
@@ -138,14 +137,15 @@ internal class SDLInput : IInput
         {
             unsafe
             {
-                SDLAPI.WarpMouseInWindow(connectedWindow.GetNativeWindow(), connectedWindow.Size / 2);
+                
+                NativeSDL.WarpMouseInWindow(connectedWindow.GetNativeWindow(), connectedWindow.Size.X / 2f, connectedWindow.Size.Y / 2f);
             }
         }
     }
 
     public bool SupportsInputKey(InputKey inputKey)
     {
-        return keyMap[inputKey] != SDL_Keycode.SDLK_UNKNOWN;
+        return keyMap[inputKey] != SDLScancode.Unknown;
     }
 
     public bool IsKeyPressed(InputKey key)
@@ -210,16 +210,16 @@ internal class SDLInput : IInput
         switch (cursorMode)
         {
             case CursorMode.Normal:
-                SDLAPI.ShowCursor();
-                SDLAPI.SetMouseRelativeMode(connectedWindow.GetNativeWindow(), false);
+                NativeSDL.ShowCursor();
+                NativeSDL.SetWindowRelativeMouseMode(connectedWindow.GetNativeWindow(), false);
                 break;
             case CursorMode.Hidden:
-                SDLAPI.HideCursor();
-                SDLAPI.SetMouseRelativeMode(connectedWindow.GetNativeWindow(), false);
+                NativeSDL.HideCursor();
+                NativeSDL.SetWindowRelativeMouseMode(connectedWindow.GetNativeWindow(), false);
                 break;
             case CursorMode.Locked:
-                SDLAPI.HideCursor();
-                SDLAPI.SetMouseRelativeMode(connectedWindow.GetNativeWindow(), true);
+                NativeSDL.HideCursor();
+                NativeSDL.SetWindowRelativeMouseMode(connectedWindow.GetNativeWindow(), true);
                 break;
             default:
                 throw new ArgumentOutOfRangeException(nameof(cursorMode), cursorMode, null);

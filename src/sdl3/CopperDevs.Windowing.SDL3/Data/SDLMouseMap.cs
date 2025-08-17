@@ -1,13 +1,14 @@
 using CopperDevs.Windowing.Data;
+using Hexa.NET.SDL3;
 
 namespace CopperDevs.Windowing.SDL3.Data;
 
-internal class SdlMouseMap : Dictionary<MouseButton, SDLButton>
+internal class SdlMouseMap : Dictionary<MouseButton, SDLMouseButtonFlags>
 {
     public SdlMouseMap()
     {
-        this[MouseButton.Left] = SDLButton.SDL_BUTTON_LEFT;
-        this[MouseButton.Middle] = SDLButton.SDL_BUTTON_MIDDLE;
-        this[MouseButton.Right] = SDLButton.SDL_BUTTON_RIGHT;
+        this[MouseButton.Left] = SDLMouseButtonFlags.Left;
+        this[MouseButton.Middle] = SDLMouseButtonFlags.Middle;
+        this[MouseButton.Right] = SDLMouseButtonFlags.Right;
     }
 }

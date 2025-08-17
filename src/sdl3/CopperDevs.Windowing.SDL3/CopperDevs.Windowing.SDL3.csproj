@@ -32,7 +32,7 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="ppy.SDL3-CS" Version="2025.220.0" />
+        <PackageReference Include="Hexa.NET.SDL3" Version="1.2.16" />
     </ItemGroup>
 
     <ItemGroup>
@@ -47,6 +47,6 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\..\CopperDevs.Windowing\CopperDevs.Windowing.csproj" />
+        <ProjectReference Include="..\..\CopperDevs.Windowing\CopperDevs.Windowing.csproj" />
     </ItemGroup>
 </Project>

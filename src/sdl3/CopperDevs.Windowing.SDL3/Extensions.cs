@@ -7,13 +7,13 @@ namespace CopperDevs.Windowing.SDL3;
 public static class Extensions
 {
     // ReSharper disable once InconsistentNaming
-    public static SDL_FColor AsSDLColor(this Color color)
+    public static SDLColor AsSDLColor(this Color color)
     {
-        return new SDL_FColor { r = color.R /= 255f, g = color.G /= 255f, b = color.B /= 255f, a = color.A /= 255f };
+        return new SDLColor { R = (byte)color.R, G = (byte)color.G, B = (byte)color.B, A = (byte)color.A };
     }
 
-    public static Color AsColor(this SDL_FColor color)
+    public static Color AsColor(this SDLColor color)
     {
-        return new Color(color.r *= 255f, color.g *= 255f, color.b *= 255f, color.a *= 255f);
+        return new Color(color.R, color.G, color.B, color.A);
     }
 }

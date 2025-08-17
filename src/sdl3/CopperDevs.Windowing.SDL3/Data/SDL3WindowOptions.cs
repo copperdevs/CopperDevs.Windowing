@@ -1,4 +1,5 @@
 using CopperDevs.Windowing.Data;
+using Hexa.NET.SDL3;
 
 namespace CopperDevs.Windowing.SDL3.Data;
 
@@ -12,15 +13,13 @@ public record SDL3WindowOptions : WindowOptions
     /// <summary>
     /// Flags for what to initialize the window with
     /// </summary>
-    public InitFlags InitFlags { get; set; } = InitFlags.Video;
+    public SDLInitFlags InitFlags { get; set; } = SDLInitFlags.Video;
 
     /// <summary>
     /// Flags for the window to utilize
     /// </summary>
-    public WindowFlags WindowFlags { get; set; } = WindowFlags.Resizable | WindowFlags.HighPixelDensity;
+    public SDLWindowFlags WindowFlags { get; set; } = SDLWindowFlags.Resizable | SDLWindowFlags.HighPixelDensity;
 
-    public RendererOptions RendererOptions { get; set; } = new();
-    
     /// <summary>
     /// Default settings
     /// </summary>

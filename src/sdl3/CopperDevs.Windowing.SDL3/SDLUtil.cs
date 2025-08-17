@@ -25,49 +25,4 @@ public static unsafe class SDLUtil
         fixed (TTarget* pointsPtr = nativePoint)
             return pointsPtr;
     }
-
-    public static TTarget[] ToArray<TTarget>(SDLPointerArray<TTarget>? pointerArray) where TTarget : unmanaged
-    {
-        if (pointerArray is null)
-            return [];
-
-        var array = new TTarget[pointerArray.Count];
-
-        for (var i = 0; i < pointerArray.Count; i++)
-            array[i] = pointerArray[i];
-
-        pointerArray.Dispose();
-
-        return array;
-    }
-
-    public static TTarget[] ToArray<TTarget>(SDLArray<TTarget>? pointerArray) where TTarget : unmanaged
-    {
-        if (pointerArray is null)
-            return [];
-
-        var array = new TTarget[pointerArray.Count];
-
-        for (var i = 0; i < pointerArray.Count; i++)
-            array[i] = pointerArray[i];
-
-        pointerArray.Dispose();
-
-        return array;
-    }
-
-    public static TTarget[] ToArray<TTarget>(SDLOpaquePointerArray<TTarget>? pointerArray) where TTarget : unmanaged
-    {
-        if (pointerArray is null)
-            return [];
-
-        var array = new TTarget[pointerArray.Count];
-
-        for (var i = 0; i < pointerArray.Count; i++)
-            array[i] = *pointerArray[i];
-
-        pointerArray.Dispose();
-
-        return array;
-    }
 }

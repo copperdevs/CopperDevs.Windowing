@@ -8,15 +8,15 @@ public enum SystemTheme
     /// <summary>
     /// Light mode theme
     /// </summary>
-    Light,
+    Light = 1,
     
     /// <summary>
     /// Dark mode theme
     /// </summary>
-    Dark,
+    Dark = 2,
     
     /// <summary>
     /// Unknown theme
     /// </summary>
-    Unknown,
+    Unknown = 0,
 }

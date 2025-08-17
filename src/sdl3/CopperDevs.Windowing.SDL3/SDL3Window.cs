@@ -26,31 +26,18 @@ public class SDL3Window : Window
     /// Get the direct SDL Window
     /// </summary>
     /// <returns>SDL Window pointer</returns>
-    public unsafe SDL_Window* GetNativeWindow() => window.GetNativeWindow();
-
-    /// <summary>
-    /// Get the managed SDL renderer wrapper
-    /// </summary>
-    /// <returns>Renderer wrapper object</returns>
-    public SDLRenderer? GetRenderer() => window.GetRenderer();
-
-    /// <summary>
-    /// Get the SDL GPU API wrapper
-    /// </summary>
-    /// <returns>GPU API wrapper object</returns>
-    // ReSharper disable once InconsistentNaming
-    public SDLGPU? GetGPU() => window.GetGPU();
+    public unsafe SDLWindow* GetNativeWindow() => window.GetNativeWindow();
 
     /// <summary>
     /// Callback for when an event is called
     /// </summary>
     /// <remarks>If you need the <see cref="SDL_Event"/> info, use <see cref="HandleEvent"/></remarks>
-    public Action<EventType> OnEvent = null!;
+    public Action<SDLEventType> OnEvent = null!;
 
     /// <summary>
     /// Callback for when an event is called and gives the events data
     /// </summary>
-    public Action<EventType, SDL_Event> HandleEvent = null!;
+    public Action<SDLEventType, SDLEvent> HandleEvent = null!;
 
     /// <summary>
     /// Disposes of the windows resources and shuts down SDL
@@ -82,7 +69,7 @@ public class SDL3Window : Window
     protected override void SetMaximize() => window.Maximize();
     protected override bool GetFocused() => window.Focused;
     protected override bool GetHovered() => window.Hovered;
-    protected override SystemTheme GetSystemTheme() => SDLAPI.GetSystemTheme();
+    protected override SystemTheme GetSystemTheme() => (SystemTheme)NativeSDL.GetSystemTheme();
     protected override double GetTotalTime() => totalTime;
     protected override double GetDeltaTime() => deltaTime;
 
@@ -99,19 +86,17 @@ public class SDL3Window : Window
     /// <remarks>Use <see cref="CopperDevs.Windowing.Window.Create{TWindow}()"/> or <see cref="CopperDevs.Windowing.Window.Create{TWindow}(WindowOptions)"/> instead to properly set up the windowing system</remarks>
     protected override void CreateWindow(WindowOptions options)
     {
-        SDLAPI.SetHint(SDL_HINT_WINDOWS_CLOSE_ON_ALT_F4, "null byte \0 in string"u8);
-
-        SDLAPI.SetHint(SDL_HINT_WINDOWS_CLOSE_ON_ALT_F4, "1"u8);
-        SDLAPI.SetHint(SDL_HINT_WINDOWS_CLOSE_ON_ALT_F4, "1");
+        NativeSDL.SetHint(SDL_HINT_WINDOWS_CLOSE_ON_ALT_F4, @"null byte \0 in string");
+        NativeSDL.SetHint(SDL_HINT_WINDOWS_CLOSE_ON_ALT_F4, "1");
 
         window = new ManagedSDLWindow(options);
         window.HandleEvent += EventsHandler;
         window.OnEvent += HandleOnEvent;
 
-        unsafe
-        {
-            SDL_AddEventWatch(&EventWatcher, new IntPtr(null));
-        }
+//        unsafe
+//        {
+//            NativeSDL.AddEventWatch(&EventWatcher, new IntPtr(null));
+//        }
     }
 
     /// <summary>
@@ -135,7 +120,7 @@ public class SDL3Window : Window
     }
 
     // ReSharper disable once InconsistentNaming
-    private double totalTime => SDLAPI.GetTicks() / (double)1000;
+    private double totalTime => NativeSDL.GetTicks() / (double)1000;
     private double deltaTime;
     private double deltaTimeStartTime;
 
@@ -148,7 +133,7 @@ public class SDL3Window : Window
         Dispose();
     }
 
-    private void EventsHandler(EventType type, SDL_Event e)
+    private void EventsHandler(SDLEventType type, SDLEvent e)
     {
         HandleEvent?.Invoke(type, e);
 
@@ -156,31 +141,31 @@ public class SDL3Window : Window
         // ReSharper disable once ConvertSwitchStatementToSwitchExpression
         switch (type)
         {
-            case EventType.WindowCloseRequested:
-            case EventType.Quit:
+            case SDLEventType.WindowCloseRequested:
+            case SDLEventType.Quit:
                 ShouldRun = false;
                 break;
         }
     }
 
-    private void HandleOnEvent(EventType type) => OnEvent?.Invoke(type);
+    private void HandleOnEvent(SDLEventType type) => OnEvent?.Invoke(type);
 
-    [UnmanagedCallersOnly(CallConvs = [typeof(CallConvCdecl)])]
-    private static unsafe SDLBool EventWatcher(IntPtr userdata, SDL_Event* eventPtr)
-    {
-        // ReSharper disable once SwitchStatementMissingSomeEnumCasesNoDefault
-        // ReSharper disable once ConvertSwitchStatementToSwitchExpression
-        switch ((EventType)eventPtr->type)
-        {
-            case EventType.WindowResized:
-                foreach (var window in CreatedWindows)
-                {
-                    window.RenderWindow();
-                }
-
-                break;
-        }
-
-        return true;
-    }
+//    [UnmanagedCallersOnly(CallConvs = [typeof(CallConvCdecl)])]
+//    private static unsafe byte EventWatcher(IntPtr userdata, SDLEvent* eventPtr)
+//    {
+//        // ReSharper disable once SwitchStatementMissingSomeEnumCasesNoDefault
+//        // ReSharper disable once ConvertSwitchStatementToSwitchExpression
+//        switch ((SDLEventType)eventPtr->Type)
+//        {
+//            case SDLEventType.WindowResized:
+//                foreach (var window in CreatedWindows)
+//                {
+//                    window.RenderWindow();
+//                }
+//
+//                break;
+//        }
+//
+//        return true;
+//    }
 }

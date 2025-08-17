@@ -15,32 +15,17 @@ public unsafe class ManagedSDLWindow : SafeDisposable
     private bool createdSuccessfully;
 
     // ReSharper disable once PrivateFieldCanBeConvertedToLocalVariable
-    private readonly SDL_Window* window;
-    private readonly SDLRenderer? renderer;
-    private readonly SDLGPU? gpu;
+    private readonly SDLWindow* window;
 
     /// <summary>
     /// Get the direct SDL Window
     /// </summary>
     /// <returns>SDL Window pointer</returns>
-    public SDL_Window* GetNativeWindow() => window;
-
-    /// <summary>
-    /// Get the SDL renderer wrapper
-    /// </summary>
-    /// <returns>Renderer wrapper object</returns>
-    public SDLRenderer? GetRenderer() => renderer;
-
-    /// <summary>
-    /// Get the SDL GPU API wrapper
-    /// </summary>
-    /// <returns>GPU API wrapper object</returns>
-    // ReSharper disable once InconsistentNaming
-    public SDLGPU? GetGPU() => gpu;
+    public SDLWindow* GetNativeWindow() => window;
 
     // ReSharper disable once PrivateFieldCanBeConvertedToLocalVariable
-    private readonly WindowFlags windowFlags;
-    private readonly InitFlags initFlags;
+    private readonly SDLWindowFlags windowFlags;
+    private readonly SDLInitFlags initFlags;
 
     private Events events = new();
 
@@ -49,8 +34,13 @@ public unsafe class ManagedSDLWindow : SafeDisposable
     /// </summary>
     public Vector2Int Position
     {
-        get => SDLAPI.GetWindowPosition(window);
-        set => SDLAPI.SetWindowPosition(window, value);
+        get
+        {
+            var vector = new Vector2Int();
+            NativeSDL.GetWindowPosition(window, ref vector.X, ref vector.Y);
+            return vector;
+        }
+        set => NativeSDL.SetWindowPosition(window, value.X, value.Y);
     }
 
     /// <summary>
@@ -58,8 +48,13 @@ public unsafe class ManagedSDLWindow : SafeDisposable
     /// </summary>
     public Vector2Int Size
     {
-        get => SDLAPI.GetWindowSize(window);
-        set => SDLAPI.SetWindowSize(window, value);
+        get
+        {
+            var vector = new Vector2Int();
+            NativeSDL.GetWindowSize(window, ref vector.X, ref vector.Y);
+            return vector;
+        }
+        set => NativeSDL.SetWindowSize(window, value.X, value.Y);
     }
 
     /// <summary>
@@ -67,8 +62,13 @@ public unsafe class ManagedSDLWindow : SafeDisposable
     /// </summary>
     public Vector2Int MinimumSize
     {
-        get => SDLAPI.GetWindowMinimumSize(window);
-        set => SDLAPI.SetWindowMinimumSize(window, value);
+        get
+        {
+            var vector = new Vector2Int();
+            NativeSDL.GetWindowMinimumSize(window, ref vector.X, ref vector.Y);
+            return vector;
+        }
+        set => NativeSDL.SetWindowMinimumSize(window, value.X, value.Y);
     }
 
     /// <summary>
@@ -76,8 +76,13 @@ public unsafe class ManagedSDLWindow : SafeDisposable
     /// </summary>
     public Vector2Int MaximumSize
     {
-        get => SDLAPI.GetWindowMaximumSize(window);
-        set => SDLAPI.SetWindowMaximumSize(window, value);
+        get
+        {
+            var vector = new Vector2Int();
+            NativeSDL.GetWindowMaximumSize(window, ref vector.X, ref vector.Y);
+            return vector;
+        }
+        set => NativeSDL.SetWindowMaximumSize(window, value.X, value.Y);
     }
 
 
@@ -86,8 +91,8 @@ public unsafe class ManagedSDLWindow : SafeDisposable
     /// </summary>
     public string Title
     {
-        get => SDLAPI.GetWindowTitle(window);
-        set => SDLAPI.SetWindowTitle(window, value);
+        get => NativeSDL.GetWindowTitle(window)->ToString();
+        set => NativeSDL.SetWindowTitle(window, value);
     }
 
     /// <summary>
@@ -95,8 +100,8 @@ public unsafe class ManagedSDLWindow : SafeDisposable
     /// </summary>
     public bool Fullscreen
     {
-        get => SDLAPI.GetFlags(window).HasFlag(WindowFlags.Fullscreen);
-        set => SDLAPI.SetFullscreen(window, value);
+        get => NativeSDL.GetWindowFlags(window).HasFlag(SDLWindowFlags.Fullscreen);
+        set => NativeSDL.SetWindowFullscreen(window, value);
     }
 
     /// <summary>
@@ -104,40 +109,40 @@ public unsafe class ManagedSDLWindow : SafeDisposable
     /// </summary>
     public bool AlwaysOnTop
     {
-        get => SDLAPI.GetFlags(window).HasFlag(WindowFlags.AlwaysOnTop);
-        set => SDLAPI.SetAlwaysOnTop(window, value);
+        get => NativeSDL.GetWindowFlags(window).HasFlag(SDLWindowFlags.AlwaysOnTop);
+        set => NativeSDL.SetWindowAlwaysOnTop(window, value);
     }
 
     /// <summary>
     /// Is the window currently minimized
     /// </summary>
-    public bool Minimized => SDLAPI.GetFlags(window).HasFlag(WindowFlags.Minimized);
+    public bool Minimized => NativeSDL.GetWindowFlags(window).HasFlag(SDLWindowFlags.Minimized);
 
     /// <summary>
     /// Is the window currently maximized
     /// </summary>
-    public bool Maximized => SDLAPI.GetFlags(window).HasFlag(WindowFlags.Maximized);
+    public bool Maximized => NativeSDL.GetWindowFlags(window).HasFlag(SDLWindowFlags.Maximized);
 
     /// <summary>
     /// Is the window currently being focused
     /// </summary>
-    public bool Focused => SDLAPI.GetFlags(window).HasFlag(WindowFlags.InputFocus);
+    public bool Focused => NativeSDL.GetWindowFlags(window).HasFlag(SDLWindowFlags.InputFocus);
 
     /// <summary>
     /// Is the window currently being hovered by the mouse
     /// </summary>
-    public bool Hovered => SDLAPI.GetFlags(window).HasFlag(WindowFlags.MouseFocus);
+    public bool Hovered => NativeSDL.GetWindowFlags(window).HasFlag(SDLWindowFlags.MouseFocus);
 
     /// <summary>
     /// Callback for when an event is called
     /// </summary>
-    /// <remarks>If you need the <see cref="SDL_Event"/> info, use <see cref="HandleEvent"/></remarks>
-    public Action<EventType> OnEvent = null!;
+    /// <remarks>If you need the <see cref="SDLEvent"/> info, use <see cref="HandleEvent"/></remarks>
+    public Action<SDLEventType> OnEvent = null!;
 
     /// <summary>
     /// Callback for when an event is called and gives the events data
     /// </summary>
-    public Action<EventType, SDL_Event> HandleEvent = null!;
+    public Action<SDLEventType, SDLEvent> HandleEvent = null!;
 
     /// <summary>
     /// Create
@@ -147,8 +152,8 @@ public unsafe class ManagedSDLWindow : SafeDisposable
     /// <remarks><see cref="SDL3WindowOptions"/> can be used instead of <see cref="WindowOptions"/> for <paramref name="options"/> to get SDL specific options</remarks>
     public ManagedSDLWindow(WindowOptions options)
     {
-        initFlags = InitFlags.Video;
-        windowFlags = WindowFlags.Resizable | WindowFlags.Hidden;
+        initFlags = SDLInitFlags.Video;
+        windowFlags = SDLWindowFlags.Resizable | SDLWindowFlags.Hidden;
 
         if (options.GetType() == typeof(SDL3WindowOptions))
         {
@@ -156,40 +161,14 @@ public unsafe class ManagedSDLWindow : SafeDisposable
             windowFlags = ((SDL3WindowOptions)options).WindowFlags;
         }
 
-        if (!(createdSuccessfully = SDLAPI.InitSubSystem(initFlags)))
+        if (!(createdSuccessfully = NativeSDL.InitSubSystem(initFlags)))
         {
-            throw new InvalidOperationException($"Failed to initialise SDL. Error: {SDLAPI.GetError()}");
+            throw new InvalidOperationException($"Failed to initialise SDL. Error: {NativeSDL.GetError()->ToString()}");
         }
 
         events.HandleEvent += HandleEvents;
 
-        window = SDLAPI.CreateWindow(options.Title, options.Size, windowFlags);
-//        renderer = new SDLRenderer(SDLAPI.CreateRenderer(window));
-
-        if (options.GetType() != typeof(SDL3WindowOptions))
-            return;
-
-        var windowOptions = (SDL3WindowOptions)options;
-
-        switch (windowOptions.RendererOptions.TargetRenderer)
-        {
-            case SDLRenderers.GPU:
-                renderer = null;
-                gpu = new SDLGPU();
-                break;
-            case SDLRenderers.Renderer:
-                renderer = new SDLRenderer();
-                gpu = null;
-                break;
-            case SDLRenderers.None:
-            default:
-                renderer = null;
-                gpu = null;
-                break;
-        }
-
-        gpu?.CreateRenderer(this, windowOptions.RendererOptions);
-        renderer?.CreateRenderer(this, windowOptions.RendererOptions);
+        window = NativeSDL.CreateWindow(options.Title, options.Size.X, options.Size.Y, windowFlags);
     }
 
     /// <summary>
@@ -200,21 +179,21 @@ public unsafe class ManagedSDLWindow : SafeDisposable
         events.Poll();
     }
 
-    private void HandleEvents(SDL_Event e)
+    private void HandleEvents(SDLEvent e)
     {
-        OnEvent?.Invoke((EventType)e.type);
-        HandleEvent?.Invoke((EventType)e.type, e);
+        OnEvent?.Invoke((SDLEventType)e.Type);
+        HandleEvent?.Invoke((SDLEventType)e.Type, e);
     }
 
     /// <summary>
     /// Maximize the window 
     /// </summary>
-    public void Maximize() => SDLAPI.Maximize(window);
+    public void Maximize() => NativeSDL.MaximizeWindow(window);
 
     /// <summary>
     /// Minimize the window
     /// </summary>
-    public void Minimize() => SDLAPI.Minimize(window);
+    public void Minimize() => NativeSDL.MinimizeWindow(window);
 
     /// <summary>
     /// Flash the window
@@ -222,7 +201,7 @@ public unsafe class ManagedSDLWindow : SafeDisposable
     /// <param name="untilFocus">If true, flashes the window until focused, otherwise only briefly flashes</param>
     public void Flash(bool untilFocus = true)
     {
-        SDLAPI.FlashWindow(window, untilFocus ? SDL_FlashOperation.SDL_FLASH_UNTIL_FOCUSED : SDL_FlashOperation.SDL_FLASH_BRIEFLY);
+        NativeSDL.FlashWindow(window, untilFocus ? SDLFlashOperation.UntilFocused : SDLFlashOperation.Briefly);
     }
 
     /// <summary>
@@ -230,7 +209,7 @@ public unsafe class ManagedSDLWindow : SafeDisposable
     /// </summary>
     public void StopFlash()
     {
-        SDLAPI.FlashWindow(window, SDL_FlashOperation.SDL_FLASH_CANCEL);
+        NativeSDL.FlashWindow(window, SDLFlashOperation.Cancel);
     }
 
     /// <summary>
@@ -240,33 +219,25 @@ public unsafe class ManagedSDLWindow : SafeDisposable
     public override void DisposeResources()
     {
         if (createdSuccessfully)
-            SDLAPI.QuitSubSystem(initFlags);
+            NativeSDL.QuitSubSystem(initFlags);
 
-        renderer?.Dispose();
-        gpu?.Dispose();
-
-        SDLAPI.Quit();
+        NativeSDL.Quit();
     }
 
     private class Events
     {
-        private const int EventsPerPeep = 64;
-        private readonly SDL_Event[] events = new SDL_Event[EventsPerPeep];
-
-        public Action<SDL_Event> HandleEvent = null!;
+        public Action<SDLEvent> HandleEvent = null!;
 
         public void Poll()
         {
-            SDLAPI.PumpEvents();
+            SDLEvent sdlEvent = default;
 
-            int eventsRead;
+            NativeSDL.PumpEvents();
 
-            do
+            while (NativeSDL.PollEvent(ref sdlEvent))
             {
-                eventsRead = SDLAPI.PeepEvents(events, SDL_EventAction.SDL_GETEVENT, SDL_EventType.SDL_EVENT_FIRST, SDL_EventType.SDL_EVENT_LAST);
-                for (var i = 0; i < eventsRead; i++)
-                    HandleEvent?.Invoke(events[i]);
-            } while (eventsRead == EventsPerPeep);
+                HandleEvent?.Invoke(sdlEvent);
+            }
         }
     }
 }

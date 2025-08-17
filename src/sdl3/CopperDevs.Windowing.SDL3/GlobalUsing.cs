@@ -1,3 +1,4 @@
-global using static SDL.SDL3;
-global using SDL;
-global using NativeSDL = SDL.SDL3;
+global using static Hexa.NET.SDL3.SDL;
+global using Hexa.NET.SDL3;
+global using NativeSDL = Hexa.NET.SDL3.SDL;
+global using Log = CopperDevs.Logger.Log;
