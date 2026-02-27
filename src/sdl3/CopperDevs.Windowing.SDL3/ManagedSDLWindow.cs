@@ -1,5 +1,4 @@
-using CopperDevs.Core.Data;
-using CopperDevs.Core.Utility;
+using CopperDevs.Celesium;
 using CopperDevs.Windowing.Data;
 using CopperDevs.Windowing.SDL3.Data;
 

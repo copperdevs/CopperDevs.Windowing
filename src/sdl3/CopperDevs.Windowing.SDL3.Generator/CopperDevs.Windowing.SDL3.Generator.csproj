@@ -10,8 +10,7 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="CopperDevs.Core" Version="1.1.13" />
-        <PackageReference Include="CopperDevs.Logger" Version="1.0.1" />
+        <PackageReference Include="CopperDevs.Celesium" Version="1.0.0" />
         <PackageReference Include="ppy.SDL3-CS" Version="2025.220.0" />
     </ItemGroup>
 

@@ -1,5 +1,5 @@
 using System.Numerics;
-using CopperDevs.Logger;
+using CopperDevs.Celesium;
 
 namespace CopperDevs.Windowing.Data;
 

@@ -1,6 +1,5 @@
 ﻿using System.Numerics;
-using CopperDevs.Core.Data;
-using CopperDevs.Core.Utility;
+using CopperDevs.Celesium;
 using CopperDevs.Windowing.Data;
 using CopperDevs.Windowing.SDL3.Data;
 
@@ -62,7 +61,7 @@ public static class Program
         if (Input.IsKeyPressed(InputKey.Right))
             scale += ArrowChanger;
 
-        scale = MathUtil.Clamp(scale, ScaleRange.X, ScaleRange.Y);
+        scale = Math.Clamp(scale, ScaleRange.X, ScaleRange.Y);
 
         renderer.Scale = Vector2.One * scale;
     }

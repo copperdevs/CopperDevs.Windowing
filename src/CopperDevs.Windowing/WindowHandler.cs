@@ -50,8 +50,8 @@ public partial class Window
         OnUpdate?.Invoke();
         OnRender?.Invoke();
 
-        if (Options.FrameRenderDelay.Enabled)
-            Thread.Sleep(Options.FrameRenderDelay.Value);
+        if (Options.FrameRenderDelay > 0)
+            Thread.Sleep(Options.FrameRenderDelay);
 
         StopWindowUpdate();
     }
