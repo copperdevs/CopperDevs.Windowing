@@ -22,7 +22,7 @@ public static class Input
         if (input is not null)
             return true;
 
-        Log.Warning("Input is not setup, attempting to setup now");
+        Log.Warn("Input is not setup, attempting to setup now");
         window.SetupInput();
 
         return input is not null;
