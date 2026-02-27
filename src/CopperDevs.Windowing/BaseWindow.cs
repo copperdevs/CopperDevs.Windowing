@@ -1,5 +1,5 @@
 #pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
-using CopperDevs.Core.Utility;
+using CopperDevs.Celesium;
 using CopperDevs.Windowing.Data;
 
 namespace CopperDevs.Windowing;

@@ -1,5 +1,5 @@
 ﻿using System.Reflection;
-using CopperDevs.Logger;
+using CopperDevs.Celesium;
 using SDL;
 
 namespace CopperDevs.Windowing.SDL3.Generator;
@@ -8,7 +8,7 @@ internal static class HotReloadCallbackReceiver
 {
     public static void UpdateApplication(Type[] updatedTypes)
     {
-        Log.Warning("Program Hot Reloaded");
+        Log.Warn("Program Hot Reloaded");
 
         Program.CreateFiles();
         Program.GenerateMethods();

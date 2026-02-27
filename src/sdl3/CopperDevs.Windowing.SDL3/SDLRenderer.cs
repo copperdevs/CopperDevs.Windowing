@@ -1,6 +1,5 @@
 using System.Numerics;
-using CopperDevs.Core.Utility;
-using CopperDevs.Logger;
+using CopperDevs.Celesium;
 using CopperDevs.Windowing.Data;
 using CopperDevs.Windowing.SDL3.Data;
 

@@ -1,5 +1,4 @@
-using CopperDevs.Core.Utility;
-using CopperDevs.Logger;
+using CopperDevs.Celesium;
 using CopperDevs.Windowing.SDL3.Data;
 
 namespace CopperDevs.Windowing.SDL3;

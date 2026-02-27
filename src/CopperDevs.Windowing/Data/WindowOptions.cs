@@ -1,5 +1,4 @@
-using CopperDevs.Core.Data;
-using CopperDevs.Core.Utility;
+using CopperDevs.Celesium;
 
 namespace CopperDevs.Windowing.Data;
 
@@ -18,11 +17,14 @@ public record WindowOptions
     /// Starting title of the window on creation
     /// </summary>
     public string Title = "Untitled Window";
-    
+
     /// <summary>
     /// Delay in milliseconds between each frame render
     /// </summary>
-    public Optional<int> FrameRenderDelay = new(10);
+    /// <remarks>
+    /// Set to 0 (or any value below) to disable 
+    /// </remarks>
+    public int FrameRenderDelay = 10;
 
     /// <summary>
     /// Default settings
